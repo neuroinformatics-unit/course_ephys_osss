@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: neuroinformatics-unit/actions/build_sphinx_docs@main
         with:
-          use-artifactci: lazy
+          use-artifactci: false
 
   deploy_sphinx_docs:
     name: Deploy Sphinx Docs

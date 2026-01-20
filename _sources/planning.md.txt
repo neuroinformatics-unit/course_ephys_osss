@@ -1,6 +1,10 @@
 # OSSS Course Planning
 
-## Plan
+## A Tentative Plan
+
+This is a tenative plan to see how the course would look within the alloted
+time frame. It is flexible, let's discuss if anything any 
+content should be moved or replaced.
 
 ### Monday Morning (10:00-13:00) : Introduction
 

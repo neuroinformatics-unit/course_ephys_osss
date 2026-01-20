@@ -1,4 +1,4 @@
-# OSSS Course Planning
+# Course Plan
 
 ## A tentative plan
 

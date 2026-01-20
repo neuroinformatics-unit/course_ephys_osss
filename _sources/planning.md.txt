@@ -1,12 +1,12 @@
 # OSSS Course Planning
 
-## A Tentative Plan
+## A tentative plan
 
 This is a tenative plan to see how the course would look within the alloted
 time frame. It is flexible, let's discuss if anything any 
 content should be moved or replaced.
 
-### Monday Morning (10:00-13:00) : Introduction
+### Monday morning (10:00-13:00) : Introduction
 
 **Goal** 
 - Provide a high-level overview of the main concepts in extracellular electrophysiology, of which 
@@ -45,7 +45,7 @@ why we do them and how they result in data (spike times from good units) that ar
 
 A very short (1-2 s) recording that can be quickly run through the entire pipeline.
 
-### Tuesday Morning (10:00 - 13:00) : Preprocessing
+### Tuesday morning (10:00 - 13:00) : Preprocessing
 
 **Goal**
 
@@ -80,7 +80,7 @@ Maybe a good example for bad-channel detection, saturation or raw-data quality m
 We could have a good example and a bad example.
 
 
-### Tuesday Afternoon (14:00-17:00) : Sorting
+### Tuesday afternoon (14:00-17:00) : Sorting
 
 **Goal**
 
@@ -114,7 +114,7 @@ Here we can use short data that sorts quickly, but it would be nice if it wasn't
 We could try and use the same data as on Monday. 
 For UnitMatching, the sorting outputs from two sessions would work. 
 
-### Wednesday Morning (10:00 - 13:00) : Assessing Sorting Quality
+### Wednesday morning (10:00 - 13:00) : Assessing Sorting Quality
 
 **Goal**
 
@@ -145,7 +145,7 @@ We will need a small toy dataset that they can quickly create and run a sorting 
 But it should have a few good units, so will be as small as possible while being useful.
 For the spikeinterface-GUI, we can just use the sorting output of a larger dataset.
 
-### Wednesday Afternoon (14:00-17:00) : Analysing Outputs
+### Wednesday afternoon (14:00-17:00) : Analysing Outputs
 
 **Plan**
 
@@ -171,7 +171,7 @@ much background in ephys / neuroscience / DSP. This is not a problem, we can sti
 will just need to make sure to build to these from the ground-up.
 - Their laptops may range in performance, where possible we should endeavour to use the smallest example data possible.
 
-## Other Notes
+## Other notes
 
 - Having a 10-minute end-of-session discussion / recap might be a nice idea
 

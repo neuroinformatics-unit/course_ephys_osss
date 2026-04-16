@@ -1,4 +1,4 @@
-# Walking through a SpikeInterface pipeline {.unnumbered}
+# Introduction {.unnumbered}
 
 Some overview of extracellular electrophysiology.
 

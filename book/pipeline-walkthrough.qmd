@@ -1,16 +1,9 @@
 # Walking through a SpikeInterface pipeline {.unnumbered}
+\
+In this chapter, we will code an entire spike sorting pipeline using SpikeInterface. We will load and preprocesing the data, run spike sorting and compute metrics for assessing the sorting quality.
 
-SpikeInterface is a community-build tool, written in Python, 
-for implementing and developing extracellular electrophysiogy pipelines.
-It can handle all stages of a pipeline, from data-loading and
-preprocessing to deploying spike sorters, computing postprocessing
-and quality-checking.
-
-In this walkthrough, we will use an example dataset available [here]().
-This dataset contains XXX minutes of data recorded on a 384 2-shank
-NeuroPixels probe, acquired in SpikeGLX.
+In this walkthrough, we will use an example dataset available [here](). This dataset contains XXX minutes of data recorded on 384 channels, located on the middle two shanks of a  4-shank Neuropixels probe, acquired in SpikeGLX.
  
-
  ADD THE COMPELTELED WALKTHROUGH. SAY DON'T COPY. DONT USE AI. TYPE IT ALL.
 
 
@@ -18,11 +11,29 @@ NeuroPixels probe, acquired in SpikeGLX.
 
 ## Loading the data
 
-To load data in SpikeInterface, we can use the `extractors` module. SpikeInterface
-can load data from many different types of acquisition systems (see [here]() for a full list). 
+SpikeInterface can load data from many different types of acquisition systems, using functions within its [extractors module](https://spikeinterface.readthedocs.io/en/stable/modules/extractors.html). As our data is from SpikeGLX, we will use the `read_spikeglx` method.
 
-As our data is from SpikeGLX, we will use the `read_spikeglx` method. Because we want to load the AP data stream (LINK), we
-pass the "imec0.ap" stream. 
+We need to tell SpikeInterfafce where the data is, and what [data stream](https://github.com/billkarsh/SpikeGLX/blob/master/Markdown/UserManual.md#data-stream) we want to load. 
+
+Streams written by SpikeGLX can include the action potential (AP) band, local feild potential (LF) band and a sync stream. Because we want to load the AP data stream for spike sorting, we pass `"imec0.ap"`.   
+
+::: {.callout-note collapse="true"}
+### Details on SpikeGLX streams
+
+In earlier versions of Neuropixels probes, the data was filtered in the probe  into two separate streams. The action potential (AP) band was filtered with high-pass filter (300, 500 or 1000 Hz depending on settings). This removes low-frequency component, keeping the action potentials (which are typically in the 300-3000Hz range) untouched. This stream was used for spike sorting.
+
+https://github.com/billkarsh/SpikeGLX/blob/master/Markdown/UserManual.md#data-stream
+
+^^CHECK THIS (LOWER) https://pmc.ncbi.nlm.nih.gov/articles/PMC3715549/#:~:text=Note%20that%20we%20here%20for,setup%20and%20the%20mathematical%20model.
+https://d.lib.msu.edu/etd/10273?__goaway_challenge=header-refresh&__goaway_id=ca01fdb6671dc71b62462ce092b4bbd1&__goaway_referer=https%3A%2F%2Fd.lib.msu.edu%2F (HIGHH 1k-5k)
+
+A local-field potential band was also written, filtered using a 300 Hz low pass filter. This removes high-frequency data (including action potential) and left low-freuqnecy local feild potential (LF). The LF band represents the summed oscilatiosn of votlage from across the brain and is subject to differnt analysiss.
+
+In more recent Neuropixels versions (e.g. Neuropixels 2) there is no logner a distinction betweeen data streams. The unfiltered data is written to disk (saved in the `imec0.ap` band suffix, although it is now broadband), and popst-hoc filtering left up to the user.
+
+There is also a sync stream. that records a digital sync signal. This allows you to align the neural data to external events (behaviour, stimuli, other data streams, or other probes) by embedding shared TTL pulses into the recording.
+
+:::
 
 ```{python}
 import spikeinterface.extractors as si_extractors
@@ -40,13 +51,22 @@ recording = si_extractors.read_spikeglx(
 print(recording)
 ```
 
-The data is loaded as a `Recording` object, that contains a lot of information about our recording, as well as the underlying data. For example, we can get the sampling frequency in Hz (TODO: make sure this is introduced already). 
+The loading functions return the `recording` as a Python object, which contains many useful methods for exploring the recording metadata as well as accessing the underlying data.
+
+::: {.callout-note collapse="true"}
+### Details on class inheritence in SpikeInterface
+
+Under the hood, SpikeInterface XX widely relies on a class inheritence model, and the `Recording` object is a good example of this. A `BaseRecording` object defines many useful functions for interacting with a recording for example `getXXX` (see the API docs here). All other recording objects inherit from this BaseRcording object, for example our SpiekGLXRecordingExtractor object inherits from BaseRecording, and so contains all of this.
+
+Every recording-like object we will deal with doday inherits from BaseRecording and so includes all this functionality. Often, these inherited classes add some functinoaity on top. For example, `BaseRecording` has a `get_traces()` fucntion that returns the underlying data. A Filter recording extends this function to first filter the data before returning it.
+
+:::
 
 ### Exploring the Recording object
 
-The recording object is a Python object contaning maybe useful methods. To see these
-methods, check out the API docmentation [here](). You can also use Python's `dir()` functoin
-to see all attributes and methods associated with any Python object.
+The recording object is a [Python object](https://www.reddit.com/r/learnprogramming/comments/uekqvv/comment/i6ns974/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) contaning maybe useful methods. The [SpikeInterface API Documentation](https://spikeinterface.readthedocs.io/en/latest/api.html) is a useful resource for looking up methods associated with an object and their arguments.  TODO MENTION BASERECORDING.
+
+You can also use Python's `dir()` functoin to see all attributes and methods associated with any Python object.
 
 ```{python}
 
@@ -57,21 +77,25 @@ print(
 
 
 :::{.callout-tip}
-### Something to try
-Can you:
+### Some things to try 
 
-- print a list of all channel locations?
-- print the times associated with the recording?
-- use the `get_traces()` function to get an array of data?
+This is a good time to play around with the `recording`, using the API docs ([BaseRecording object](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseRecording)) to navigate it. Have a go at:
+
+1. Print the locations of all channels on the probe.
+2. Print the time vector associated with the recording.
+3. Use `get_traces()` to retrieve a segment of the raw data as a NumPy array. What are its dimensions?
+
 :::
 
 ### Visualising the probe
 
-There are many different types of probe used in extracellula electrophysiology (e.g. Neuropixels, Cambridge Neurotech, NeuroNexus). They can come in very complex arangements, most of which are supported by SpikeInterface.
+There are many different types of probe used in extracellular electrophysiology (e.g. 
+[Neuropixels](https://www.neuropixels.org/), 
+[Cambridge Neurotech](https://www.cambridgeneurotech.com/neural-probes),
+[NeuroNexus](https://www.neuronexus.com/products/electrode-arrays/)
+). They can come in very complex arrangements. Probeinterface is a library used by SpikeInterface (and by the same developers) to load many different types of probe.
 
-It is important to check that your probe has loaded as expected, and that the geometry TODO matches that which you are expecting on your recording device.
-
-In Spikeinterface, we can plot the probe to confirm it loaded correctly: TODO: mention probeinterface
+It is important to check that your probe has loaded as expected, and that the geometry matches how it was set up in your acquisition software. To do this, we can plot the probe to confirm it loaded correctly:
 
 ```{python}
 from probeinterface.plotting import plot_probe
@@ -84,12 +108,13 @@ plt.show()
 
 ```
 
-Here we can see we have a two-shank NP probe with recording sites on the XXX, as expected.
-
+Here we can see we have a two-shank Neuropixels probe with recording sites on the two central shanks, as was expected. You can also use the `show_contact_ids` argument to display the contact IDs, to double check the exact location of each contact.
 
 ### Visualising the data
 
-It is similarly important to visualise the ddata X.  in general visualise as much as possible! We will plot one second of data.
+Extracellula relectrophysiological data is suceptible to many noise sources, including electrical noise, phyical noise from movements in the probe as well as phyiscal issues with the probe (?).
+
+As such, it is important to visualise the data, especially after preprocessing, to check the data quality. First, lets's plot one second of data from our raw recording:
 
 ```{python}
 import spikeinterface.widgets as si_widgets
@@ -105,9 +130,19 @@ si_widgets.plot_traces(
 plt.show()
 ```
 
-TODO: a note on return_in_uV and order_channels_by_depth
 
-The data looks terrible! It is contaiminated with sever electrical noise and other issues. Lets preprocess it to tidy it up.
+Here we return in `uV` to ensure the data is returned in interpretable units, and use `order_channel_by_depth` as the default ordering of channels on the probe is not always by depth (WHY? represents how stored by acquisition system?)
+
+As we can see - the data looks terrible! It is contaiminated with sever electrical noise and other issues. We will need to preprocess it to tidy it up.
+
+::: {.callout-note collapse="true"}
+### A note on scaling to `uV`
+
+Most acquisition systems will store data in `int16` format (i.e. integers in the range XXX) to save storage space. To get these values, the acquired data in `uV` is scaled and offset into the `int16` range. 
+
+By default, SpikeInterface will display the raw `int16` data. To use the stored offsets and gains to reconstrct XX, we can use the `return_in_uV` argument on many functions. Also see XX, XX and XX for working with these.
+
+:::
 
 ## Section 2: Preprocessing
 
@@ -118,7 +153,7 @@ get the data (e.g. in `plot_traces`, or with `get_traces()` or when saving the d
 
 Below, we will apply three key preprocessing steps. In the next chapter, we will dive into more detail on the theory of these steps and inrtoduce more.
 
-**phase_shift** : corrects a hardware artefact in the Neuropixels headstage 
+**phase_shift** : corrects a hardware artefact in the Neuropixels probe 
 which causes small shifts between the recording time across nearby channels.
 
 **bandpass_filter** : removes high and low frequency oscillations from the data. It is applied to each channel separately. 
@@ -286,8 +321,8 @@ import spikeinterface.sorters as si_sorters
 
 sorting = si_sorters.run_sorter(
     "kilosort4",
-    remove_existing_folder=True,
     cmr_recording,
+    remove_existing_folder=True,
     do_CAR=False,
     highpass_cutoff=0.1,
 )
@@ -304,7 +339,22 @@ SPIKE CLUSTERS
 
 ## Section 4: Postprocessing
 
+This will be a whitestop tour. We will go into much more detail later. What is teh purpose of this.
+
 ### create sorting analyzer
+
+In SPikeInterface, the main construct for work with postprocessing of spike sorting outputs is the `SortingAnalzyer` object. We can create the `SortingAnalzyer` by passing the sorting output and recording to a sorting XXX.
+
+```{python}
+
+
+```
+
+:::{warning}
+Some sorters will output their own waveforms, templates, amplitudes ETC (for example, Kilosort has a `templates.npy` file containnig the templates it generated during sorting).
+
+These are not loaded by SpikeInterface. Instead, the sorting analzyer will always recompute these features directly from the passed `recording`.
+:::
 
 ### compute spikes
 

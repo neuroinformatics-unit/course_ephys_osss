@@ -25,6 +25,9 @@ book:
     - pipeline-walkthrough.qmd
     - references.qmd
 
+jupyter:
+  kernel: osss_book
+
 bibliography: references.bib
 
 format:

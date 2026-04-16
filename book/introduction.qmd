@@ -1,0 +1,15 @@
+# Walking through a SpikeInterface pipeline {.unnumbered}
+
+Some overview of extracellular electrophysiology.
+
+This course will go into depth into the theory and implementation of each stage of an extracellular electrophysiological data pipeline. 
+
+In this walkthrough, we will go over the entire pipeline from start-to-finish at a high level, introducing each processing stage. Then, over the next few chapters
+we will flesh this out and add detail.
+
+For an ground-up introduction to extracellular electrophysiohy, the stages
+of the processing pipeline and the SpikeInterface package, please see below / link to slides.
+
+
+
+

@@ -1,0 +1,327 @@
+# Walking through a SpikeInterface pipeline {.unnumbered}
+
+SpikeInterface is a community-build tool, written in Python, 
+for implementing and developing extracellular electrophysiogy pipelines.
+It can handle all stages of a pipeline, from data-loading and
+preprocessing to deploying spike sorters, computing postprocessing
+and quality-checking.
+
+In this walkthrough, we will use an example dataset available [here]().
+This dataset contains XXX minutes of data recorded on a 384 2-shank
+NeuroPixels probe, acquired in SpikeGLX.
+ 
+
+ ADD THE COMPELTELED WALKTHROUGH. SAY DON'T COPY. DONT USE AI. TYPE IT ALL.
+
+
+## Section 1: Loading and data exploration
+
+## Loading the data
+
+To load data in SpikeInterface, we can use the `extractors` module. SpikeInterface
+can load data from many different types of acquisition systems (see [here]() for a full list). 
+
+As our data is from SpikeGLX, we will use the `read_spikeglx` method. Because we want to load the AP data stream (LINK), we
+pass the "imec0.ap" stream. 
+
+```{python}
+import spikeinterface.extractors as si_extractors
+
+# This should be the path to the folder contaning
+# the data. On Windows, you may need to preprend
+# r to the string e.g. r"C:\my\path"
+path_to_data_folder = "data/pipeline-walkthrough"
+
+recording = si_extractors.read_spikeglx(
+    path_to_data_folder,
+    stream_id="imec0.ap"
+)
+
+print(recording)
+```
+
+The data is loaded as a `Recording` object, that contains a lot of information about our recording, as well as the underlying data. For example, we can get the sampling frequency in Hz (TODO: make sure this is introduced already). 
+
+### Exploring the Recording object
+
+The recording object is a Python object contaning maybe useful methods. To see these
+methods, check out the API docmentation [here](). You can also use Python's `dir()` functoin
+to see all attributes and methods associated with any Python object.
+
+```{python}
+
+print(
+    [method for method in dir(recording) if method.startswith("get")]
+)
+```
+
+
+:::{.callout-tip}
+### Something to try
+Can you:
+
+- print a list of all channel locations?
+- print the times associated with the recording?
+- use the `get_traces()` function to get an array of data?
+:::
+
+### Visualising the probe
+
+There are many different types of probe used in extracellula electrophysiology (e.g. Neuropixels, Cambridge Neurotech, NeuroNexus). They can come in very complex arangements, most of which are supported by SpikeInterface.
+
+It is important to check that your probe has loaded as expected, and that the geometry TODO matches that which you are expecting on your recording device.
+
+In Spikeinterface, we can plot the probe to confirm it loaded correctly: TODO: mention probeinterface
+
+```{python}
+from probeinterface.plotting import plot_probe
+import matplotlib.pyplot as plt
+
+probe = recording.get_probe()
+
+plot_probe(probe)
+plt.show()
+
+```
+
+Here we can see we have a two-shank NP probe with recording sites on the XXX, as expected.
+
+
+### Visualising the data
+
+It is similarly important to visualise the ddata X.  in general visualise as much as possible! We will plot one second of data.
+
+```{python}
+import spikeinterface.widgets as si_widgets
+
+start_time = recording.get_times()[0]
+
+si_widgets.plot_traces(
+    recording,
+    time_range=(start_time, start_time + 0.1),
+    return_in_uV=True,
+    order_channel_by_depth=True
+)
+plt.show()
+```
+
+TODO: a note on return_in_uV and order_channels_by_depth
+
+The data looks terrible! It is contaiminated with sever electrical noise and other issues. Lets preprocess it to tidy it up.
+
+## Section 2: Preprocessing
+
+To preprocess the data, we will pass our recording object into functions that return a new, recording object. e.g. ```filtered_recording = bandpass_filter(recording)```. 
+
+This is almost instantenous as all preprocessing is applied 'lazily'. When we apply the preprocessing function, we just change the metadata associated with the recording. Only when we 
+get the data (e.g. in `plot_traces`, or with `get_traces()` or when saving the data) is the data preprocessed in the requested chunk. This makes operating very fast!
+
+Below, we will apply three key preprocessing steps. In the next chapter, we will dive into more detail on the theory of these steps and inrtoduce more.
+
+**phase_shift** : corrects a hardware artefact in the Neuropixels headstage 
+which causes small shifts between the recording time across nearby channels.
+
+**bandpass_filter** : removes high and low frequency oscillations from the data. It is applied to each channel separately. 
+
+**commmon_reference** : removes noise spikes that appear as verticle stripes across the data. It is applied across channels separately at each timepoint.
+
+We can easily apply these preprocessing steps with the processing module:
+
+```{python}
+import spikeinterface.preprocessing as si_prepro
+
+phase_shift_recording = si_prepro.phase_shift(recording)
+filtered_recording = si_prepro.bandpass_filter(
+    phase_shift_recording, freq_min=300, freq_max=6000
+)
+cmr_recording = si_prepro.common_reference(
+    filtered_recording, operator="median"
+)
+```
+
+Cool, we can plot the data:
+
+
+```{python}
+
+si_widgets.plot_traces(
+    cmr_recording,
+    time_range=(start_time, start_time + 0.1),
+    return_in_uV=True,
+    order_channel_by_depth=True
+)
+plt.show()
+
+```
+
+
+:::{.callout-tip}
+### Something to try
+Can you:
+- try plotting the data after each preprocessing step, to see the effect of each
+- ANYTHING ELSE? 
+:::
+
+
+
+### Splitting the data by shank
+
+You might notice the data in the above image looks slightly strange. All spikes have predictable gaps between them:
+
+```{python}
+si_widgets.plot_traces(
+    cmr_recording,
+    time_range=(23.923, 23.928),
+    return_in_uV=True,
+    order_channel_by_depth=True,
+)
+ax = plt.gca()
+ax.set_ylim(200, 300)
+plt.show()
+```
+
+:::{.callout-note icon=false}
+### Why does the data look like this?
+Look carefully at the plot above. Why do you think there are predictable gaps in the signal every two channels?
+:::
+
+::: {.callout-note collapse="true"}
+### Click to reveal the answer
+
+For many probes, it is normal to have slight differences between adjacent channels because they are often in column format. One column can get a stronger signal than another.
+
+Here however there is significantly different signal every two channels. This is because we are plotting all shanks together, in y-axis order. So different shanks are interspersed.
+:::
+
+We can solve this by spliting the recording by shank with the `groups` property. When SpikeInterface loads the data, it will automatically assign different shanks to different groups.
+
+```{python}
+
+split_recording = cmr_recording.split_by("group")
+print(
+    split_recording
+)
+```
+
+We can plot both shanks separately:
+
+```{python}
+
+fig, ax = plt.subplots(1, 2)
+
+for shank_idx, shank_recording in split_recording.items():
+
+    si_widgets.plot_traces(
+        shank_recording,
+        time_range=(start_time, start_time + 0.1),
+        return_in_uV=True,
+        order_channel_by_depth=True,
+        ax=ax[shank_idx]
+    )
+    ax[shank_idx].set_title(f"Shank: {shank_idx}")
+
+plt.show()
+```
+
+
+Much better!
+
+Now we have our preprocessed data, and have visually confirmed the data quality is good, we are ready to perform spike sorting! 
+
+
+### Additional things to try
+
+Here are some optional tasks to try to furthe familiarlise yourself with preprocessing in spikeinterface.
+
+
+## Section 2: Sorting
+
+What we are fundamentally interested in doing is XXX.
+
+Now we are ready to move onto spike sorting. In our data, we can see by eye the action potentials recorded on the probe:
+
+```{python}
+#| echo: false
+
+fig, ax = plt.subplots(1, 2)
+
+_rec_tmp = cmr_recording.split_by("group")[0]
+
+si_widgets.plot_traces(
+    _rec_tmp,
+    time_range=(23.923, 23.926),
+    return_in_uV=True,
+    order_channel_by_depth=True,
+    ax=ax[0],
+    mode="map"
+)
+si_widgets.plot_traces(
+    _rec_tmp,
+    time_range=(23.923, 23.926),
+    return_in_uV=True,
+    order_channel_by_depth=True,
+    ax=ax[1],
+    mode="line"
+)
+ax[0].set_ylim(200, 310)
+ax[1].set_ylim(11000, 16000)
+plt.show()
+
+```
+
+A close up of a single action potential on the probe.
+
+Although we can easily indetify these by eye, it is the sorters job both to algorithmically detect these action potentials (hereforth called 'spikes') and separate them. XXX
+
+<add schematic>
+
+In this schematic, ....
+
+
+In SpikeInterface, running a sorter is quite simple. Today, we will run Kilosort4, and we can do it with a single function call:
+
+
+```{python}
+import spikeinterface.sorters as si_sorters
+
+sorting = si_sorters.run_sorter(
+    "kilosort4",
+    remove_existing_folder=True,
+    cmr_recording,
+    do_CAR=False,
+    highpass_cutoff=0.1,
+)
+
+print(sorting)
+```
+
+You will see the sorting output written to disk. This contains all of the output files of the sorter. We will go through these outputs in detail XXX. The key outputs are `spike_times.npy`, and `spike_clusters.npy`. EXPLAIN
+
+We also have this information in a spikeinterface `sorting` object. We can get it e.g.:
+
+SPIKE TIMES
+SPIKE CLUSTERS
+
+## Section 4: Postprocessing
+
+### create sorting analyzer
+
+### compute spikes
+
+### waveforms
+
+### templates
+
+### amplitudes
+
+## Section 5: Manual Curation in spikeinterface-gui
+
+
+
+
+
+
+
+
+
+

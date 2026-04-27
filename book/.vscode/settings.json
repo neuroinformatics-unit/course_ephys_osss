@@ -1,10 +1,12 @@
 {
     "terminal.integrated.env.windows": {
-        "QUARTO_PYTHON": "C:\\Users\\Joe\\miniconda3\\envs\\osss_book\\python.exe"
+        "QUARTO_PYTHON": "C:\\Users\\Jzimi\\git-repos\\course-ephys-osss\\book\\.venv\\Scripts\\python.exe"
     },
-    "python.defaultInterpreterPath": "C:\\Users\\Joe\\miniconda3\\envs\\osss_book\\python.exe",
-    "quarto.python.path": "C:\\Users\\Joe\\miniconda3\\envs\\osss_book\\python.exe",
+    "python.defaultInterpreterPath": "C:\\Users\\Jzimi\\git-repos\\course-ephys-osss\\book\\.venv\\Scripts\\python.exe",
+    "quarto.python.path": "C:\\Users\\Jzimi\\git-repos\\course-ephys-osss\\book\\.venv\\Scripts\\python.exe",
     "quarto.render.renderEnvVars": {
-        "QUARTO_PYTHON": "C:\\Users\\Joe\\miniconda3\\envs\\osss_book\\python.exe"
-    }
+        "QUARTO_PYTHON": "C:\\Users\\Jzimi\\git-repos\\course-ephys-osss\\book\\.venv\\Scripts\\python.exe"
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda"
 }

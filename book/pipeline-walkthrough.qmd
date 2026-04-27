@@ -345,10 +345,24 @@ This will be a whitestop tour. We will go into much more detail later. What is t
 
 In SPikeInterface, the main construct for work with postprocessing of spike sorting outputs is the `SortingAnalzyer` object. We can create the `SortingAnalzyer` by passing the sorting output and recording to a sorting XXX.
 
+TODO: give overview. We will choose spikes, cut out waveform, compute templates etc. amplitudes.
+basically extract the features of the detected APs.
+
+
+We can create a `SortingAnalyzer` we need to pass our preprocessing `recording` and the `sorting` output:
+
+
 ```{python}
+from spikeinterface import create_sorting_analyzer
 
-
+analyzer = create_sorting_analyzer(
+    sorting=sorting, 
+    recording=recording
+)
 ```
+
+Using this sorting analyzer interface, we will compute all of the 
+postprocessing we need to assess the quality of our sorting.
 
 :::{warning}
 Some sorters will output their own waveforms, templates, amplitudes ETC (for example, Kilosort has a `templates.npy` file containnig the templates it generated during sorting).
@@ -358,20 +372,103 @@ These are not loaded by SpikeInterface. Instead, the sorting analzyer will alway
 
 ### compute spikes
 
+In our sorting, we can have many many detected spikes. This may be in the order of millios of spikes for an hour long recording.
+
+To process all of these spikes would be computationally intensive, and give diminishing gains. We can instead sample a subset of spikes. In this step, we will randomly select spikes uniformly from the recording with the `max_spikes_per_unit` argument.
+
+```{python}
+
+analyzer.compute(
+    "random_spikes",
+    method="uniform",
+    max_spikes_per_unit=500,
+)
+```
+
+to access...
+
+```{python}
+spike_indices = analyzer.get_extension("random_spikes").data["random_spikes_indices"]
+spike_times = spike_indices / recording.get_sampling_frequency()
+
+print(spike_times)
+```
+
 ### waveforms
+
+Next, we will extract the waveforms from the preprocessed data.
+
+```{python}
+import matplotlib.pyplot as plt  # TODO: CHECK IMPORT
+
+analyzer.compute("waveforms", ms_before=1.0, ms_after=2.0)
+
+waveforms = analyzer.get_extension("waveforms").data["waveforms"]
+
+print(waveforms.shape)
+
+plt.imshow(waveforms[12, :, :].T)
+plt.show()
+
+```
+
+The waveforms array is three dimensional `(num waveforms, num samples, num channels)`. Indexing the first dimension will
+get us the 2d waveform. We can transpose the matrix so that it is num channels x num timepoints and plot it ourselves to confirm by plotting the raw array.
+
+
+SOME THINGS TO TRY
+1) PLOT SOME OTHER WAVEFORMS
+2) PLOT SOME WAVEFORMS FROM UNIT XXX USING THE SPIKE_CLUSTER INFORMATION
+3) COMPUTE THE MEAN OF ALL WAVEFORMS xxx
 
 ### templates
 
+The template is a representative wavecform from a putative neuron. Often, it is computed as the average
+waveform from all of the spikes that were assigned to a unit i.e. thought to be fired from the same neuron.
+
+We can compute the extension and access the templates with:
+
+For all these, don't forget WHY we aer doing them
+
+```{python }
+analyzer.compute("templates")
+
+templates = analyzer.get_extension("templates").data["average"]
+
+print(
+    templates.shape
+)
+
+```
+
+
+SPIKEINTERFACE PLOT
+```
+si_widgets.plot_unit_templates(analyzer, unit_ids=[0])
+plt.show()
+```
 ### amplitudes
 
+There are a number of different features we can compute from our waveforms and templates,
+which are useful for quality assessment. We will explore more of these in detail in XXX. 
+
+One of thes features i the spike amplitude. It is assumed that the amplitud eof a neuron shouold
+be imila across the recording. If the amplitude decreases, for example, acroess the ession, maybe the neuron dead.
+
+```
+amplitudes = analyzer.get_extension("spike_amplitudes").data["amplitudes"]
+
+print(amplitudes)
+```
+
+This gives a list of amplitudes, one for every spike. We could get the amplitudes
+for a specific unit with:
+
+XXX
+
+and plot across time
+XXX
+
 ## Section 5: Manual Curation in spikeinterface-gui
-
-
-
-
-
-
-
-
 
 

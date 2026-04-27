@@ -8,5 +8,12 @@ This page should include:
 3) Versioning
 4) Funding
 
+Spikes & Signals
+Spike Sorting in Practice
+Spikes & Signals: A Practical Course in Spike Sorting
+Spikes & Signals: Spike Sorting Pipelines with SpikeInterface
+From Noise to Neurons
+Order from Chaos: ...
+Finding Neurons in the Noise
 
 To learn more about Quarto books visit <https://quarto.org/docs/books>.

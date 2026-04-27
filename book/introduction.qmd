@@ -1,15 +1,31 @@
 # Introduction {.unnumbered}
 
-Some overview of extracellular electrophysiology.
+## Why do we do extracellular electrophysiology?
 
-This course will go into depth into the theory and implementation of each stage of an extracellular electrophysiological data pipeline. 
+## Neurons, spikes and the extracellular signal
 
-In this walkthrough, we will go over the entire pipeline from start-to-finish at a high level, introducing each processing stage. Then, over the next few chapters
-we will flesh this out and add detail.
+## Recording from the extracellular space
 
-For an ground-up introduction to extracellular electrophysiohy, the stages
-of the processing pipeline and the SpikeInterface package, please see below / link to slides.
+### The recording set up
+
+### High-density probes
+
+## The acquired data
+
+## An overview of the spike-sorting pipeline
+
+(can introduce SpikeInterface here)
+
+## Linking spikes to behaviour
 
 
+GEneral Notes
+^^CHECK THIS (LOWER) https://pmc.ncbi.nlm.nih.gov/articles/PMC3715549/#:~:text=Note%20that%20we%20here%20for,setup%20and%20the%20mathematical%20model.
+https://d.lib.msu.edu/etd/10273?__goaway_challenge=header-refresh&__goaway_id=ca01fdb6671dc71b62462ce092b4bbd1&__goaway_referer=https%3A%2F%2Fd.lib.msu.edu%2F (HIGHH 1k-5k)
+
+things to add |(section 1)
+
+ ADD THE COMPELTELED WALKTHROUGH. SAY DON'T COPY. DONT USE AI. TYPE IT ALL.
 
 
+TODO: maybe we want a 'glossary' or 'extras'

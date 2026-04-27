@@ -23,10 +23,11 @@ book:
     - index.qmd
     - introduction.qmd
     - pipeline-walkthrough.qmd
+    - concept-notes.qmd
     - references.qmd
 
 jupyter:
-  kernel: python3
+  kernel: osss_book
 
 bibliography: references.bib
 
@@ -35,8 +36,6 @@ format:
     theme:
       - cosmo
       - brand
-  pdf:
-    documentclass: scrreprt
 
 
 

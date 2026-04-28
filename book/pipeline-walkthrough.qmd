@@ -281,6 +281,8 @@ referencing that Kilosort 4 can perform, as we have already run these steps in S
 
 Kilosort will then detect spikes and assign each spike to a unit (i.e. a putative neuron). It will output the time of each spike, what unit it belongs to.
 
+It is often easiest to sort each shank separately. From now on, we will only sort the first shank of the recording.
+
 In SpikeInterface, running a sorter is quite simple:
 
 ```{python}
@@ -290,9 +292,11 @@ import spikeinterface.sorters as si_sorters
 sorter_folder = Path("kilosort4_output")
 sorter_output_folder = sorter_folder / "sorter_output"
 
+first_shank_recording = split_recording[0]
+
 sorting = si_sorters.run_sorter(
     "kilosort4",
-    split_recording[0],
+    first_shank_recording,
     folder=sorter_folder,
     remove_existing_folder=True,
     do_CAR=False,
@@ -356,7 +360,7 @@ from spikeinterface import create_sorting_analyzer
 
 analyzer = create_sorting_analyzer(
     sorting=sorting,
-    recording=split_recording[0]
+    recording=first_shank_recording
 )
 ```
 
@@ -414,15 +418,9 @@ waveforms = analyzer.get_extension("waveforms").data["waveforms"]
 
 print(waveforms.shape)
 
-import numpy as np
-templates = np.load(r"C:\Users\Joe\work\git-repos\course-ephys-osss\book\kilosort4_output\sorter_output\templates.npy")
-
-for i in range(waveforms.shape[0]):
-
-    plt.imshow(waveforms[i, :, :].T, aspect="auto")
-    plt.show()
-
-
+# This is the waveform of the 19th spike (chosen as it looks nice)
+plt.imshow(waveforms[18, :, :].T, aspect="auto")
+plt.show()
 ```
 
 ### Templates
@@ -445,9 +443,9 @@ SpikeInterface also includes many useful post-processing plots in the widget smo
 
 ```{python}
 
-for i in range(analyzer.sorting.get_num_units()):
-    si_widgets.plot_unit_templates(analyzer, unit_ids=[i])
-    plt.show()
+# Plot the template waveform of the first unit 
+si_widgets.plot_unit_templates(analyzer, unit_ids=[0])
+plt.show()
 
 ```
 
@@ -474,8 +472,7 @@ From this, we can compute quality metrics used to filter the units e.g. bombcell
 
 For now, see SpikeInterface GUI video?
 
-
-
+https://www.youtube.com/watch?v=OGlQtxzip-Q
 
 
 

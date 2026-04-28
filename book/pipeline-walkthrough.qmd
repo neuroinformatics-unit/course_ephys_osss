@@ -62,7 +62,7 @@ print(
 
 
 :::{.callout-tip}
-### Some things to try 
+### Things to try 
 
 This is a good time to explore the recording object using the API docs. Have a go at the following:
 
@@ -258,7 +258,7 @@ Much better!
 Now we have our preprocessed data, and have visually confirmed the data quality is good, we are ready to perform spike sorting! 
 
 :::{.callout-tip}
-### Additional things to try
+### Things to try
 - How does the data look using `median` vs. `mean` for `common_average`?
 - What happens if you set the bandpass filter minimum cutoff to zero? What frequencies are including now? Or set the maximum cutoff to 15000?
 - Set `return_in_uV=False`. Does the data look much different?
@@ -333,7 +333,7 @@ print(
 
 
 :::{.callout-tip}
-### Some things to try
+### Things to try
  - Get a list of all non-empty unit ids
  - Remove a unit - what happens to the spikes assigned to this unit?
  - Get the spike times for a specific unit

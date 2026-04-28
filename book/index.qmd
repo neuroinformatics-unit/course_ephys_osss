@@ -2,7 +2,7 @@
 
 Welcome to the electrophysiology course (TODO: name).
 
-TODO: [think of a cool course name]()
+TODO: [think of a cool course name](https://github.com/neuroinformatics-unit/course-ephys-osss/issues/2)
 
 This course will cover the full electrophysiology processing pipeline,
 from start to finish. This includes 
@@ -12,7 +12,9 @@ from start to finish. This includes
 - postproicessng and quality assessment
 - integration with behavioural data.
 
-Link to other pages, link to github
+Give overview and link to pages
+Explain the Concept Notes (internal links where concepts are expanded, indicated with the 💡 emoji) 
+link to github: https://github.com/neuroinformatics-unit/course-ephys-osss
 
 ## Funding and Ackowledgements
 

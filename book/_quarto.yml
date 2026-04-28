@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: ../docs
 
 book:
   title: "Spikes in your face"
@@ -25,6 +26,7 @@ book:
     - pipeline-walkthrough.qmd
     - concept-notes.qmd
     - references.qmd
+    - planning.qmd
 
 jupyter:
   kernel: osss_book

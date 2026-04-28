@@ -1,19 +1,20 @@
 # Preface {.unnumbered}
 
-Welcome to spikes in your face! This course will tell you all about spikes.
+Welcome to the electrophysiology course (TODO: name).
 
-This page should include:
-1) Introduction to the course and its purpose
-2) Schedule for the course (can be removed after the course)
-3) Versioning
-4) Funding
+This course will cover the full electrophysiology processing pipeline,
+from start to finish. This includes 
 
-Spikes & Signals
-Spike Sorting in Practice
-Spikes & Signals: A Practical Course in Spike Sorting
-Spikes & Signals: Spike Sorting Pipelines with SpikeInterface
-From Noise to Neurons
-Order from Chaos: ...
-Finding Neurons in the Noise
+- data preprocessing
+- spike sorting,
+- postproicessng and quality assessment
+- integration with behavioural data.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+Link to other pages
+
+## Funding and Ackowledgements
+
+
+- Wellcome Trust, Gatsby
+- Funders for those who contributed materials?
+- Niko 

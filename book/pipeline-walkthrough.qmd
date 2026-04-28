@@ -13,7 +13,7 @@ for assessing the sorting output.
 
 Let's get started!
  
-## i. Data Loading and Exploration
+## Data Loading and Exploration
 
 ### Data Loading
 
@@ -131,7 +131,7 @@ channels, and [`order_channels_by_depth()`](https://spikeinterface.readthedocs.i
 
 As we can see - the raw data looks terrible! It is severely contaminated, mostly by electrical noise. We will need to preprocess it to tidy it up.
 
-## ii. Preprocessing
+## Preprocessing
 
 Below, we will apply three key preprocessing steps: 
 
@@ -270,7 +270,7 @@ Now we have our preprocessed data, and have visually confirmed the data quality 
 
 
 
-## iii. Sorting
+## Sorting
 
 Now we are ready to move onto spike sorting. There are many possible spike sorters
 to choose from, today we will use Kilosort 4.
@@ -292,7 +292,7 @@ sorter_output_folder = sorter_folder / "sorter_output"
 
 sorting = si_sorters.run_sorter(
     "kilosort4",
-    cmr_recording,
+    split_recording[0],
     folder=sorter_folder,
     remove_existing_folder=True,
     do_CAR=False,
@@ -335,7 +335,7 @@ print(
  - Get the spike times for a specific unit
 :::
 
-## iv. Postprocessing
+## Postprocessing
 
 TODO! Depending on timing and content of the other sections, we 
 may want to reduce this down to a single command where
@@ -356,7 +356,7 @@ from spikeinterface import create_sorting_analyzer
 
 analyzer = create_sorting_analyzer(
     sorting=sorting,
-    recording=recording
+    recording=split_recording[0]
 )
 ```
 
@@ -414,8 +414,15 @@ waveforms = analyzer.get_extension("waveforms").data["waveforms"]
 
 print(waveforms.shape)
 
-plt.imshow(waveforms[12, :, :].T, aspect="auto")
-plt.show()
+import numpy as np
+templates = np.load(r"C:\Users\Joe\work\git-repos\course-ephys-osss\book\kilosort4_output\sorter_output\templates.npy")
+
+for i in range(waveforms.shape[0]):
+
+    plt.imshow(waveforms[i, :, :].T, aspect="auto")
+    plt.show()
+
+
 ```
 
 ### Templates
@@ -438,8 +445,9 @@ SpikeInterface also includes many useful post-processing plots in the widget smo
 
 ```{python}
 
-si_widgets.plot_unit_templates(analyzer, unit_ids=[0])
-plt.show()
+for i in range(analyzer.sorting.get_num_units()):
+    si_widgets.plot_unit_templates(analyzer, unit_ids=[i])
+    plt.show()
 
 ```
 
@@ -460,7 +468,7 @@ print(amplitudes)
 
 This gives a list of amplitudes, one for every spike. We will explore how visualisng spike amplitude across time is a useful measure for quality asessment later.
 
-## v. Manual Curation in spikeinterface-gui
+## Manual Curation in spikeinterface-gui
 
 From this, we can compute quality metrics used to filter the units e.g. bombcell. We cover this more in the postprocessing chapter.
 

@@ -3,7 +3,7 @@ project:
   output-dir: ../docs
 
 book:
-  title: "Spikes in your face"
+  title: "OSSS Ephys Course 2026"
   author:
   - name: Joseph Ziminski
     url: https://github.com/JoeZiminski

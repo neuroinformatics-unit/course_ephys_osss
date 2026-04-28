@@ -12,7 +12,7 @@ from start to finish. This includes
 - postproicessng and quality assessment
 - integration with behavioural data.
 
-Link to other pages
+Link to other pages, link to github
 
 ## Funding and Ackowledgements
 

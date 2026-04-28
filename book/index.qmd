@@ -2,6 +2,8 @@
 
 Welcome to the electrophysiology course (TODO: name).
 
+TODO: [think of a cool course name]()
+
 This course will cover the full electrophysiology processing pipeline,
 from start to finish. This includes 
 

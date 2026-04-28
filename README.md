@@ -25,7 +25,7 @@ the `index.qmd`.
 Some things I have included, we can discuss if they are useful and worth including them across all chapters:
 - During the course we will walk them through the key code sections. Then after each natural section, we
 can have a 'things to try' box. We'll give them some time to play around and try these things out on their own.
-- 'Concept Notes' is a page that contains expanded definitions / explainations of concepts. For example in the introduction
+- 'Concept Notes' is a page that contains expanded definitions / explanations of concepts. For example in the introduction
 chapter, we mention data streams, or the fact data is stored in int16 unitless. It's a bit much to go into it in the middle
 of the chapter, but can link to a longer explanation. We link internally including a little 💡 by the link.
 

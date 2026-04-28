@@ -14,8 +14,10 @@ quarto render --to html
 
 This will generate the website in the `docs` folder (and when on `main`, it will be the website).
 
-The easiest way to contribute chapters will be to make a new branch and open a PR with the new chapter added. 
-To adda  new chapter it should be sufficient to create the `qmd` file in the root and add the file to
+The easiest way to contribute chapters will be to make a new branch and open a PR to add a new chapter
+(I have been pushing to main, but will stop now).
+
+To add a  new chapter it should be sufficient to create the `qmd` file in the root and add the file to
 the `index.qmd`.
 
 

@@ -20,6 +20,15 @@ The easiest way to contribute chapters will be to make a new branch and open a P
 To add a  new chapter it should be sufficient to create the `qmd` file in the root and add the file to
 the `index.qmd`.
 
+# Style
 
+Some things I have included, we can discuss if they are useful and worth including them across all chapters:
+- During the course we will walk them through the key code sections. Then after each natural section, we
+can have a 'things to try' box. We'll give them some time to play around and try these things out on their own.
+- 'Concept Notes' is a page that contains expanded definitions / explanations of concepts. For example in the introduction
+chapter, we mention data streams, or the fact data is stored in int16 unitless. It's a bit much to go into it in the middle
+of the chapter, but can link to a longer explanation. We link internally including a little 💡 by the link.
+
+Currently this is the default quarto book style, maybe we can jazz it up as we go along.
 
 

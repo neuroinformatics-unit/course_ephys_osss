@@ -28,9 +28,6 @@ book:
     - references.qmd
     - planning.qmd
 
-jupyter:
-  kernel: osss_book
-
 bibliography: references.bib
 
 format:

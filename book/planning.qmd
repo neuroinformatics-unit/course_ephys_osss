@@ -189,8 +189,3 @@ will just need to make sure to build to these from the ground-up.
 
 - Having a 10-minute end-of-session discussion / recap might be a nice idea
 
-```{toctree}
-:maxdepth: 2
-:caption: Sections
-
-```

@@ -38,17 +38,26 @@ why we do them and how they result in data (spike times from good units) that ar
 
 A very short (1-2 s) recording that can be quickly run through the entire pipeline.
 
-### Tuesday morning (10:00 - 13:00) : Preprocessing
+### Tuesday morning (10:00 - 13:00) : Raw Data Quality and Preprocessing
 
 **Goal**
 
-They should have a good understanding of how to implement common and state-of-the-art
-preprocessing steps, and at least some intuition as to the underlying theory.
+Students should be able to open and visualize Neuropixels recording, and assess the quality of the recordings for different probe types and brain regions.
+They should have a good understanding of how to implement common and state-of-the-art preprocessing steps, and at least some intuition as to the underlying theory.
 
 **Plan**
 
+*10:00-10:30*: (lecture, Olivier) Raw Extra-Cellular Neuropixels Data
 
-*10:00-10:30* : (lecture, Joe / Olivier) Talk on the theory of preprocessing steps 
+* What are we actually recording / looking at ? AP / LF bands.
+* Sampling Theory: Saturation and bit depth for Neuropixels Hardware
+* Spatial Sampling: Channel Layouts
+* Raw data Quality Metrics, Saturation Detection
+* Data management: Compression and Shank-Splitting
+
+*10:30 - 11:30* : (coding) Visualisation of raw data for multiple regions, multiple probes in AP and LFP bands.
+
+*11:30 - 12:00* : (lecture, Joe / Olivier) Pre-Processing Steps
 
 * phase shift, bandpass, CMR
 * whitening
@@ -59,20 +68,11 @@ preprocessing steps, and at least some intuition as to the underlying theory.
 * always look at your data
 * Maybe Olivier can jump on and talk about bad channel detection, spatial high pass filter
 
-*10:30 - 11:30* : (coding) 
+*12:00 - 13:00* : (coding)
 
 * Add whitening and drift correction to the pipeline. Visualise before vs. after.
 * Exploring motion outputs (e.g. drift maps)
 * bad channel detection, spatial high pass filter
-
-*11:30 - 12:00* : (lecture, Olivier) 
-
-* A deeper introduction to electrophysiological data and advanced preprocessing 
-* ADC sampling, sampling theory (quick introduction to sine, cosine functions and the Fourier transform / Power spectrum)
-* Saturation and bit depth
-* raw data quality metrics, saturation detection
-
-*12:00 - 13:00* : (coding) Adding these steps to the pipeline and assessing
 
 TODO
 - PSD and spectrograms could be exposed in SpikeInterface directly (and used in the course)

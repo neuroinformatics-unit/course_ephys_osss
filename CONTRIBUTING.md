@@ -1,32 +1,26 @@
 # How to contribute to this website
 
-
-# Website structure
-You can build your website by adding md files in the `docs/source` directory, and by using high-level sections defined in this template as `docs/source/subfolder/example.md` and `docs/source/subfolder/index.md`.
-
+## Website structure
+This repository is a Quarto book. Source files live in `book/`, and the rendered site is written to the tracked `docs/` directory.
 
 ## Adding new content
+To add a new chapter, create a `.qmd` file in `book/` and add it to the chapter list in `book/_quarto.yml`.
 
-To add a new sub-section, create a new markdown file in the appropriate section directory, and make sure to start it with a level-1 heading. Remember to also add the new file to the table of contents in the corresponding`docs/source/{section}/index.md` file.
+To update an existing chapter, edit the relevant `.qmd` file in `book/`.
 
-To add entries to an existing sub-section, simply add new level-2/3 headings to the right markdown file, as appropriate.
-  
 ## GitHub workflow
-* Clone the GitHub repository, and create your `new_branch`.
-* Edit the website and commit your changes to the `new_branch`.
-* Push the `new_branch` to GitHub and create a pull request. This will automatically trigger a [GitHub Action](https://github.com/ammaraskar/sphinx-action) that checks if the website still builds correctly.
-* If the checks pass, assign someone to review your changes. 
-* When the reviewer merges your changes into the `main` branch, a different [GitHub Action](https://github.com/peaceiris/actions-gh-pages) will be triggered, which will build the website and publish it to the `gh-pages` branch.
-* The updated website should be available at [howto.neuroinformatics.dev](https://howto.neuroinformatics.dev)
+* Clone the repository and create your feature branch.
+* Edit the book sources in `book/` and commit your changes to that branch.
+* Rebuild the book locally from `book/` with `quarto render --to html` and review the affected pages in `docs/`.
+* Push the branch and open a pull request. GitHub Actions will render the book to verify that the site still builds.
+* If the checks pass, request review.
+* After the pull request is merged into `main`, GitHub Actions will render the book again and commit the refreshed `docs/` output automatically.
 
-> **note**
-> If you wish to view the website locally, before you push it, you can do so by running the following commands from the root of the repository.
-> ```bash
-> # First time only
-> pip install -r docs/requirements.txt
-> sphinx-build docs/source docs/build
->
-> # Every time you want to build the website
-> rm -rf docs/build && sphinx-build docs/source docs/build
->```
->You can view the local build at `docs/build/index.html`
+## Local preview
+If you want to review the site locally before opening or updating a pull request, run the following command from `book/`:
+
+```bash
+quarto render --to html
+```
+
+This writes the rendered site to `docs/`. Open `docs/index.html` in a browser to inspect the result.

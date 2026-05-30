@@ -1,2 +1,4 @@
 /.quarto/
+/book/.quarto/
+/book/site_libs/
 **/*.quarto_ipynb

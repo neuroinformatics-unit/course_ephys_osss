@@ -5,4 +5,5 @@ spikeinterface==0.104.1
 probeinterface==0.3.2
 matplotlib==3.10.0
 scipy==1.14.1
-kilosort==4.0.40
+kilosort
+

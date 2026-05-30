@@ -8,6 +8,7 @@ The website is a Quarto book. GitHub Actions rebuilds it from `main` when change
 To preview the website locally, run from the `book` folder:
 
 ```
+python -m pip install -r requirements.txt
 quarto render --to html
 ```
 (requires [Quarto](https://quarto.org/docs/get-started/) to be installed).

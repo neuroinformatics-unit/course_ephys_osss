@@ -1,0 +1,202 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "OSSS Ephys Course 2026",
+    "section": "",
+    "text": "Preface\nWelcome to the electrophysiology course (TODO: name).\nTODO: think of a cool course name\nThis course will cover the full electrophysiology processing pipeline, from start to finish. This includes\nGive overview and link to pages Explain the Concept Notes (internal links where concepts are expanded, indicated with the 💡 emoji) link to github: https://github.com/neuroinformatics-unit/course-ephys-osss",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#funding-and-ackowledgements",
+    "href": "index.html#funding-and-ackowledgements",
+    "title": "OSSS Ephys Course 2026",
+    "section": "Funding and Ackowledgements",
+    "text": "Funding and Ackowledgements\n\nWellcome Trust, Gatsby\nFunders for those who contributed materials?\nNiko",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "introduction.html",
+    "href": "introduction.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Why do we do extracellular electrophysiology?",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "introduction.html#neurons-spikes-and-the-extracellular-signal",
+    "href": "introduction.html#neurons-spikes-and-the-extracellular-signal",
+    "title": "Introduction",
+    "section": "Neurons, spikes and the extracellular signal",
+    "text": "Neurons, spikes and the extracellular signal",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "introduction.html#recording-from-the-extracellular-space",
+    "href": "introduction.html#recording-from-the-extracellular-space",
+    "title": "Introduction",
+    "section": "Recording from the extracellular space",
+    "text": "Recording from the extracellular space\n\nThe recording set up\n\n\nHigh-density probes",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "introduction.html#the-acquired-data",
+    "href": "introduction.html#the-acquired-data",
+    "title": "Introduction",
+    "section": "The acquired data",
+    "text": "The acquired data",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "introduction.html#an-overview-of-the-spike-sorting-pipeline",
+    "href": "introduction.html#an-overview-of-the-spike-sorting-pipeline",
+    "title": "Introduction",
+    "section": "An overview of the spike-sorting pipeline",
+    "text": "An overview of the spike-sorting pipeline\n(can introduce SpikeInterface here)",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "introduction.html#linking-spikes-to-behaviour",
+    "href": "introduction.html#linking-spikes-to-behaviour",
+    "title": "Introduction",
+    "section": "Linking spikes to behaviour",
+    "text": "Linking spikes to behaviour\nGEneral Notes CHECK THIS (LOWER) https://pmc.ncbi.nlm.nih.gov/articles/PMC3715549/#:~:text=Note%20that%20we%20here%20for,setup%20and%20the%20mathematical%20model. https://d.lib.msu.edu/etd/10273?__goaway_challenge=header-refresh&__goaway_id=ca01fdb6671dc71b62462ce092b4bbd1&__goaway_referer=https%3A%2F%2Fd.lib.msu.edu%2F (HIGHH 1k-5k)\nthings to add |(section 1)\nADD THE COMPELTELED WALKTHROUGH. SAY DON’T COPY. DONT USE AI. TYPE IT ALL.\nTODO: maybe we want a ‘glossary’ or ‘extras’",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "pipeline-walkthrough.html",
+    "href": "pipeline-walkthrough.html",
+    "title": "Pipeline walkthrough with SpikeInterface",
+    "section": "",
+    "text": "Data Loading and Exploration\nIn this chapter, we will implement a spike sorting pipeline from start to finish, using SpikeInterface. We will go through the key steps at a high level here, and develop the theory and add more complex methods and use cases in the following chapters.\nIn this walkthrough, we will use a short example dataset available for download here. This dataset contains 2.5 seconds of data recorded on 384 channels, with channels located on the middle two shanks of a 4-shank Neuropixels probe, acquired in SpikeGLX.\nWe will load and preprocess the data, run spike sorting and compute quality metrics for assessing the sorting output.\nLet’s get started!",
+    "crumbs": [
+      "Pipeline walkthrough with SpikeInterface"
+    ]
+  },
+  {
+    "objectID": "pipeline-walkthrough.html#data-loading-and-exploration",
+    "href": "pipeline-walkthrough.html#data-loading-and-exploration",
+    "title": "Pipeline walkthrough with SpikeInterface",
+    "section": "",
+    "text": "Data Loading\nFirst, we will load the data, currently saved on our hard drive, into Python.\nSpikeInterface can load data from many different types of acquisition systems, using functions within its extractors module. As our data is from SpikeGLX, we will use the read_spikeglx method.\nWe need to tell SpikeInterface where the data is, and what data stream💡 we want to load. A stream refers to a continuous recording of voltage signals from a specific set of channels, sampled at a fixed rate. SpikeGLX saves different streams to separate files depending on the frequency band and channel type. Streams written by SpikeGLX can include the action potential (AP) band, local field potential (LF) band and a sync stream (depending on the version).\nBecause we want to load the AP data stream for spike sorting, we pass \"imec0.ap\".\n\nimport spikeinterface.extractors as si_extractors\n\n# This should be the path to the folder containing\n# the data. On Windows, you may need to prepend\n# r to the string e.g. r\"C:\\my\\path\"\npath_to_data_folder = \"data/pipeline-walkthrough\"\n\nrecording = si_extractors.read_spikeglx(\n    path_to_data_folder,\n    stream_id=\"imec0.ap\"\n)\n\nprint(recording)\n\nSpikeGLXRecordingExtractor: 384 channels - 30.0kHz - 1 segments - 75,000 samples - 2.50s \n                            int16 dtype - 54.93 MiB\n\n\nSpikeInterface uses ‘lazy loading’, which means at this stage no data is actually loaded into memory. Data is only loaded when we request it (e.g. for visualisation, or spike sorting) and only the requested chunk is loaded. This makes operations very fast as we do not need to load large recordings up-front.\n\n\nThe Recording object\nSpikeInterface extractor functions return the recording as a Python object, which contains many useful methods for exploring the recording metadata as well as accessing the underlying data. In our case, recording is a SpikeGLXRecordingExtractor recording object.\nThe SpikeInterface API Documentation is a useful resource for looking up methods associated with an object and their arguments. In Spikeinterface, all recordings inherit💡 from the BaseRecording, so checking out the API docs for BaseRecording gives us iformation about all recording objects.\nYou can also use Python’s dir() functoin to see all attributes and methods associated with any Python object.\n\nprint(\n    [method for method in dir(recording) if method.startswith(\"get\")]\n)\n\n['get_annotation', 'get_annotation_keys', 'get_binary_description', 'get_channel_gains', 'get_channel_groups', 'get_channel_ids', 'get_channel_locations', 'get_channel_offsets', 'get_channel_property', 'get_dtype', 'get_duration', 'get_end_time', 'get_memory_size', 'get_neo_io_reader', 'get_num_blocks', 'get_num_channels', 'get_num_frames', 'get_num_samples', 'get_num_segments', 'get_parent', 'get_preferred_mp_context', 'get_probe', 'get_probegroup', 'get_probes', 'get_property', 'get_property_keys', 'get_sampling_frequency', 'get_start_time', 'get_streams', 'get_time_info', 'get_times', 'get_total_duration', 'get_total_memory_size', 'get_total_samples', 'get_traces']\n\n\n\n\n\n\n\n\nTipThings to try\n\n\n\nThis is a good time to explore the recording object using the API docs. Have a go at the following:\n\nPrint the locations of all channels on the probe.\nPrint the time vector associated with the recording.\nUse get_traces() to retrieve a segment of raw data as a NumPy array. What are its dimensions?\n\n\n\n\n\nVisualising the probe\nThere are many brands of recording probes used in extracellular electrophysiology (e.g.  Neuropixels, Cambridge Neurotech or NeuroNexus ). There are many models, which come in complex and varied geometries and channel arangements\nUnder the hood, SpikeInterface uses the ProbeInterface package to load many different types of probe. In our case, it automatically identifie and loaded a Neuropixels 2 (NP2) probe.\nIt is important to check that the probe has loaded as expected, and that the geometry matches how it was set up in your acquisition software. We can plot the probe to confirm it loaded correctly:\n\nfrom probeinterface.plotting import plot_probe\nimport matplotlib.pyplot as plt\n\nprobe = recording.get_probe()\n\nplot_probe(probe)\nplt.show()\n\n\n\n\n\n\n\n\nAs expected, we have a 4-shank Neurpixels probe in which all the recording channels are located in the middle two shanks. The argument show_contact_ids can also be used to display the contact IDs, to double check the exact location of each contact.\n\n\nVisualising the data\nElectrophysiological recordings are susceptible to contamination from multiple noise sources: electrical interference, mechanical noise caused by probe movement, and artefacts arising from hardware defects or poor contact.\nAs such, it is important to visualise the data, especially after preprocessing, to check the data quality. First, lets’s plot one second of data from our raw recording:\n\nimport spikeinterface.widgets as si_widgets\n\nstart_time = recording.get_times()[0]\n\nsi_widgets.plot_traces(\n    recording,\n    time_range=(start_time, start_time + 0.1),\n    return_in_uV=True,\n    order_channel_by_depth=True\n)\nplt.show()\n\n\n\n\n\n\n\n\nreturn_in_uV to ensure the data is returned in interpretable units (microvolts), as by default most electrophysiological recordings are stored as unitless int16 values💡.\norder_channel_by_depth is used as the default ordering of channels on the probe is not always by depth, meaning the order is scrambled on the plot.\n\n\n\n\n\n\nTipTip\n\n\n\nIn general when working with raw data, you can use recording.get_channel_locations() to inspect the default channel ordering of the channels, and order_channels_by_depth() function can be used to get the indicies for reordering.\n\n\nAs we can see - the raw data looks terrible! It is severely contaminated, mostly by electrical noise. We will need to preprocess it to tidy it up.",
+    "crumbs": [
+      "Pipeline walkthrough with SpikeInterface"
+    ]
+  },
+  {
+    "objectID": "pipeline-walkthrough.html#preprocessing",
+    "href": "pipeline-walkthrough.html#preprocessing",
+    "title": "Pipeline walkthrough with SpikeInterface",
+    "section": "Preprocessing",
+    "text": "Preprocessing\nBelow, we will apply three key preprocessing steps:\nphase_shift : corrects a hardware artefact in the Neuropixels probe which causes small shifts between the recording time across nearby channels.\nbandpass_filter : removes high and low frequency oscillations from the data. It is applied to each channel separately.\ncommmon_reference : removes noise spikes that appear as verticle stripes across the data. It is applied across channels separately at each timepoint.\nTo preprocess the data, we will pass our recording object into functions that return a new, recording object. e.g. filtered_recording = bandpass_filter(recording). We can do this for every step in the preprocessing chain:\n\nimport spikeinterface.preprocessing as si_prepro\n\nphase_shift_recording = si_prepro.phase_shift(recording)\nfiltered_recording = si_prepro.bandpass_filter(\n    phase_shift_recording, freq_min=300, freq_max=6000\n)\ncmr_recording = si_prepro.common_reference(\n    filtered_recording, operator=\"median\"\n)\n\nIn SpikeInterface, the preprocessing is applied almost instantly due to the ‘lazy’ loading mentioned earlier. When we apply the preprocessing function, we only really just change the metadata associated with the recording, the data is not actually changed at this stage.\nOnly when we get the data (e.g. in plot_traces, or with get_traces() or when saving the data) is the data preprocessed in the requested chunk. This makes operating very fast!\nNow we are ready to plot the data:\n\nsi_widgets.plot_traces(\n    cmr_recording,\n    time_range=(start_time, start_time + 0.1),\n    return_in_uV=True,\n    order_channel_by_depth=True\n)\nplt.show()\n\n\n\n\n\n\n\n\nAs you can see, it is much cleaner and we can see action potentials firing! However, there does seem to be an artefact, small gaps in the action potential waveform. We will investigate these in the next section.\n\nSplitting the data by shank\nYou might notice the data in the above image looks slightly strange. All spikes have predictable gaps between them, we can see this clearly if we zoom into a single action potential waveform:\n\nsi_widgets.plot_traces(\n    cmr_recording,\n    time_range=(23.923, 23.928),\n    return_in_uV=True,\n    order_channel_by_depth=True,\n)\nax = plt.gca()\nax.set_ylim(200, 300)\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteDiscuss\n\n\n\nLook carefully at the plot above. Why do you think there are predictable gaps in the signal every two channels?\n\n\n\n\n\n\n\n\nNoteClick to reveal the answer\n\n\n\n\n\nOur recording channels are located on two shanks, however we have plot all recording channels together. The channels on different shanks have the same y-position, so they are plot next to eachother, but different x-positions.\nThis means that the AP recorded on one shanks channels is interleaved with blank channels from the other shank.\n\n\n\nWe can solve this by spliting the recording by shank with the groups property. When SpikeInterface loads the data, it will automatically assign different shanks to different groups:\n\nsplit_recording = cmr_recording.split_by(\"group\")\nprint(\n    split_recording\n)\n\n{0: ChannelSliceRecording: 192 channels - 30.0kHz - 1 segments - 75,000 samples - 2.50s - int16 dtype \n                       27.47 MiB, 1: ChannelSliceRecording: 192 channels - 30.0kHz - 1 segments - 75,000 samples - 2.50s - int16 dtype \n                       27.47 MiB}\n\n\nWe can plot both shanks separately:\n\nfig, ax = plt.subplots(1, 2)\n\nfor shank_idx, shank_recording in split_recording.items():\n\n    si_widgets.plot_traces(\n        shank_recording,\n        time_range=(start_time, start_time + 0.1),\n        return_in_uV=True,\n        order_channel_by_depth=True,\n        ax=ax[shank_idx]\n    )\n    ax[shank_idx].set_title(f\"Shank: {shank_idx}\")\n\nplt.show()\n\n\n\n\n\n\n\n\n\nsi_widgets.plot_traces(\n    split_recording[0],\n    time_range=(23.923, 23.926),\n    return_in_uV=True,\n    order_channel_by_depth=True,\n    mode=\"map\"\n)\nax = plt.gca()\nax.set_ylim(200, 300)\nplt.show()\n\n\n\n\n\n\n\n\nMuch better!\nNow we have our preprocessed data, and have visually confirmed the data quality is good, we are ready to perform spike sorting!\n\n\n\n\n\n\nTipThings to try\n\n\n\n\nHow does the data look using median vs. mean for common_average?\nWhat happens if you set the bandpass filter minimum cutoff to zero? What frequencies are including now? Or set the maximum cutoff to 15000?\nSet return_in_uV=False. Does the data look much different?\nSave the data to disk with the Recording objects .save attribute\nUse get_traces() with and without return_in_uV as True and False to inspect the data type.\nPerform spike detection (e.g. absolute threshold method) on the preprocessed data obtained with get_traces()",
+    "crumbs": [
+      "Pipeline walkthrough with SpikeInterface"
+    ]
+  },
+  {
+    "objectID": "pipeline-walkthrough.html#sorting",
+    "href": "pipeline-walkthrough.html#sorting",
+    "title": "Pipeline walkthrough with SpikeInterface",
+    "section": "Sorting",
+    "text": "Sorting\nNow we are ready to move onto spike sorting. There are many possible spike sorters to choose from, today we will use Kilosort 4.\nAll we need to do is pass our preprocessed recording to the sorter of choice, along with any parameters. In our case, we will skip the filtering and common average referencing that Kilosort 4 can perform, as we have already run these steps in SpikeInterface (we cannot turn filtering off, so just set it to a very low cutoff).\nKilosort will then detect spikes and assign each spike to a unit (i.e. a putative neuron). It will output the time of each spike, what unit it belongs to.\nIt is often easiest to sort each shank separately. From now on, we will only sort the first shank of the recording.\nIn SpikeInterface, running a sorter is quite simple:\n\nfrom pathlib import Path\nimport spikeinterface.sorters as si_sorters\n\nsorter_folder = Path(\"kilosort4_output\")\nsorter_output_folder = sorter_folder / \"sorter_output\"\n\nfirst_shank_recording = split_recording[0]\n\nsorting = si_sorters.run_sorter(\n    \"kilosort4\",\n    first_shank_recording,\n    folder=sorter_folder,\n    remove_existing_folder=True,\n    do_CAR=False,\n    highpass_cutoff=0.1,\n)\n\nprint(sorting)\n\n\n  0%|          | 0/2 [00:00&lt;?, ?it/s]\n 50%|█████     | 1/2 [00:07&lt;00:07,  7.08s/it]\n100%|██████████| 2/2 [00:13&lt;00:00,  6.63s/it]\n100%|██████████| 2/2 [00:13&lt;00:00,  6.70s/it]\n\n  0%|          | 0/2 [00:00&lt;?, ?it/s]\n 50%|█████     | 1/2 [00:07&lt;00:07,  7.20s/it]\n100%|██████████| 2/2 [00:13&lt;00:00,  6.76s/it]\n100%|██████████| 2/2 [00:13&lt;00:00,  6.83s/it]\n\n  0%|          | 0/1 [00:00&lt;?, ?it/s]\n100%|██████████| 1/1 [00:00&lt;00:00, 25.32it/s]\n100%|██████████| 1/1 [00:00&lt;00:00, 24.73it/s]\n\n  0%|          | 0/2 [00:00&lt;?, ?it/s]\n 50%|█████     | 1/2 [00:00&lt;00:00,  1.26it/s]\n100%|██████████| 2/2 [00:01&lt;00:00,  1.42it/s]\n100%|██████████| 2/2 [00:01&lt;00:00,  1.39it/s]\n\n  0%|          | 0/1 [00:00&lt;?, ?it/s]\n100%|██████████| 1/1 [00:00&lt;00:00, 49.10it/s]\n100%|██████████| 1/1 [00:00&lt;00:00, 47.09it/s]\n\n\nKiloSortSortingExtractor: 40 units - 1 segments - 30.0kHz\n\n\nThe sorting output is written to disk. The output contains all of the output files of the sorter, and its organisation is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each units (‘templates’).\nIn SpikeInterface, we can access the spike times and unit assignments in a sorter-independent manner, using the sorting object. For example, to get the spike times and unit assignments:\n\nspikes = sorting.to_spike_vector()\n\nspike_times = spikes[\"sample_index\"] / sorting.get_sampling_frequency()\n\n# show the first 5 spikes\nprint(\n    f\"`spikes` is a structured number array with fields`: {spikes.dtype.names}\\n\"\n)\nprint(\n    f\"First 5 spike times (s): {spike_times[:5]}\\n\"\n)\nprint(\n    f\"First 5 unit assignments: {spikes['unit_index'][:5]}\"\n)\n\n`spikes` is a structured number array with fields`: ('sample_index', 'unit_index', 'segment_index')\n\nFirst 5 spike times (s): [6.66666667e-05 6.66666667e-05 1.00000000e-04 1.00000000e-04\n 1.33333333e-04]\n\nFirst 5 unit assignments: [ 3 11  7 19 39]\n\n\n\n\n\n\n\n\nTipThings to try\n\n\n\n\nGet a list of all non-empty unit ids\nRemove a unit - what happens to the spikes assigned to this unit?\nGet the spike times for a specific unit",
+    "crumbs": [
+      "Pipeline walkthrough with SpikeInterface"
+    ]
+  },
+  {
+    "objectID": "pipeline-walkthrough.html#postprocessing",
+    "href": "pipeline-walkthrough.html#postprocessing",
+    "title": "Pipeline walkthrough with SpikeInterface",
+    "section": "Postprocessing",
+    "text": "Postprocessing\nTODO! Depending on timing and content of the other sections, we may want to reduce this down to a single command where we compute all of the extensions, and then go through them in more detail in the SpikeInterface GUI\nSpike sorting is a complex task undertaken in the precense of significant noise. Therefore, many units will not cleanly represent a single neuron. As well as good units (i.. where each spike is from the same putative neuron) units may be noise (XXX) or multi-unit activity (MUA).\nTo determine whether units are good or not, we must look at the individual spikes that belong to a unit, and compute metrics. Cut then out, waveforms. In this section we will go over some key concepts at a very high level - we will develop this much further in the Postprocessing chapter.\n\nCreating a SortingAnalzyer\nThe SortingAnalzyer is the key object for postprocessing in SpikeInterface. We can create the SortingAnalzyer by passing the sorting output and preprocessed recording:\n\nfrom spikeinterface import create_sorting_analyzer\n\nanalyzer = create_sorting_analyzer(\n    sorting=sorting,\n    recording=first_shank_recording\n)\n\n\n\n\nUsing this sorting analyzer interface, we will compute all of the postprocessing results needed to assess the quality of our sorting.\n\nSome sorters will output their own waveforms, templates, amplitudes ETC (for example, Kilosort has a templates.npy file containnig the templates it generated during sorting).\nThese are not loaded by SpikeInterface. Instead, the sorting analzyer will always recompute these features directly from the passed recording.\n\n\n\nSelecting spikes\nIn our sorting, we can have many many detected spikes. This may be in the order of millios of spikes for an hour long recording.\nIn general, we will compute summary statistics over metrics computed from individual spikes. Therefore, including millions of spikes is computationally intensive while providing marginal gains. Instead, we can subselect spikes to include in postprocessing computations (typically, 3-500 spikes per unit is used a default).\n\nanalyzer.compute(\n    \"random_spikes\",\n    method=\"uniform\",\n    max_spikes_per_unit=500,\n)\n\n&lt;spikeinterface.core.analyzer_extension_core.ComputeRandomSpikes at 0x7f03fe9ade10&gt;\n\n\nTo access the data assicated with a computed extension, we can use the get_extension function as below. We can see the indices (and compute the spike times) for the selected spikes:\n\nspike_indices = analyzer.get_extension(\"random_spikes\").data[\"random_spikes_indices\"]\nspike_times = spike_indices / recording.get_sampling_frequency()\n\nprint(spike_times)\n\n[0.00000000e+00 3.33333333e-05 6.66666667e-05 ... 5.10000000e-02\n 5.10333333e-02 5.10666667e-02]\n\n\n\n\nWaveforms\nThe action potential waveforms are important for assessing unit quality. For example, we expect that the waveforms of spikes which belong to a single unit are all similar.\nTo compute waveforms in SpikeInterface, we can use the waveforms extension. This will ‘chop out’ the spike waveform from the data, with a time window specified by the ms_before and ms_after (the spike peak) arguments. For example in the schematic below, we could cut out the blue spike in a window defined by the red blox:\n\n\n\nExample raw trace segment with an artifact highlighted in red.\n\n\n\nanalyzer.compute(\"waveforms\", ms_before=1.0, ms_after=2.0)\n\n\n\n\n&lt;spikeinterface.core.analyzer_extension_core.ComputeWaveforms at 0x7f03fe9af010&gt;\n\n\nThe waveforms array is three dimensional `(num waveforms, num samples, num channels)\n\nwaveforms = analyzer.get_extension(\"waveforms\").data[\"waveforms\"]\n\nprint(waveforms.shape)\n\n# This is the waveform of the 19th spike (chosen as it looks nice)\nplt.imshow(waveforms[18, :, :].T, aspect=\"auto\")\nplt.show()\n\n(1533, 90, 26)\n\n\n\n\n\n\n\n\n\n\n\nTemplates\nThe template is a representative wavecform from a putative neuron. Often, it is computed as the average waveform from all of the spikes that were assigned to a unit.\nWe can compute the extension and access the templates with:\n\nanalyzer.compute(\"templates\")\n\ntemplates = analyzer.get_extension(\"templates\").data[\"average\"]\n\nprint(\n    templates.shape\n)\n\n(40, 90, 192)\n\n\nSpikeInterface also includes many useful post-processing plots in the widget smodule. For example we can plot a unit template as below:\n\n# Plot the template waveform of the first unit \nsi_widgets.plot_unit_templates(analyzer, unit_ids=[0])\nplt.show()\n\n\n\n\n\n\n\n\n\n\nAmplitudes\nFinally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable througghout a recording. Changes in spike amplitudes may indicate problems with hte neuron health, drift, or other issues.\nTo compute the spike amplitudes, we can run:\n\nanalyzer.compute(\"spike_amplitudes\")\n\namplitudes = analyzer.get_extension(\"spike_amplitudes\").data[\"amplitudes\"]\n\nprint(amplitudes)\n\n\n\n\n[  0.76293945 -57.9834      10.681152   ... -87.73804    -76.293945\n -61.798096  ]\n\n\nThis gives a list of amplitudes, one for every spike. We will explore how visualisng spike amplitude across time is a useful measure for quality asessment later.",
+    "crumbs": [
+      "Pipeline walkthrough with SpikeInterface"
+    ]
+  },
+  {
+    "objectID": "pipeline-walkthrough.html#manual-curation-in-spikeinterface-gui",
+    "href": "pipeline-walkthrough.html#manual-curation-in-spikeinterface-gui",
+    "title": "Pipeline walkthrough with SpikeInterface",
+    "section": "Manual Curation in spikeinterface-gui",
+    "text": "Manual Curation in spikeinterface-gui\nFrom this, we can compute quality metrics used to filter the units e.g. bombcell. We cover this more in the postprocessing chapter.\nFor now, see SpikeInterface GUI video?\nhttps://www.youtube.com/watch?v=OGlQtxzip-Q",
+    "crumbs": [
+      "Pipeline walkthrough with SpikeInterface"
+    ]
+  },
+  {
+    "objectID": "concept-notes.html",
+    "href": "concept-notes.html",
+    "title": "Concept Notes",
+    "section": "",
+    "text": "SpikeGLX streams\nThis page collects longer conceptual explanations that are linked from other chapters. Use it as a reference while reading the walkthroughs.\nA stream refers to any contiously recorded stream of bytes, which usually represent numbers. Two key streams are the data stream (which contains recorded data from the probe) and the sync stream. The sync stream is used to align times between the probe and other equiptment used in the experiment (e.g. cameras), and consists of repeating ON/OFF pattern (e.g. 0 1 0 1 0 1…).\nTODO: better integrate Source reference: SpikeGLX User Manual: Data Stream.\nIn earlier Neuropixel probe versions, the data stream was separated into AP and LF streams. was filtered in the probe into two separate streams. The action potential (AP) band was filtered with high-pass filter (300, 500 or 1000 Hz, depending on how it was set). This filtering removes low-frequency signal component, leaving the action potentials (which are typically in the 300-3000 Hz range) untouched. This stream is used for spike sorting.\nA local-field potential band was also written, filtered using a 300 Hz low pass filter. This removes high-frequency data (including action potentials) and leaves low-frequency local feild potentials (LF). The LF band represents the summed voltage ossilations generated by neurons across the brain and is subject to differnt analyses.\nIn recent Neuropixels versions (e.g. Neuropixels 2) there is no longer a distinction betweeen AP and LF data streams. The unfiltered data is written to disk (saved in the imec0.ap band suffix, although it is now broadband), and popst-hoc filtering left up to the user.\nIn more recent Neuropixels versions (e.g. Neuropixels 2) there is no logner a distinction betweeen data streams. The unfiltered data is written to disk (saved in the imec0.ap band suffix, although it is now broadband), and popst-hoc filtering left up to the user.",
+    "crumbs": [
+      "Concept Notes"
+    ]
+  },
+  {
+    "objectID": "concept-notes.html#inheritence",
+    "href": "concept-notes.html#inheritence",
+    "title": "Concept Notes",
+    "section": "Inheritence",
+    "text": "Inheritence\nUnder the hood, SpikeInterface XX widely relies on a class inheritence model, and the Recording object is a good example of this. A BaseRecording object defines many useful functions for interacting with a recording for example getXXX (see the API docs here). All other recording objects inherit from this BaseRcording object, for example our SpiekGLXRecordingExtractor object inherits from BaseRecording, and so contains all of this.\nEvery recording-like object we will deal with doday inherits from BaseRecording and so includes all this functionality. Often, these inherited classes add some functinoaity on top. For example, BaseRecording has a get_traces() fucntion that returns the underlying data. A Filter recording extends this function to first filter the data before returning it.",
+    "crumbs": [
+      "Concept Notes"
+    ]
+  },
+  {
+    "objectID": "concept-notes.html#data-storage-in-int16-and-scaling-to-uv",
+    "href": "concept-notes.html#data-storage-in-int16-and-scaling-to-uv",
+    "title": "Concept Notes",
+    "section": "Data storage in int16 and scaling to uV",
+    "text": "Data storage in int16 and scaling to uV\nMost acquisition systems will store data in int16 format (i.e. integers in the range XXX) to save storage space. To get these values, the acquired data in uV is scaled and offset into the int16 range.\nBy default, SpikeInterface will display the raw int16 data. To use the stored offsets and gains to reconstrct XX, we can use the return_in_uV argument on many functions. Also see XX, XX and XX for working with these.",
+    "crumbs": [
+      "Concept Notes"
+    ]
+  },
+  {
+    "objectID": "planning.html",
+    "href": "planning.html",
+    "title": "1  Course Planning (temp, to remove)",
+    "section": "",
+    "text": "1.0.1 Monday morning (10:00-13:00) : Introduction\nGoal\nPlan:\n10:00 - 10:15 : Welcome, housekeeping, overview of the course, downloading the example data\n10:15 - 10:45 : (lecture, Joe) A high-level introduction to extracellular electrophysiology:\n10:45 - 12:30 : (coding) Coding up a very simple pipeline and exploring the data.\n12:39 - 13:00 : SpikeInterface GUI introduction and overview of key concepts (Chris)\nExample data required\nA very short (1-2 s) recording that can be quickly run through the entire pipeline.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Planning (temp, to remove)</span>"
+    ]
+  },
+  {
+    "objectID": "planning.html#general-thoughts-on-course-structure-content",
+    "href": "planning.html#general-thoughts-on-course-structure-content",
+    "title": "1  Course Planning (temp, to remove)",
+    "section": "1.1 General thoughts on course structure / content",
+    "text": "1.1 General thoughts on course structure / content\n\nDuring the coding periods, we can walk through the code step-by-step for core pipeline, then have periods for those to do extra exercises (e.g. ‘Use get traces to get scaled and unscaled raw data’, ‘Plot data before and after whitening’ etc.’. This way those with less experience have a solid grounding, and those with more experience can go ahead and start on the exercises.\nWe can have a lot of exercises, from easy to harder, to keep everyone busy. There is no obligation for them to complete these, it is just a tool for learning / prompting questions.\nThe code will be presented through Quarto, either through slides (e.g. here) or a book-like format (e.g. here), lets discuss.\nThe benefit of the latter is we end up with a really nice handbook that should be generally useful.\nThe coding periods will be interleaved with short (20-30 minute) lectures to discuss the theory.\nThere will be a range of backgrounds and while we can assume basic Python knowledge, we cannot assume too much background in ephys / neuroscience / DSP. This is not a problem, we can still discuss advanced topics, we will just need to make sure to build to these from the ground-up.\nTheir laptops may range in performance, where possible we should endeavour to use the smallest example data possible.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Planning (temp, to remove)</span>"
+    ]
+  },
+  {
+    "objectID": "planning.html#other-notes",
+    "href": "planning.html#other-notes",
+    "title": "1  Course Planning (temp, to remove)",
+    "section": "1.2 Other notes",
+    "text": "1.2 Other notes\n\nHaving a 10-minute end-of-session discussion / recap might be a nice idea",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Course Planning (temp, to remove)</span>"
+    ]
+  }
+]

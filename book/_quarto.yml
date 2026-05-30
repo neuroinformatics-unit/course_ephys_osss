@@ -2,6 +2,9 @@ project:
   type: book
   output-dir: _site
 
+execute:
+  freeze: auto
+
 book:
   title: "OSSS Ephys Course 2026"
   author:

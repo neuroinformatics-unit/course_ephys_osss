@@ -5,3 +5,4 @@ _book/
 *.tex
 *.html
 kilosort4_output/
+_environment

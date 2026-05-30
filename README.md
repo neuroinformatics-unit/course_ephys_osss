@@ -3,16 +3,16 @@
 The [website](https://neuroinformatics.dev/course-ephys-osss/) of the 2026 OSSS course. Currently in development, includes the [working plan](https://neuroinformatics.dev/course-ephys-osss/planning.html).
 
 # Contributing to the book
-The website is a quarto book. It is published directly from the `docs` folder on the repo by GitHub pages.
+The website is a Quarto book. GitHub Actions rebuilds it from `main` when changes are merged, and publishes the rendered site to the `gh-pages` branch for GitHub Pages to serve.
 
-To build the website, run from the `book` folder:
+To preview the website locally, run from the `book` folder:
 
 ```
 quarto render --to html
 ```
 (requires [Quarto](https://quarto.org/docs/get-started/) to be installed).
 
-This will generate the website in the `docs` folder (and when on `main`, it will be the website).
+This generates the website in `book/_site` for local review. After a PR is merged into `main`, CI rebuilds the site and publishes it to `gh-pages` automatically.
 
 The easiest way to contribute chapters will be to make a new branch and open a PR to add a new chapter
 (I have been pushing to main, but will stop now).

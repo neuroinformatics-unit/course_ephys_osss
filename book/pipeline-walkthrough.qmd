@@ -28,8 +28,8 @@ Because we want to load the AP data stream for spike sorting, we pass `"imec0.ap
 ```{python}
 import spikeinterface.extractors as si_extractors
 
-# This should be the path to the folder contaning
-# the data. On Windows, you may need to preprend
+# This should be the path to the folder containing
+# the data. On Windows, you may need to prepend
 # r to the string e.g. r"C:\my\path"
 path_to_data_folder = "data/pipeline-walkthrough"
 

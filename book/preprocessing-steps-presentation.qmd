@@ -1,0 +1,6 @@
+# Preprocessing - theory
+
+This presentation can be found [here](https://docs.google.com/presentation/d/1KsR5lh2i3QatL2LFhxDyiqdFYjOI7ttqNNcJecuh1L4/edit?usp=sharing).
+
+(it may be converted into a quarto page)
+

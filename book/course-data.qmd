@@ -1,0 +1,30 @@
+# Course data
+
+Please include a short description of the data and instructions (e.g. code snippets) on how to download / access it.
+
+In future where possible we can host these on zenodo
+
+
+# Session 1 (introduction)
+
+A 2.5 second NP2010 recording (50MB) that will preprocess and sort without crashing
+and produces a few good units. Could be swapped out for the recording
+used in other sections. Recording is available on github
+[here](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) but
+can be moved to zendoo.
+
+
+# Session 2 (preprocessing)
+
+
+*JZ* for the coding part the data from section 1 won't work as will need data that
+is long enough to be motion corrected. Sometimes these recordings need to be
+very long, in which case we might just work with the output but that would not be ideal.
+
+# Session 3 (Sorting)
+
+
+# Session 4 (Post-procesing)
+
+
+# Session 5 (Pynapple, probe alignment)

@@ -30,6 +30,7 @@ book:
     - concept-notes.qmd
     - references.qmd
     - planning.qmd
+    - course-data.qmd
 
 bibliography: references.bib
 

@@ -5,6 +5,8 @@ Please include a short description of the data and instructions (e.g. code snipp
 In future where possible we can host these on zenodo
 
 
+
+
 # Session 1 (introduction)
 
 A 2.5 second NP2010 recording (50MB) that will preprocess and sort without crashing
@@ -16,6 +18,21 @@ can be moved to zendoo.
 
 # Session 2 (preprocessing)
 
+The [IBL Benchmark dataset](https://doi.org/10.6084/m9.figshare.26348630) is a curated set of 11
+Neuropixels recordings in varied brain regions available publicly via the
+[Open Neurophysiology Environment (ONE)](https://int-brain-lab.github.io/ONE/) API.
+Data can be streamed directly — no bulk download required.
+
+The script below demonstrates how to:
+
+1. Connect to the public IBL server and select a probe insertion by its `pid`
+2. Stream a short snippet of raw AP-band voltage
+3. Apply a Butterworth high-pass filter (300 Hz) to remove LFP/DC drift
+4. Run the full IBL destriping pipeline (ADC shift correction + spatial k-filter)
+5. Open all three stages side-by-side in the `viewephys` interactive viewer
+
+```{.python include="scripts/stream_raw_ephys.py"}
+```
 
 *JZ* for the coding part the data from section 1 won't work as will need data that
 is long enough to be motion corrected. Sometimes these recordings need to be

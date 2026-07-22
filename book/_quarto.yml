@@ -27,6 +27,7 @@ book:
     - index.qmd
     - introduction.qmd
     - pipeline-walkthrough.qmd
+    - pynapple.qmd
     - concept-notes.qmd
     - references.qmd
     - planning.qmd

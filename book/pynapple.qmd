@@ -4,6 +4,7 @@ This chapter is an introduction to [Pynapple](pynapple.org).
 Pynapple is a python package for analysing neural data.  
 The package is actively maintained by the Flatiron Institute's [neuroRSE team](https://neurorse.flatironinstitute.org/). 
 
+Pynapple can do a lot more than what is covered in this chapter, take a look at the [Pynapple documentation](https://pynapple.org/user_guide/03_core_methods.html) for more.   
 The only thing you'll need to follow along is a working Python environment with `pynapple` installed:
 
 ```python
@@ -106,6 +107,7 @@ It contains functions facilitating alignment, wrangling, and performing basic ne
 ## 1. Pynapple fundamentals
 
 ### Time series (`Ts`)
+We store a time series, for example a spike train, in a `Ts` object.
 ```{python}
 
 import pynapple as nap
@@ -128,6 +130,7 @@ plt.show()
 ```
 
 ### Time series with data (`Tsd`)
+We store a time series with corresponding data values, for example a speed curve, in a `Tsd` object.
 
 ```{python}
 import pynapple as nap
@@ -149,6 +152,8 @@ plt.show()
 ```
 
 ### Multiple time series
+If we have multiple time series, they can be collected in a `TsGroup`.  
+This could be a collection of spiking units, for example.
 ```{python}
 import pynapple as nap
 tsgroup = nap.TsGroup({
@@ -177,6 +182,8 @@ plt.show()
 ```
 
 ### Time series with multiple data columns (`TsdFrame`)
+If we have multiple time series with data with the same time points, they can be stored in a `TsdFrame`.  
+This could be a collection of calcium traces, for example.
 ```{python}
 import pynapple as nap
 tsdframe = nap.TsdFrame(
@@ -206,6 +213,7 @@ plt.show()
 ```
 
 ### Intervals (`IntervalSet`)
+We store time intervals as start and end pairs in an `IntervalSet`.
 ```{python}
 import pynapple as nap
 epochs = nap.IntervalSet(
@@ -229,8 +237,11 @@ plt.show()
 ```
 
 ## 2. Interactions
+Many Pynapple objects interact with each other.
 
 ### Time supports (`time_support`)
+Every time series object has a time support, an `IntervalSet` that gives the epochs
+over which the time series is defined.
 ```{python}
 import pynapple as nap
 ts = nap.Ts(t=[1,2,3,4,5])
@@ -253,6 +264,7 @@ plt.show()
 ```
 
 ### Restricting (`restrict`)
+Any time series object can be restricted to certain `IntervalSet`, thereby updating its time support.
 ```{python}
 import pynapple as nap
 ts = nap.Ts(t=[1,2,3,4,5])
@@ -277,6 +289,8 @@ plt.show()
 ```
 
 ### Taking values (`value_from`)
+Given one time series, you can `value_from` to take the value corresponding 
+to the closest time point in another time series with data.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -299,13 +313,15 @@ ax.set_ylabel("data (a.u.)")
 ax.set_xlabel("time (s)")
 ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
-plt.legend(frameon=False)
+fig.legend(frameon=False, bbox_to_anchor=(0.9, 1.1))
 plt.show()
 ```
 
 ## 3. Wrangling
+Pynapple objects are easy to transform, reshape, slice, and more.
 
 ### Numpy
+Most Numpy functions can be applied to Pynapple objects without hassle.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -337,6 +353,7 @@ np.diff(tsdframe, axis=1)
 ```
 
 ### Slicing
+Pynapple objects can be sliced like Numpy arrays.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -368,8 +385,11 @@ tsdframe[2:4]
 ```
 
 ## 4. Core functions
+Pynapple has a core set of functions designed to help with neuroscientific analyses.
+The following are a subset of them, for an exhaustive list, see the [Pynapple documentation](https://pynapple.org/user_guide/03_core_methods.html).
 
 ### Binning
+The time points of any time series object can be counted.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -377,7 +397,7 @@ dt = 0.001
 times = np.arange(0, 4, dt)
 rate = 40 * (1 + np.sin(2*np.pi*times)) / 2
 spikes = nap.Ts(times[np.random.rand(len(times)) < rate * dt])
-counts = spikes.count(0.1)
+counts = spikes.count(bin_size=0.1)
 counts
 ```
 ```{python}
@@ -400,6 +420,7 @@ plt.show()
 ```
 
 ### Averaging
+The values of any time series with data can be averaged across bins.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -407,7 +428,7 @@ times = np.arange(0, 10, 0.01)
 signal = np.sin(2 * np.pi * times) 
 signal += 0.2 * np.random.randn(len(times))
 tsd = nap.Tsd(t=times, d=signal)
-averaged = tsd.bin_average(0.2)
+averaged = tsd.bin_average(bin_size=0.2)
 averaged
 ```
 ```{python}
@@ -426,6 +447,7 @@ plt.show()
 ```
 
 ### Thresholding
+Time series with data can be thresholded, yielding new time series objects with updated time supports.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -452,6 +474,7 @@ plt.show()
 ```
 
 ### Smoothing
+Time series with data can be (Gaussian) smoothed.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -478,8 +501,10 @@ plt.show()
 ```
 
 ## 5. Advanced Functions
+Beyond fundamental processing functions, Pynapple has loads of advanced functionality for neuroscientific analysis.
 
 ### Autocorrelograms
+Given one or a group of time series, you can compute autocorrelograms.
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -508,6 +533,7 @@ plt.legend(frameon=False)
 plt.show()
 ```
 ### Crosscorrelograms
+Given one or two groups of time series, you can compute crosscorrelograms.
 ```{python}
 crosscorrelogram = nap.compute_crosscorrelogram(
     units, binsize=0.1, windowsize=1.0, norm=False
@@ -527,8 +553,9 @@ plt.show()
 ```
 
 ### Signal processing
+Pynapple wraps a lot of scipy functions for signal processing.
 
-We'll start by simulating a noisy multi-frequency signal:
+Let's simulate a noisy multi-frequency signal:
 ```{python}
 import pynapple as nap
 import numpy as np
@@ -553,6 +580,7 @@ plt.show()
 ```
 
 #### Bandpass filter
+We can bandpass filter to exract certain frequency bands.
 ```{python}
 filtered = nap.apply_bandpass_filter(
     data=tsd, 
@@ -576,6 +604,7 @@ plt.show()
 ```
 
 #### Power-spectral density
+We can compute the power-spectral density to find frequencies of interest.
 ```{python}
 psd = nap.compute_power_spectral_density(
     tsd, 
@@ -596,6 +625,7 @@ plt.show()
 ```
 
 ### Perievent
+A typical neuroscientific analysis consists of aligning activity to a set of stimuli or events.
 
 Let's start by simulating a spiking unit that has clear stimulus-locked activity:
 ```{python}
@@ -783,7 +813,7 @@ plt.show()
 
 [Pynaviz](https://github.com/pynapple-org/pynaviz) provides interactive, high-performance visualisations designed to work seamlessly with Pynapple time series and video data.   
 It allows synchronised exploration of neural signals and behavioral recordings.   
-It is build on top of pygfx, a modern GPU-based rendering engine.
+It is build on top of `pygfx`, a modern GPU-based rendering engine.
 
 To install it:
 ```python
@@ -819,8 +849,11 @@ tsgroup = to_pynapple_tsgroup(
 ```
 
 ## 7. Data
+Pynapple provides many ways to load your data.
 
 ### NWB
+The main input format Pynapple can read is [Neurodata Without Borders (NWB)](https://nwb.org/).  
+Pynapple will parse all data in the file that can be represented as a Pynapple object and present a dictionary-like interface for selecting them.
 ```{python}
 #| echo: false
 import os
@@ -850,6 +883,7 @@ data = nap.EphysReader("path/to/raw")
 ```
 
 ### Saving as `.npz`
+Pynapple objects can be saved (and loaded) as `.npz` files.
 
 ```{python}
 import pynapple as nap
@@ -860,13 +894,45 @@ loaded = nap.load_file("my_tsd.npz")
 loaded
 ```
 
+### Streaming from DANDI
+Data in the NWB format can be directly streamed from the [DANDI archive](https://dandiarchive.org) into Pynapple.  
+Here is useful function to keep handy that does this for you:
+```{python}
+import pynapple as nap
+from pynwb import NWBHDF5IO
+from dandi.dandiapi import DandiAPIClient
+import fsspec
+from fsspec.implementations.cached import CachingFileSystem
+import h5py
+
+def stream_dandiset(dandiset_id, filepath):
+    with DandiAPIClient() as client:
+        asset = client.get_dandiset(dandiset_id, "draft").get_asset_by_path(filepath)
+        s3_url = asset.get_content_url(follow_redirects=1, strip_query=True)
+
+    # first, create a virtual filesystem based on the http protocol
+    fs = fsspec.filesystem("http")
+
+    # create a cache to save downloaded data to disk (optional)
+    fs = CachingFileSystem(
+        fs=fs,
+        cache_storage="nwb-cache",  # Local folder for the cache
+    )
+
+    # next, open the file
+    file = h5py.File(fs.open(s3_url, "rb"))
+    io = NWBHDF5IO(file=file, load_namespaces=True)
+
+    return nap.NWBFile(io.read())
+```
+
 ## Your turn
 Now it is your turn!
 
-Start by streaming a single session from [this dataset](https://dandiarchive.org/dandiset/000939?search=000939&pos=1) on the DANDI archive, it contains recordings from head direction cells in the postsubiculum.  
+Start by streaming a single session from [this dataset](https://dandiarchive.org/dandiset/000939?search=000939&pos=1) on the DANDI archive, it contains recordings from head direction cells in the postsubiculum.
 Use the streaming function we provided in the data section!
 
 Then, try to compute head direction tuning curves, and use those to decode head direction from the population activity.
 
-If you are confident, you can write your own code using the snippets provided in this chapter.
+If you are confident, you can write your own code using the snippets provided in this chapter.  
 If you want a bit more help, follow along in [this notebook](https://colab.research.google.com/drive/1o3IJtprvaTzwHxThGTdInE6GYADBULyA?usp=sharing).

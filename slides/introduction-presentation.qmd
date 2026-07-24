@@ -1,0 +1,202 @@
+---
+title: "Extracellular Electrophysiology"
+subtitle: "Session 1"
+author: "OSSS Ephys Course 2026"
+pagetitle: "Extracellular Electrophysiology"
+format:
+  revealjs:
+    theme: default
+    css: custom.css
+    include-in-header:
+      text: |
+        <meta name="referrer" content="strict-origin-when-cross-origin">
+    slide-number: true
+    transition: slide
+    incremental: false
+    width: 1280
+    height: 720
+    footer: "OSSS Ephys Course 2026"
+---
+
+## Today
+
+::: {.incremental}
+1. Introduction to extracellular electrophysiology
+2. Coding a pipeline with SpikeInterface
+3. Downloading data for the course
+:::
+
+## Introduction to extracellular electrophysiology {.ephys-process-slide}
+
+::: {.ephys-process-figures}
+<div class="ephys-process-left-figure">
+  <img src="images/apollo-implant-f4-edited.png" class="ephys-process-image fragment fade-out" data-fragment-index="2" alt="Implant recording, target area, and example extracellular traces across days">
+  <img src="images/apollo-implant-f4-edited-w-spikes.png" class="ephys-process-image fragment" data-fragment-index="2" alt="Implant recording, target area, and extracellular traces with spikes highlighted across days">
+</div>
+
+<div class="ephys-tuning-figure">
+  <img src="images/tuning-curve-image-edited.png" class="ephys-tuning-image fragment" data-fragment-index="4" alt="Orientation tuning curve and preferred orientation schematic">
+</div>
+:::
+
+::: {.ephys-process-grid}
+<div class="ephys-step"><strong>1.</strong> Implant recording electrode</div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="1"><strong>2.</strong> Record during behaviour of interest</span></div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="2"><strong>3.</strong> Identify action potentials in the recorded trace</span></div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="3"><strong>4.</strong> Assign action potentials to neurons with spike sorting</span></div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="4"><strong>5.</strong> Understand how neural activity encodes behaviour</span></div>
+:::
+
+## Pros and cons {.ephys-compare-slide}
+
+:::: {.ephys-compare-grid}
+
+::: {.ephys-compare-col}
+![](images/ephys-positives-examples.png){.ephys-compare-image fig-alt="Targeted deep electrophysiology recording and traces"}
+
+<h3 class="ephys-compare-title">Electrophysiology</h3>
+
+- ✅ High temporal resolution
+- ✅ Targetted to deep and multiple regions
+- ❌ Cannot easily identify individual neurons
+:::
+
+::: {.ephys-compare-col}
+![](images/2p-examples.png){.ephys-compare-image fig-alt="Two-photon imaging field of view with labelled neurons"}
+
+<h3 class="ephys-compare-title">Imaging</h3>
+
+- ✅ Easy identification of individual neurons (genetically targetable)
+- ❌ Low temporal resolution
+- ❌ Limited depth and field of view
+:::
+
+::::
+
+## Classic findings
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Orientation selectivity (Hubel and Wiesel, 1962)
+
+<iframe class="video-embed video-embed-classic video-embed-center" src="https://www.youtube-nocookie.com/embed/IOHayh06LJ4" title="Hubel and Wiesel orientation selectivity" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+:::
+
+::: {.column width="50%"}
+<div class="fragment">
+
+### Motor population encoding (Georgopoulos, 1986)
+
+![](images/georgeopoulos-1986.png){.classic-findings-image fig-alt="Georgopoulos 1986 motor population encoding figure"}
+
+</div>
+:::
+
+::::
+
+## Classic findings
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Hippocampal space encoding
+
+<div class="classic-findings-label classic-findings-label-first">Place cells</div>
+
+<iframe class="video-embed video-embed-place-cell" src="https://www.youtube-nocookie.com/embed/STyd1qJr3yM" title="Hippocampal place cells" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+<div class="classic-findings-label">Theta phase precession</div>
+
+![](images/pheta-phase-precession.png){.classic-findings-image-medium .classic-findings-image-compact fig-alt="Theta phase precession example"}
+:::
+
+::: {.column width="50%"}
+<div class="fragment">
+
+### Brain-wide map (The International Brain Laboratory et al., 2023)
+
+![](images/brain-wide-map-ibl.png){.classic-findings-image fig-alt="International Brain Laboratory brain-wide map"}
+
+
+</div>
+:::
+
+::::
+
+## In the clinic
+
+<iframe class="video-embed video-embed-clinic video-embed-center" src="https://www.youtube-nocookie.com/embed/iTZ2N-HJbwA" title="Recording example" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+## Evolution of recording devices
+
+![](images/evolution-of-recording-devices.png){.slide-image-centered fig-alt="Timeline of recording devices"}
+
+## The recording set up
+
+![](images/the-recording-setup.png){fig-alt="Electrode to amplifier to analog to digital conversion to computer recording setup"}
+
+## Extracellular electrophysiological data {data-transition="none"}
+
+![](images/extrcellular-line-image.png){fig-alt="Extracellular electrophysiology line traces across channels"}
+
+## Extracellular electrophysiological data {data-transition="none"}
+
+![](images/extrcellular-map-image.png){fig-alt="Extracellular electrophysiology spatial map view"}
+
+## The sorting pipeline
+
+
+## Course timeline review
+
+## SpikeInterface: a common API for open-source electrophysiological tools
+
+![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools"}
+
+## The goal of the course: fun and learning!
+
+::: {.r-fit-text style="color:#2e8b57;"}
+Mathematical topics and being "comfortable in confusion"
+:::
+
+<br>
+
+> It is like being lost in a jungle and trying to use all the knowledge that you can gather to come up with some new tricks, and with some luck, you might find a way out.
+>
+> — **Maryam Mirzakhani**, Fields medal winner
+
+> So each of these breakthroughs... couldn't exist without the many months of stumbling around in the dark that precede them.
+>
+> — **Andrew Wiles**, solved Fermat's last theorem
+
+## The goal of the course: fun and learning! {.math-goal-slide}
+
+<div class="math-goal-grid">
+  <div class="math-goal-quote">
+    <p>It is like being lost in a jungle and trying to use all the knowledge that you can gather to come up with some new tricks, and with some luck, you might find a way out.</p>
+    <p><strong>Maryam Mirzakhani</strong>, Fields medal winner</p>
+  </div>
+  <div class="math-goal-quote">
+    <p>So each of these breakthroughs, they are the culmination of, and couldn't exist without, the many months of stumbling around in the dark that precede them.</p>
+    <p><strong>Andrew Wiles</strong>, solved Fermat's last theorem</p>
+  </div>
+  <div class="math-goal-center">Mathematical topics and being "comfortable in confusion"</div>
+  <div class="math-goal-quote math-goal-quote-lower">
+    <p>My advisor once told me that doing math is 98% being confused and 2% figuring it out.</p>
+  </div>
+  <div class="math-goal-quote math-goal-quote-lower">
+    <p>If I spend an entire day and all I do is understand this one feature of this one object that I didn't understand before, then that's a great day.</p>
+  </div>
+  <div class="math-goal-author"><strong>Mathematics PhD Students</strong></div>
+</div>
+
+## The coding segment
+
+::: {.r-fit-text}
+(explain how it will work)
+
+Suggestions on how to run the code
+:::
+
+

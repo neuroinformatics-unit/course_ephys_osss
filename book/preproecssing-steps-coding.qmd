@@ -1,1 +1,325 @@
 # Preprocessing - coding
+\ 
+In this chapter we will explore in more detail the preprocessing steps used in extracellular electrophysiology. The theory behind these steps is explained in the previous slides LINK.
+
+In the introduction, we ran three preprocessing steps, `phase_shift`, `bandpass_filter` and `common_reference`:
+
+```{python}
+#| eval: false
+
+import spikeinterface.preprocessing as si_prepro
+
+phase_shift_recording = si_prepro.phase_shift(recording)
+filtered_recording = si_prepro.bandpass_filter(
+    phase_shift_recording, freq_min=300, freq_max=6000
+)
+cmr_recording = si_prepro.common_reference(
+    filtered_recording, operator="median"
+)
+
+```
+
+In this sesssion, we will add additional useful preprocessing steps as well as inspect the effects of other common preprocesing steps. The steps we will explore are:
+
+- **bad channel detection** : XXX
+- **motion correction** : XXX
+- **whiten** : XXX
+- **highpass spatial filter**: 
+
+We will run this on a new dataset
+
+# Downloading the data
+
+In this section we will download the data we will use for the majority of the rest of the course. This dataset is a XXX.
+
+SpikeInterface has a lot of useful utilities for downloading and saving data from public repositories. This is very useful to know, because it opens up an entire world of analysis! With the code below, we can download any of the XXXX recordings on DANDI, including the entire IBL Brain Wide Map! (as specified by hte DANDI ID).
+
+```{python}
+
+from pathlib import Path
+import numpy as np
+from spikeinterface.extractors import NwbRecordingExtractor
+
+s3_url = "https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5"
+DURATION_S = 90
+LOCAL_FOLDER = Path("nwb_first_slice")
+
+series_paths = NwbRecordingExtractor.fetch_available_electrical_series_paths(
+        file_path=s3_url,
+        stream_mode="remfile",
+    )
+
+# TODO: Explain the series
+for p in series_paths:
+    print("  -", p)
+
+non_lfp = [p for p in series_paths if "lfp" not in p.lower()]
+electrical_series_path = (non_lfp or series_paths)[0]
+
+# stream_mode="remfile" (or "fsspec") reads bytes lazily over HTTP — no full download.
+rec = NwbRecordingExtractor(
+    file_path=s3_url,
+    stream_mode="remfile",
+    electrical_series_path=electrical_series_path,
+)
+
+end_frame = np.round(DURATION_S * rec.get_sampling_frequency()).astype(int)
+rec_slice_remote = rec.frame_slice(start_frame=0, end_frame=end_frame)
+
+recording = rec_slice_remote.save(
+    format="binary",
+    folder=LOCAL_FOLDER,
+    n_jobs=1,
+    chunk_duration="1s",
+    progress_bar=True,
+    overwrite=True
+)
+
+
+```
+
+In future, to avoid redownloading the data each time, we can download from disk
+
+```python
+if ...
+recording = si.load(LOCAL_FOLDER)
+else:
+    ... (download)
+```
+
+use a dropdown here
+Note we can retrieve the nwb file in code given the daandiset with the following code block (see main_nwb.py joe)
+DANDISET_ID = "000939"  
+
+# Initial steps
+
+
+- no phase shift for this probe
+- bandpass filter before bad channel detection
+
+Before we start, we will define a function to plot.This will make it easy to compare before vs. after
+
+Note you can also view these in viewephys as per the last tutorial if you want to.
+
+```{python}
+
+import spikeinterface.preprocessing as si_prepro
+import spikeinterface.widgets as si_widgets
+import matplotlib.pyplot as plt
+
+def plot_prepro(recordings: dict, time_range: tuple[float], title: str) -> None:
+    """"""
+    fig, axes = plt.subplots(
+        1, len(recordings), figsize=(6 * len(recordings), 5),
+        squeeze=False, layout="constrained",
+    )
+    for ax, (name, recording) in zip(axes.ravel(), recordings.items()):
+        si_widgets.plot_traces(
+            recording,
+            time_range=time_range,
+            mode="map",
+            ax=ax,
+            with_colorbar=True,
+        )
+        ax.set_title(name)
+    fig.suptitle(title)
+
+```
+
+Let's have a look at the effects of bandpass filtering:
+
+```{python}
+
+TIME_RANGE = (49, 49.01)
+
+import spikeinterface.preprocessing as si_prepro
+
+recording_bp = si_prepro.bandpass_filter(
+    recording, freq_min=300,
+                                         freq_max=6000)  # common values used based on AP waveform kinetics
+
+plot_prepro({"raw": recording, "filtered": recording_bp}, TIME_RANGE, "Bandpass filtering")
+
+```
+
+# Bad Channel Detection
+
+Next we can use SpikeInterface's `bad_channel_detection` function to detect recording channels that
+are either dead, noisy (e.g. due  to electrical wiring issue) or out of the brain. To do this, we will
+use the default `"coherence+psd"` function, which was ported from the IBL (link original implementation and paper
+).
+
+First, let's apply the bad channel detection and look at the data before and afterwards:
+
+```{python}
+
+bad_channel_ids_1, channel_labels_1 = si_prepro.detect_bad_channels(recording_bp)
+print("first attempt labels:\n", channel_labels_1)
+
+rec_clean_1 = recording_bp.remove_channels(bad_channel_ids_1)
+
+plot_prepro({"filtered": recording_bp, "bad channels removed": rec_clean_1}, TIME_RANGE, "Bad channel detection: default settings")
+```
+
+It didn't work! We need to adjust the settings
+
+```{python}
+# Let's try again with different settings
+
+bad_channel_ids, channel_labels = si_prepro.detect_bad_channels(recording_bp, dead_channel_threshold=-0.25)
+print("second attempt labels:\n", channel_labels)
+
+rec_clean = recording_bp.remove_channels(bad_channel_ids)
+
+plot_prepro({"filtered": recording_bp, "bad channels removed": rec_clean}, TIME_RANGE, "Bad channel detection: adjusted threshold")
+
+```
+
+Cool, we see that it works now
+
+WARNING ADOMINITION - ALWAYS VISUALISE AND CHECK PREPROCESSING STEPS! DON'T TRUST THE DEFAULTS ON YOUR DATA!
+PROBE BRAIN REGION ETC.
+
+
+# Common average referencing
+
+CMR goes across channels. Therefore forg ood estimation of the cental tendency, we want
+to have the bad channels removed, which is good.
+
+Commonr median referencing does this XX. 
+
+```{python}
+
+recording_cmr = si_prepro.common_reference(rec_clean, operator="median")
+
+plot_prepro({"filtered": recording_bp, "recording_cmr": recording_cmr}, TIME_RANGE, "Common median reference")
+
+```
+
+IBL also has the highpass spatial filter.
+
+```{python}
+recording_hsf = si_prepro.highpass_spatial_filter(recording_bp, highpass_butter_wn=0.015)
+
+plot_prepro({"recording_cmr": recording_cmr, "recording_hsf": recording_hsf}, TIME_RANGE, "High-pass spatial filter")
+
+```
+
+# Motion correction
+
+Motion c
+
+```{python}
+
+rec_corrected, motion_info = si_prepro.correct_motion(
+    recording_cmr,
+    preset="dredge_fast",
+    output_motion_info=True,
+)
+print(rec_corrected)
+
+```
+
+More stuff
+
+```{python}
+
+# Display the motion output: drift map + estimated motion over depth/time.
+fig = plt.figure(figsize=(14, 8))
+si_widgets.plot_motion_info(
+    motion_info,
+    recording=rec_corrected,
+    figure=fig,
+    color_amplitude=True,
+    amplitude_cmap="inferno",
+    scatter_decimate=10,
+)
+fig.suptitle("Motion correction output")
+
+```
+
+because its a small recording, dont see much. We can see in longer recordings, the drift correction is much more obvious:
+
+Explain the image, then add the https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording
+
+explain the spiking phenomenon!?
+
+# Whitening
+
+Finally, we will explore the whiteinng step. The whitening step is an agressive step to remove noise correlations and xx across channels.
+Has the effect of removing scaled versions of neighoubring races h3h3h3
+
+In spikeinterface, whitening is done by the `whiten` function:
+
+```{python}
+
+recording_whiten = si_prepro.whiten(rec_corrected)
+
+plot_prepro({"rec_corrected": rec_corrected, "whitened": recording_whiten}, TIME_RANGE, "Whitening")
+
+```
+
+
+For visualisation, let's rescale hte recroding. **Note we would not do this in our actual analysis, this is just for visualising the data as part of this course**
+
+```{python}
+
+rec_range = np.ptp(
+    rec_corrected.get_traces(start_frame=0, end_frame=30000, return_in_uV=True)
+)  
+
+whitened_range = np.ptp(
+    recording_whiten.get_traces(start_frame=0, end_frame=30000, return_in_uV=True)
+)  
+estimate_scale_difference = rec_range / whitened_range
+
+print(estimate_scale_difference)
+scaled_white_recording = si_prepro.scale(recording_whiten, estimate_scale_difference)
+
+plot_prepro({"rec_corrected": rec_corrected, "scaled_white_recording": scaled_white_recording}, TIME_RANGE, "Scaled whitened recording")
+
+```
+
+We can see a few of the effects. Let's also plot the 
+Whats going on here? Whitening scales the recording
+
+```{python}
+
+# Choose some example times that show the phenomenon well
+start_time = int(51.475 * rec_corrected.get_sampling_frequency())
+end_time = int(51.55 * rec_corrected.get_sampling_frequency())
+
+first_data = rec_corrected.get_traces(start_frame=start_time, end_frame=end_time, return_in_uV=True)
+third_data = scaled_white_recording.get_traces(start_frame=start_time, end_frame=end_time)
+
+# We add the offset with np.arange so the traces are vetically separated
+plt.plot(first_data + np.arange(first_data.shape[1])*500, color="k")
+plt.plot(third_data + np.arange(third_data.shape[1])*500, color="r")
+plt.xlabel("sample number)")
+
+```
+
+# Turn off the steps in KS! 
+
+We must remember to turn off! Note kS does opposite order, we can't necessary be sure internal assumptions of KS are
+met when we perform preprocessing outside of it. Make sure to carefully check the sorting results.
+
+Or use other sorters!
+
+
+```{python}
+
+import spikeinterface.sorters as si_sorters
+
+sorting = si_sorters.run_sorter(
+    "kilosort4",
+    recording_whiten,
+    folder="ks4_out",
+    remove_existing_folder=True,
+    verbose=True,
+    skip_kilosort_preprocessing=True,
+    do_correction=False,
+)
+print(sorting)
+
+```

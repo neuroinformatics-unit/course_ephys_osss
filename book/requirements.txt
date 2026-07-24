@@ -7,4 +7,5 @@ matplotlib
 scipy
 pandas
 kilosort
+remfile
 

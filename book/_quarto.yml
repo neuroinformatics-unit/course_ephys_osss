@@ -2,6 +2,8 @@ project:
   type: book
   output-dir: _site
 
+jupyter: course-ephys-venv
+
 execute:
   freeze: auto
 
@@ -25,7 +27,6 @@ book:
   date: "15/04/2026"
   chapters:
     - index.qmd
-    - introduction-presentation.qmd
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
     - preproecssing-steps-coding.qmd
@@ -40,6 +41,8 @@ format:
     theme:
       - cosmo
       - brand
+    css: custom.css
+    fig-dpi: 96
 
 
 

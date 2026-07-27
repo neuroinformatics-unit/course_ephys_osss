@@ -6,5 +6,6 @@ probeinterface
 matplotlib
 scipy
 pandas
+remfile
 kilosort
 

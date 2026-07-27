@@ -1,34 +1,34 @@
 # Preprocessing - coding
 \ 
-In this chapter we will explore in more detail the preprocessing steps used in extracellular electrophysiology. The theory behind these steps is explained in the previous slides LINK.
+In this chapter we will explore in more detail the preprocessing steps used in extracellular electrophysiology. The purpose of preprocessing is to take a potentially
+'noisy' recording and apply various processing steps to reduce the noise and isolate the signal. In our case, the signals of interset are recorded action potentials
+and the noise sources include electrical (e.g. XX, XX), thermal (??) and kinetic (e.g. physical movement of the probe in the brain).
 
-In the introduction, we ran three preprocessing steps, `phase_shift`, `bandpass_filter` and `common_reference`:
+This chapter will focus on the practical implementation of preprocessing steps using SpikeInterface, and the importance of visually checking the results.
+See the [previous chapter]() for details on the underlying theory.
 
-```{python}
-#| eval: false
+In this sesssion, we will add additional useful preprocessing steps as well as inspect the effects of other common preprocesing steps. 
+The steps we will explore are:
 
-import spikeinterface.preprocessing as si_prepro
+- **bandpass filtering**: Filters out low-frency oscilations (e.g. 50-60 Hz noise) and high-frequency oscilations (e.g. noise spikes) from the data. Applied separately per channel.
 
-phase_shift_recording = si_prepro.phase_shift(recording)
-filtered_recording = si_prepro.bandpass_filter(
-    phase_shift_recording, freq_min=300, freq_max=6000
-)
-cmr_recording = si_prepro.common_reference(
-    filtered_recording, operator="median"
-)
+- **bad channel detection** : Automatically detect channels that are dead, noisy or out-of-brain. These bad channels can be removed of interpolated (i.e filled in) with the data from surrounding channels.
 
-```
+- **common median referencing**: Removes noise that takes the form of strips through the data (i.e. occuring on all channels for a short time period). This is applied across all channels, separately per time point.
 
-In this sesssion, we will add additional useful preprocessing steps as well as inspect the effects of other common preprocesing steps. The steps we will explore are:
+- **highpass spatial filter**: A destriping algorithm (i.e. similar to common median referencing) introduced by the [IBL]() that accounts for slow oscilations of the signal across channels within the noise stripe.
 
-- **bad channel detection** : XXX
-- **motion correction** : XXX
-- **whiten** : XXX
-- **highpass spatial filter**: 
+- **motion correction** : A step to account for physical drift of the probe (typically vertical) in the brain. Attemps to estimate the drift and interpolate the channels to account for it.
 
-We will run this on a new dataset
+- **whiten** : Removes correlated noise across channels and helps isolate spikes on  a subset of channels. Has large effects of the data scaling and waveform shape.
+
+We will run this on a new dataset recorded on a 64-channel Cambridge Neurotech H5 probe. 
+Note that we will not apply the 'phase shift' step that we did in the introduction, as that step is only relevant for Neuropixel probes.
+See XXX page for information on the dataset and how to download it.
 
 # Downloading the data
+
+<include some information on the experiment, probably do this on a central 'dataset' page>
 
 In this section we will download the data we will use for the majority of the rest of the course. This dataset is a XXX.
 
@@ -36,44 +36,49 @@ SpikeInterface has a lot of useful utilities for downloading and saving data fro
 
 ```{python}
 
+import spikeinterface as si
+
 from pathlib import Path
 import numpy as np
 from spikeinterface.extractors import NwbRecordingExtractor
 
 s3_url = "https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5"
 DURATION_S = 90
-LOCAL_FOLDER = Path("nwb_first_slice")
+LOCAL_FOLDER = Path("_tmp/nwb_first_slice")
 
-series_paths = NwbRecordingExtractor.fetch_available_electrical_series_paths(
+if LOCAL_FOLDER.exists():
+    recording = si.load(LOCAL_FOLDER)
+else:
+    series_paths = NwbRecordingExtractor.fetch_available_electrical_series_paths(
+            file_path=s3_url,
+            stream_mode="remfile",
+        )
+
+    # TODO: Explain the series (dataset page)
+    for p in series_paths:
+        print("  -", p)
+
+    non_lfp = [p for p in series_paths if "lfp" not in p.lower()]
+    electrical_series_path = (non_lfp or series_paths)[0]
+
+    # stream_mode="remfile" (or "fsspec") reads bytes lazily over HTTP — no full download.
+    rec = NwbRecordingExtractor(
         file_path=s3_url,
         stream_mode="remfile",
+        electrical_series_path=electrical_series_path,
     )
 
-# TODO: Explain the series
-for p in series_paths:
-    print("  -", p)
+    end_frame = np.round(DURATION_S * rec.get_sampling_frequency()).astype(int)
+    rec_slice_remote = rec.frame_slice(start_frame=0, end_frame=end_frame)
 
-non_lfp = [p for p in series_paths if "lfp" not in p.lower()]
-electrical_series_path = (non_lfp or series_paths)[0]
-
-# stream_mode="remfile" (or "fsspec") reads bytes lazily over HTTP — no full download.
-rec = NwbRecordingExtractor(
-    file_path=s3_url,
-    stream_mode="remfile",
-    electrical_series_path=electrical_series_path,
-)
-
-end_frame = np.round(DURATION_S * rec.get_sampling_frequency()).astype(int)
-rec_slice_remote = rec.frame_slice(start_frame=0, end_frame=end_frame)
-
-recording = rec_slice_remote.save(
-    format="binary",
-    folder=LOCAL_FOLDER,
-    n_jobs=1,
-    chunk_duration="1s",
-    progress_bar=True,
-    overwrite=True
-)
+    recording = rec_slice_remote.save(
+        format="binary",
+        folder=LOCAL_FOLDER,
+        n_jobs=1,
+        chunk_duration="1s",
+        progress_bar=True,
+        overwrite=True
+    )
 
 
 ```
@@ -81,10 +86,10 @@ recording = rec_slice_remote.save(
 In future, to avoid redownloading the data each time, we can download from disk
 
 ```python
-if ...
-recording = si.load(LOCAL_FOLDER)
+if LOCAL_FOLDER.exists()
+    recording = si.load(LOCAL_FOLDER)
 else:
-    ... (download)
+    # download the data...
 ```
 
 use a dropdown here
@@ -93,13 +98,8 @@ DANDISET_ID = "000939"
 
 # Initial steps
 
-
-- no phase shift for this probe
-- bandpass filter before bad channel detection
-
-Before we start, we will define a function to plot.This will make it easy to compare before vs. after
-
-Note you can also view these in viewephys as per the last tutorial if you want to.
+Before we start, we will define a function to plot and compare multiple preprocessing steps. We can reuse this function through the rest of the tutorial.
+Also, feel free to instead visualise with [viewephys](https://github.com/int-brain-lab/viewephys) as we did in the [previous tutorial]().
 
 ```{python}
 
@@ -108,7 +108,17 @@ import spikeinterface.widgets as si_widgets
 import matplotlib.pyplot as plt
 
 def plot_prepro(recordings: dict, time_range: tuple[float]) -> None:
-    """"""
+    """
+    Plot multiple recordings in subplots.
+
+    Parameters
+    ----------
+    recordings :
+        A dictionary of recordings. The recordings will be plot and
+        the corresponding keys used as plot titles.
+    time_range: 
+        A tuple with the (start, stop) times of the data to plot.
+    """
     fig, axes = plt.subplots(
         1, len(recordings), figsize=(6 * len(recordings), 5),
         squeeze=False, layout="constrained",
@@ -125,29 +135,50 @@ def plot_prepro(recordings: dict, time_range: tuple[float]) -> None:
 
 ```
 
-Let's have a look at the effects of bandpass filtering:
+
+First, let's have a look at the effect of bandpass filtering on the data. We will plot the first 5 seconds of the data.
+
 
 ```{python}
-
-TIME_RANGE = (49, 49.01)
 
 import spikeinterface.preprocessing as si_prepro
 
 recording_bp = si_prepro.bandpass_filter(
-    recording, freq_min=300,
-                                         freq_max=6000)  # common values used based on AP waveform kinetics
+    recording, 
+    freq_min=300, # commonly used values used based on AP waveform kinetics
+    freq_max=6000
+) 
 
-plot_prepro({"raw": recording, "filtered": recording_bp}, TIME_RANGE)
+plot_prepro(
+    {"raw": recording, "filtered": recording_bp}, 
+    time_range=(0, 5)
+)
+
 ```
+
+The filtering operation removes a lot of contaminating low-frequency noise, realising a significant improvement to the data. 
+Plotting a shorter time window demonstrates how this improves resolution of individual spikes:
+
+```{python}
+
+TIME_RANGE = (49, 49.02)
+
+plot_prepro(
+    {"raw": recording, "filtered": recording_bp}, 
+    time_range=TIME_RANGE
+)
+
+```
+
 
 # Bad Channel Detection
 
-Next we can use SpikeInterface's `bad_channel_detection` function to detect recording channels that
-are either dead, noisy (e.g. due  to electrical wiring issue) or out of the brain. To do this, we will
-use the default `"coherence+psd"` function, which was ported from the IBL (link original implementation and paper
-).
+Individual contacts on a probe are liable to break and become 'dead' (no signal), 'noisy' (excessive random fluctuations)
+or may be 'out of brain' (i.e. a contigious set of channels at the end of the probe with no signal). 
 
-First, let's apply the bad channel detection and look at the data before and afterwards:
+The [IBL have developed an algorithm]() of automatically detecting bad channels, which has been ported to SpikeInterface.
+
+First, let's apply the bad channel detection to our data and look at the data before and afterwards:
 
 ```{python}
 
@@ -159,11 +190,14 @@ rec_clean_1 = recording_bp.remove_channels(bad_channel_ids_1)
 plot_prepro({"filtered": recording_bp, "bad channels removed": rec_clean_1}, TIME_RANGE)
 ```
 
-It didn't work! We need to adjust the settings
+**It didn't work!** We can still see the dead channels on our recording. Why is this? 
+
+It turns out that the IBL algorithm was developed for Neurpixel probes
+(NP1 probes) but we are using Cambridge Neurotech 64-channel probes. In this case, the default settings
+are not approrpiate for our data, and we need to adjust them slightly:
 
 ```{python}
 # Let's try again with different settings
-
 bad_channel_ids, channel_labels = si_prepro.detect_bad_channels(recording_bp, dead_channel_threshold=-0.25)
 print("second attempt labels:\n", channel_labels)
 
@@ -173,10 +207,11 @@ plot_prepro({"filtered": recording_bp, "bad channels removed": rec_clean}, TIME_
 
 ```
 
-Cool, we see that it works now
 
-WARNING ADOMINITION - ALWAYS VISUALISE AND CHECK PREPROCESSING STEPS! DON'T TRUST THE DEFAULTS ON YOUR DATA!
-PROBE BRAIN REGION ETC.
+::: {.callout-warning}
+This example demonstrates why it is critically important to **always visualise your data**
+to ensure the default arguments of the algorithms we are using are suitable for your recordings.
+:::
 
 
 # Common average referencing
@@ -197,11 +232,29 @@ plot_prepro({"filtered": rec_clean, "recording_cmr": recording_cmr}, TIME_RANGE)
 IBL also has the highpass spatial filter.
 
 ```{python}
-recording_hsf = si_prepro.highpass_spatial_filter(rec_clean, highpass_butter_wn=0.03)
+recording_hsf = si_prepro.highpass_spatial_filter(rec_clean, highpass_butter_wn=0.05)
 
 plot_prepro({"recording_cmr": recording_cmr, "recording_hsf": recording_hsf}, TIME_RANGE)
 
 ```
+
+# Things to try
+
+:::{.callout-tip}
+### Things to try
+
+- The time window we plot HAS IMPORTANT. Each spike is around 1-5 ms long, and so if we plot long time windows we don't have enough pixels on the screen to resolve spikes. Nonetheless this can reveal other patterns in the data (e.g. 50Hz noise). Play around with plotting different time windows (e.g. 10ms, 200 ms, 1s) etc. to get a feel for this.
+- Plot the data using the `mode=line` argument. Same data - a completely different perspective!
+- Play around with the filter cutoffs in bandpass filter. What happens if we set the XX very XXX or the XXX very XXX What happens if you set the bandpass filter minimum cutoff to zero? What frequencies are including now? Or set the maximum cutoff to 15000?
+
+- `return_in_uV=False`. Does the data look much different? What is the datatype now? Can you explain what has happened to the data? Use `.get_traces()`
+- CMR with special arguments
+- HSF?
+
+- Compute the Fourier transform of a raw data channel and plot the frequency spectrum
+- Perform spike detection (e.g. absolute threshold method) on the preprocessed data obtained with `get_traces()`
+
+:::
 
 # Motion correction
 
@@ -312,7 +365,7 @@ import spikeinterface.sorters as si_sorters
 sorting = si_sorters.run_sorter(
     "kilosort4",
     recording_whiten,
-    folder="ks4_out",
+    folder="_tmp/ks4_out",
     remove_existing_folder=True,
     verbose=True,
     skip_kilosort_preprocessing=True,

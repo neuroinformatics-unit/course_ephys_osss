@@ -1,4 +1,4 @@
-# Pipeline walkthrough with SpikeInterface {.unnumbered}
+# Pipeline walkthrough
 \
 In this chapter, we will implement a spike sorting pipeline from start to finish, using SpikeInterface.
 We will go through the key steps at a high level here, and develop the theory and add more complex methods and

@@ -163,12 +163,8 @@ For the spikeinterface-GUI, we can just use the sorting output of a larger datas
 
 **Plan**
 
-Something like?:
-
-- 20-30 minute talk on different types of extracellular ephys analysis. Some real use cases / papers
-- 20-30 minutes on walkthrough time alignment
-- 30 minutes: give a sorting output and some behavioural event times, construct a histogram 'by hand'
-- rest of the session (~2h) on using Pynapple?
+14:00-16:00 Wolf's Pynapple course
+16:00-17:00 Olivier on probe alignment
 
 ## General thoughts on course structure / content
 

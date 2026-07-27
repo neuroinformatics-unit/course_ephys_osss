@@ -5,6 +5,7 @@ spikeinterface[full]
 probeinterface
 matplotlib
 ipywidgets
+ipympl
 scipy
 pandas
 remfile

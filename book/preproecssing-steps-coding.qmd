@@ -249,9 +249,25 @@ plot_prepro({"recording_cmr": recording_cmr, "recording_hsf": recording_hsf}, TI
 :::{.callout-tip}
 ### Things to try
 
-There's no need to get through all of these — pick whatever looks interesting. The
-later groups build on the earlier ones, so feel free to stop wherever feels right.
-The labels are just a rough guide, not a judgement — dip into any group you fancy.
+There's no need to get through all of these — pick whatever looks interesting.
+
+
+
+
+
+- The time window we plot HAS IMPORTANT. Each spike is around 1-5 ms long, and so if we plot long time windows we don't have enough pixels on the screen to resolve spikes. Nonetheless this can reveal other patterns in the data (e.g. 50Hz noise). Play around with plotting different time windows (e.g. 10ms, 200 ms, 1s) etc. to get a feel for this.
+- Plot the data using the `mode=line` argument. Same data - a completely different perspective!
+- Play around with the filter cutoffs in bandpass filter. What happens if we set the XX very XXX or the XXX very XXX What happens if you set the bandpass filter minimum cutoff to zero? What frequencies are including now? Or set the maximum cutoff to 15000?
+
+- `return_in_uV=False`. Does the data look much different? What is the datatype now? Can you explain what has happened to the data? Use `.get_traces()`
+- CMR with special arguments
+- HSF?
+
+- Compute the Fourier transform of a raw data channel and plot the frequency spectrum
+- Perform spike detection (e.g. absolute threshold method) on the preprocessed data obtained with `get_traces()`
+
+
+
 
 **Beginner — get a feel for the data**
 
@@ -280,11 +296,11 @@ direction along the probe insertion path, as this offers less physical resistanc
 The majority of motion correction algorithms are based around detected spikes. The pattern of detected spikes is used as a 'barcode' which may move up or down,
 allowing motion to be tracked and corrected with interpolation. Therefore most motion correction algorithms have three main steps:
 
-- **Spike detection and localisation**:
+- **Spike detection and localisation**: This step detections spikes in the data and estimates their physical location in space (x, y, z coordinates) from the waveform.
 
-- **Motion estimation**:
+- **Motion estimation**: Using spike information, this estimates the probe movement based on how the detected spikes move up or down along the probe during the recording.
 
-- **Interpolation**:
+- **Interpolation**: Given the motion trace and recorded data, this interpolates (i.e. estimates the true data at a point given the collected data at surrounding points) the data back to what it would be given no motion.
 
 The main drift correction algorithms are the one used in Kilosort (`kilosort-like` in SpikeInterface), DREDGE and Medicine. SpikeInterface
 exposes all these through the `correct_motion` function using hand'y present terms which define how spike detection, motion estimation and interpolation is run.

@@ -29,6 +29,8 @@ book:
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
     - preproecssing-steps-coding.qmd
+    - unitmatch-presentation.qmd
+    - unitmatch-coding.qmd
     - concept-notes.qmd
     - references.qmd
     - planning.qmd

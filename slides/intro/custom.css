@@ -4,6 +4,20 @@
   margin-bottom: 0.35rem;
 }
 
+.reveal .slide.section-title-slide {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.reveal .slide.section-title-slide h2 {
+  margin: 0;
+  font-size: 1.75em;
+  line-height: 1.08;
+}
+
 .reveal .video-embed {
   display: block;
   width: 100%;
@@ -262,6 +276,10 @@
   margin-top: 0.5rem;
 }
 
+.reveal .slide.classic-findings-continuation h2 {
+  visibility: hidden;
+}
+
 .reveal img.slide-image-centered {
   display: block;
   margin: 0.4rem auto 0;
@@ -270,24 +288,24 @@
 }
 
 .reveal .math-goal-slide h2 {
-  border: 1px solid #9c9c9c;
-  padding: 0.28rem 0.55rem;
-  margin-bottom: 0.95rem;
+  margin-bottom: 1.1rem;
+  font-size: 1.15em;
+  line-height: 1.08;
 }
 
 .reveal .math-goal-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 3rem;
-  row-gap: 1rem;
+  column-gap: 2.6rem;
+  row-gap: 0.8rem;
   align-items: start;
   padding: 0 0.6rem;
 }
 
 .reveal .math-goal-quote {
-  font-size: 0.66em;
+  font-size: 0.62em;
   font-style: italic;
-  line-height: 1.38;
+  line-height: 1.32;
 }
 
 .reveal .math-goal-quote p {
@@ -303,20 +321,14 @@
   grid-column: 1 / span 2;
   text-align: center;
   color: #0f9d58;
-  font-size: 0.86em;
+  font-size: 1.6em;
   font-weight: 700;
   line-height: 1.05;
-  max-width: 620px;
-  margin: 0.05rem auto 0.15rem;
+  max-width: 900px;
+  margin: 0 auto 0.1rem;
 }
 
 .reveal .math-goal-quote-lower {
-  margin-top: 0.45rem;
+  margin-top: 0.3rem;
 }
 
-.reveal .math-goal-author {
-  grid-column: 1 / span 2;
-  text-align: center;
-  font-size: 0.64em;
-  margin-top: -0.15rem;
-}

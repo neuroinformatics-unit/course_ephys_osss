@@ -26,7 +26,9 @@ format:
 3. Downloading data for the course
 :::
 
-## Introduction to extracellular electrophysiology {.ephys-process-slide}
+## Introduction to extracellular electrophysiology {.section-title-slide}
+
+## Overview {.ephys-process-slide}
 
 ::: {.ephys-process-figures}
 <div class="ephys-process-left-figure">
@@ -96,7 +98,7 @@ format:
 
 ::::
 
-## Classic findings
+## &nbsp; {.classic-findings-continuation}
 
 :::: {.columns}
 
@@ -137,7 +139,7 @@ format:
 
 ![](images/the-recording-setup.png){fig-alt="Electrode to amplifier to analog to digital conversion to computer recording setup"}
 
-## Extracellular electrophysiological data {data-transition="none"}
+## Extracellular electrophysiological data {data-transition="slide-in none-out"}
 
 ![](images/extrcellular-line-image.png){fig-alt="Extracellular electrophysiology line traces across channels"}
 
@@ -147,49 +149,89 @@ format:
 
 ## The sorting pipeline
 
+![](images/pipeline-stepsi.png){fig-alt="Spike sorting pipeline steps" style="display: block; width: 100%; max-height: 590px; margin: 0 auto; object-fit: contain;"}
 
-## Course timeline review
 
-## SpikeInterface: a common API for open-source electrophysiological tools
+## Course timeline
 
-![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools"}
+::: {style="font-size: 0.62em; line-height: 1.25;"}
 
-## The goal of the course: fun and learning!
+<table style="width: 100%; border-collapse: separate; border-spacing: 1.2rem 0.45rem;">
+  <thead>
+    <tr>
+      <th style="padding: 0.15rem 0.35rem;">Session</th>
+      <th style="padding: 0.15rem 0.35rem;">When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 1: Introduction</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Monday, 10:00-13:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 2: Raw data quality and preprocessing</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Tuesday, 10:00-13:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 3: Sorting</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Tuesday, 14:00-17:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 4: Sorting quality, postprocessing, and curation</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Wednesday, 10:00-13:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 5: Analysing outputs (Pynapple and probe alignment)</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Wednesday, 14:00-17:00</td>
+    </tr>
+  </tbody>
+</table>
 
-::: {.r-fit-text style="color:#2e8b57;"}
-Mathematical topics and being "comfortable in confusion"
 :::
-
-<br>
-
-> It is like being lost in a jungle and trying to use all the knowledge that you can gather to come up with some new tricks, and with some luck, you might find a way out.
->
-> — **Maryam Mirzakhani**, Fields medal winner
-
-> So each of these breakthroughs... couldn't exist without the many months of stumbling around in the dark that precede them.
->
-> — **Andrew Wiles**, solved Fermat's last theorem
 
 ## The goal of the course: fun and learning! {.math-goal-slide}
 
-<div class="math-goal-grid">
-  <div class="math-goal-quote">
-    <p>It is like being lost in a jungle and trying to use all the knowledge that you can gather to come up with some new tricks, and with some luck, you might find a way out.</p>
-    <p><strong>Maryam Mirzakhani</strong>, Fields medal winner</p>
-  </div>
-  <div class="math-goal-quote">
-    <p>So each of these breakthroughs, they are the culmination of, and couldn't exist without, the many months of stumbling around in the dark that precede them.</p>
-    <p><strong>Andrew Wiles</strong>, solved Fermat's last theorem</p>
-  </div>
-  <div class="math-goal-center">Mathematical topics and being "comfortable in confusion"</div>
-  <div class="math-goal-quote math-goal-quote-lower">
-    <p>My advisor once told me that doing math is 98% being confused and 2% figuring it out.</p>
-  </div>
-  <div class="math-goal-quote math-goal-quote-lower">
-    <p>If I spend an entire day and all I do is understand this one feature of this one object that I didn't understand before, then that's a great day.</p>
-  </div>
-  <div class="math-goal-author"><strong>Mathematics PhD Students</strong></div>
-</div>
+:::: {.math-goal-grid}
+
+::: {.math-goal-quote}
+It is like being lost in a jungle and trying to use all the knowledge that you can gather to come up with some new tricks, and with some luck, you might find a way out.
+
+**Maryam Mirzakhani**, Fields medal winner
+:::
+
+::: {.math-goal-quote}
+So each of these breakthroughs, they are the culmination of, and couldn't exist without, the many months of stumbling around in the dark that precede them.
+
+**Andrew Wiles**, solved Fermat's last theorem
+:::
+
+::: {.math-goal-center}
+Being comfortable in confusion
+:::
+
+::: {.math-goal-quote .math-goal-quote-lower}
+My advisor once told me that doing math is 98% being confused and 2% figuring it out.
+
+**PhD student**
+:::
+
+::: {.math-goal-quote .math-goal-quote-lower}
+If I spend an entire day and all I do is understand this one feature of this one object that I didn't understand before, then that's a great day.
+
+**PhD student**
+:::
+
+::::
+
+## Coding a pipeline with SpikeInterface {.section-title-slide}
+
+## SpikeInterface
+
+::: {style="font-size: 0.72em; line-height: 1.08; margin-top: -0.25rem; margin-bottom: 0.2rem;"}
+A common API for open-source electrophysiological tools
+:::
+
+![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools" style="display: block; width: 100%; max-height: 700px; margin: 0 auto; object-fit: contain;"}
 
 ## The coding segment
 
@@ -198,5 +240,7 @@ Mathematical topics and being "comfortable in confusion"
 
 Suggestions on how to run the code
 :::
+
+## Downloading data for the course {.section-title-slide}
 
 

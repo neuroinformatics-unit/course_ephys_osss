@@ -139,7 +139,7 @@ format:
 
 ![](images/the-recording-setup.png){fig-alt="Electrode to amplifier to analog to digital conversion to computer recording setup"}
 
-## Extracellular electrophysiological data {data-transition="slide-in none-out"}
+## Extracellular electrophysiological data {data-transition="none"}
 
 ![](images/extrcellular-line-image.png){fig-alt="Extracellular electrophysiology line traces across channels"}
 

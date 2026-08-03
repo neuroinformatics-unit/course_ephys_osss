@@ -803,6 +803,17 @@ A PETH aligns all activity (spikes) with respect to the event times.
 
 ### Tuning curves
 
+A typical neuroscientific analysis is that of computing tuning curves:
+the mean activity curve with respect to a variable of interest.
+Well known examples are the response of [neurons in the visual 
+cortex with respect to the orientation of a bar stimulus](https://physoc.onlinelibrary.wiley.com/doi/abs/10.1113/jphysiol.1962.sp006837), 
+the response of [neurons in the postsubiculum with respect to head direction](https://www.jneurosci.org/content/10/2/420.long), 
+or the response of [hippocampal neurons with respect to position on a track](https://www.sciencedirect.com/science/article/pii/0006899371903581?via%3Dihub).
+
+Tuning curves can be computed from both discrete (spike times) and continuous activity.
+Pynapple's `compute_tuning_curves` function handles both cases, depending on whether you pass a `Ts` or `Tsd` as data.
+In what follows, we'll simulate computing tuning curves from a circular variable (e.g. bar angle, or head direction).
+
 Let's start by simulating some spiking units that are clearly modulated by a circular feature:
 ```{python}
 import pandas as pd
@@ -861,10 +872,39 @@ tsgroup = nap.TsGroup({
     for i in range(n_neurons)
 })
 epochs = nap.IntervalSet(0, 10)
-tsgroup
 ```
 
-We can use Pynapple to easily compute tuning curves with respect to the circular feature.  
+Let's visualise what we generated.  
+We now have a random walk in the feature space:
+```{python}
+#| code-fold: true
+#| code-summary: "Show plotting code"
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(constrained_layout=True, figsize=(6, 4))
+ax.plot(feature.restrict(epochs), linestyle="none", marker="o")
+ax.set_yticks([0, 2*np.pi], ["0", "2π"])
+ax.set_ylim(0, 2*np.pi)
+ax.set_xlabel("time(s)")
+ax.set_ylabel("feature (rad)")
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+plt.show()
+```
+As well as the activity of 6 neurons, modulated by the feature:
+```{python}
+#| code-fold: true
+#| code-summary: "Show plotting code"
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(constrained_layout=True, figsize=(6, 4))
+ax.plot(tsgroup.restrict(epochs).to_tsd(), linestyle="none", marker="|")
+ax.tick_params(axis="y", length=0)
+ax.set_xlabel("time(s)")
+ax.spines['right'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.spines['top'].set_visible(False)
+plt.show()
+```
+We can now use Pynapple to easily compute tuning curves with respect to the circular feature.  
 The output is an [`xarray.DataArray`](https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html):
 ```{python}
 tuning_curves = nap.compute_tuning_curves(
@@ -876,14 +916,9 @@ tuning_curves = nap.compute_tuning_curves(
     )
 tuning_curves
 ```
+It has 2 dimensions, one for the neurons, and one for the feature bins.
 
 These can be easily visualised:
-```{python}
-#| output: false
-import matplotlib.pyplot as plt
-tuning_curves.plot.line(x="feature", add_legend=False)
-plt.ylabel("firing rate [Hz]")
-```
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
@@ -898,38 +933,60 @@ ax.spines['right'].set_visible(False)
 ax.spines['top'].set_visible(False)
 plt.show()
 ```
+We can see that the mean activity of the neurons is clearly modulated by the feature, and that each neuron
+has a clear preference, matching our generation pattern.
+For more, take a look at the Pynapple [user guide on tuning curves](https://pynapple.org/user_guide/06_tuning_curves.html), 
+as well as the [real examples](https://pynapple.org/examples/tutorial_HD_dataset.html).
 
 ### Decoding
-Given some tuning curves, Pynapple allows for easy [Bayesian decoding](https://journals.physiology.org/doi/full/10.1152/jn.1998.79.2.1017?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org):
+If we know the mean activity of many neurons with respect to a variable, we should be able to
+predict the current value of that variable, given the current activity of the neurons.
+This is the premise of [Bayesian decoding](https://journals.physiology.org/doi/full/10.1152/jn.1998.79.2.1017?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org).
+The tuning curves of a population of neurons is used as a 'template' of what activity matches what feature value.
+Combined with Poisson statistics, Bayesian decoding provides a simple but principled way of neural decoding. 
+
+Using Pynapple, we can easily do Bayesian decoding, provided we have:
+
+- a set of tuning curves computed using `compute_tuning_curves`
+- the activity of the neurons matching the tuning curves
+- a (temporal) bin size, to bin activity in
+- a smoothing window, if we want to smooth the activity (this often helps for Bayesian decoding, by reducing noise)
 ```{python}
 decoded, proba_feature = nap.decode_bayes(
     tuning_curves=tuning_curves,
     data=tsgroup,
     epochs=epochs,
-    sliding_window_size=4,
     bin_size=0.02,
+    sliding_window_size=4,
 )
 decoded
 ```
+The output consists of a `Tsd`, containing the predicted feature values at every time step,
+and a `TsdFrame` containing the estimated probabilities of each feature value at every time step:
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
 import matplotlib.pyplot as plt
 fig, (ax1, ax2) = plt.subplots(figsize=(6, 5), nrows=2, ncols=1, sharex=True)
 ax1.plot(
-    feature.times(),
-    feature.values,
+    feature,
     label="true",
+    linestyle="none",
+    marker="o",
+    markersize=4,
+    alpha=0.5
 )
-ax1.scatter(
-    decoded.times(),
-    decoded.values,
+ax1.plot(
+    decoded,
     label="decoded",
     c="orange",
+    linestyle="none",
+    marker="o",
+    markersize=3,
 )
 ax1.spines['right'].set_visible(False)
 ax1.spines['top'].set_visible(False)
-fig.legend(frameon=False, bbox_to_anchor=(0.9, 1.0))
+fig.legend(frameon=False, bbox_to_anchor=(1.1, 0.8))
 ax1.set_ylabel("feature")
 ax1.set_yticks([0, 2*np.pi], ["0", "2π"])
 proba_feature = (proba_feature.values - np.min(proba_feature.values, axis=1, keepdims=True)) / np.ptp(proba_feature.values, axis=1,keepdims=True)
@@ -941,6 +998,8 @@ ax2.set_ylabel("feature")
 ax2.set_yticks([0, 2*np.pi], ["0", "2π"])
 plt.show()
 ```
+For more, take a look at the Pynapple [user guide on decoding](https://pynapple.org/user_guide/07_decoding.html), 
+as well as the [real examples](https://pynapple.org/examples/tutorial_HD_dataset.html).
 
 ## 6. Integration with other packages
 

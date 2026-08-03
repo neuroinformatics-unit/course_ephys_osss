@@ -133,16 +133,16 @@ As we can see - the raw data looks terrible! It is severely contaminated, mostly
 
 ## Preprocessing
 
-Below, we will apply three key preprocessing steps: 
+Below, we will apply three preprocessing steps to help isolate our signal of interest (action potentials) from the noise: 
 
 **phase_shift** : corrects a hardware artefact in the Neuropixels probe 
-which causes small shifts between the recording time across nearby channels.
+which causes small shifts in time across nearby channels.
 
-**bandpass_filter** : removes high and low frequency oscillations from the data. It is applied to each channel separately. 
+**bandpass_filter** : removes high and low frequency oscillations from the data. It is applied to each channel separately, across all time points. 
 
-**commmon_reference** : removes noise spikes that appear as verticle stripes across the data. It is applied across channels separately at each timepoint.
+**commmon_reference** : removes noise that appear as verticle stripes across the data. It is applied to each timepoint separately, across all channels.
 
-To preprocess the data, we will pass our recording object into functions that return a new, recording object. e.g. ```filtered_recording = bandpass_filter(recording)```. We can do this for every step in the preprocessing chain:
+To preprocess the data, we will pass our recording object into functions that return a new, preprocessed recording object. e.g. ```filtered_recording = bandpass_filter(recording)```. We can do this for every step in the preprocessing chain:
 
 ```{python}
 import spikeinterface.preprocessing as si_prepro

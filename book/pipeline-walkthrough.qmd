@@ -46,7 +46,7 @@ print(recording)
 We need to tell SpikeInterface where the data is on our machine, and what [data stream](concept-notes.qmd#spikeglx-streams)💡 we want to load. If you are unsure of the stream, 
 run the function without the `stream_id` argument and SpikeInterface will prompt you with the available streams.
 
-Because we want to load the AP data stream for spike sorting, we pass `"imec0.ap"`.
+Because we want to load the AP ("Action Potential") data stream for spike sorting, we pass `"imec0.ap"`.
 
 :::{.callout-note #lazy-loading}
 SpikeInterface uses 'lazy loading', which means at this stage no data is actually loaded into memory. Data is only loaded when we request it (e.g. for visualisation, or spike sorting). This makes operations very fast.

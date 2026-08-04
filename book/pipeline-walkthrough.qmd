@@ -425,7 +425,7 @@ print(spike_times)
 
 The action potential waveforms are important for assessing unit quality. For example, we expect that the waveforms of spikes which belong to a single unit are all similar.
 
-To compute waveforms in SpikeInterface, we can use the `waveforms` extension. This will 'chop out' the spike waveform from the data, with a time window specified by the `ms_before` and `ms_after` (the spike peak) arguments. For example in the schematic below, we could cut out the blue spike in a window defined by the red blox:
+To compute waveforms in SpikeInterface, we can use the `waveforms` extension. This will 'chop out' the spike waveform from the data, with a time window specified by the `ms_before` and `ms_after` (the spike peak) arguments. For example in the schematic below, we could cut out the blue spike in a window defined by the red box:
 
 ![Example raw trace segment with an artifact highlighted in red.](images/intro-waveforms.png)
 

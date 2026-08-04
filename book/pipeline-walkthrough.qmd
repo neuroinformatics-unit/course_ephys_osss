@@ -235,7 +235,7 @@ print(
 )
 ```
 
-::: {.callout-note warning}
+::: {.callout-warning}
 
 If SpikeInterface does not automatically load the groups from your probe, you can set them manually with the `set_property()` function (see [here](https://spikeinterface.readthedocs.io/en/latest/tutorials/core/plot_1_recording_extractor.html#recording-objects) for an example). 
 

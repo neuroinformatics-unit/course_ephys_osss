@@ -123,6 +123,7 @@ si_widgets.plot_traces(
 plt.show()
 ```
 
+This plot is a heatmap view of the data: time in seconds is on the x-axis, and each row of the y-axis is the data from a separate recording channel (ordered by depth). The colour of the pixel indicate the voltage on that recording channel at that timepoint.
 
 `return_in_uV` to ensure the data is returned in microvolts, as by default 
 most electrophysiological recordings are [stored as unitless `int16` values](concept-notes.qmd#data-storage-in-int16-and-scaling-to-uv)💡.
@@ -328,7 +329,7 @@ sorting = si_sorters.run_sorter(
 print(sorting)
 ```
 
-The sorting output is written to disk. The output contains all of the output files of the sorter, and its organisation is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each units ('templates').
+The sorting output is written to disk. The output contains all of the output files of the sorter, and its organisation is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
 
 In SpikeInterface, we can access the spike times and unit assignments in a
 sorter-independent manner, using the [`sorting`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseSorting) object. For example, to

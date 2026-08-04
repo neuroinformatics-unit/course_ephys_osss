@@ -1,0 +1,11 @@
+jupyter
+nbformat
+ipykernel
+spikeinterface[full]
+probeinterface
+matplotlib
+scipy
+pandas
+kilosort
+pynapple
+dandi

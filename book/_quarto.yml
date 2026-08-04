@@ -40,6 +40,7 @@ book:
     - preprocessing-steps-presentation.qmd
     - preproecssing-steps-coding.qmd
     - spike-sorting-coding.qmd
+    - pynapple.qmd
     - concept-notes.qmd
     - references.qmd
     - planning.qmd

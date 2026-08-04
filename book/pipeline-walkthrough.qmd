@@ -133,11 +133,11 @@ most electrophysiological recordings are [stored as unitless `int16` values](con
 :::{.callout-tip}
 ### Tip
 In general when working with raw data, you can use [`recording.get_channel_locations()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseRecording.get_channel_locations) to inspect the default channel ordering of the 
-channels, and [`order_channels_by_depth()`](https://spikeinterface.readthedocs.io/en/stable/api.html#spikeinterface.core.order_channels_by_depth) function can be used to get the indicies for reordering.
+channels, and [`order_channels_by_depth()`](https://spikeinterface.readthedocs.io/en/stable/api.html#spikeinterface.core.order_channels_by_depth) function can be used to get the indices for reordering.
 
 :::
 
-As we can see - the raw data looks terrible! It is severely contaminated by electrical noise. We will need to preprocess it to tidy it up.
+Our signal of interest are action potentials recorded on the probe, however, we cannot see any in the raw data! It is severely contaminated by noise e.g. electrical noise. We will need to preprocess the recording to reduce the noise and isolate our signal of interest.
 
 ## Preprocessing
 

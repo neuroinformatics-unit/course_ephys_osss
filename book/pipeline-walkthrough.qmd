@@ -24,7 +24,7 @@ Let's get started!
 First, we will load the data with SpikeInterface.
 
 SpikeInterface can load data from many different of acquisition systems, using functions within its [extractors module](https://spikeinterface.readthedocs.io/en/stable/modules/extractors.html). As our data is from SpikeGLX, we will use the 
-[]`read_spikeglx`](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) method:
+[`read_spikeglx`](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) method:
 
 ```{python}
 import spikeinterface.extractors as si_extractors

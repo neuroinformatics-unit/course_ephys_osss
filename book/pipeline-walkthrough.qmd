@@ -473,7 +473,7 @@ plt.show()
 
 ### Amplitudes
 
-Finally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable througghout a recording. Changes in spike amplitudes may indicate problems with hte neuron health, drift, or other issues. 
+Finally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable throughout a recording. Changes in spike amplitudes may indicate problems with the neuron health, drift, or other issues. 
 
 To compute the spike amplitudes, we can run:
 

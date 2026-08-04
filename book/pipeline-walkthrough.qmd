@@ -454,7 +454,7 @@ We can compute the extension and access the templates with:
 ```{python}
 analyzer.compute("templates")
 
-templates = analyzer.get_extension("templates").data["average"]
+templates = analyzer.get_extension("templates").get_data()
 
 print(
     templates.shape

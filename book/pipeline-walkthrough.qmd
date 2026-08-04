@@ -400,7 +400,7 @@ These are not loaded by SpikeInterface. Instead, the sorting analzyer will alway
 
 ### Selecting spikes
 
-In our sorting, we can have many many detected spikes. This may be in the order of millios of spikes for an hour long recording.
+In our sorting, we can have many many detected spikes. This may be in the order of millions of spikes for an hour long recording. When performing experiments with very long recordings (e.g. days or weeks) billions of spikes may be detected!
 
 In general, we will compute summary statistics over metrics computed from individual spikes. Therefore, including millions of spikes is computationally intensive while providing marginal gains. Instead, we can subselect spikes to include in postprocessing computations (typically, 3-500 spikes per unit is used a default).
 

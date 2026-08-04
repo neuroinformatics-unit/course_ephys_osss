@@ -24,7 +24,7 @@ Let's get started!
 First, we will load the data with SpikeInterface.
 
 SpikeInterface can load data from many different of acquisition systems, using functions within its [extractors module](https://spikeinterface.readthedocs.io/en/stable/modules/extractors.html). As our data is from SpikeGLX, we will use the 
-[`read_spikeglx`](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) method:
+[]`read_spikeglx`](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) method:
 
 ```{python}
 import spikeinterface.extractors as si_extractors
@@ -46,7 +46,7 @@ print(recording)
 We need to tell SpikeInterface where the data is on our machine, and what [data stream](concept-notes.qmd#spikeglx-streams)💡 we want to load. If you are unsure of the stream, 
 run the function without the `stream_id` argument and SpikeInterface will prompt you with the available streams.
 
-Because we want to load the AP ("Action Potential") data stream for spike sorting, we pass `"imec0.ap"`.
+Because we want to load the AP data stream for spike sorting, we pass `"imec0.ap"`.
 
 :::{.callout-note #lazy-loading}
 SpikeInterface uses 'lazy loading', which means at this stage no data is actually loaded into memory. Data is only loaded when we request it (e.g. for visualisation, or spike sorting). This makes operations very fast.
@@ -236,7 +236,7 @@ print(
 )
 ```
 
-::: {.callout-warning}
+::: {.callout-note warning}
 
 If SpikeInterface does not automatically load the groups from your probe, you can set them manually with the `set_property()` function (see [here](https://spikeinterface.readthedocs.io/en/latest/tutorials/core/plot_1_recording_extractor.html#recording-objects) for an example). 
 
@@ -298,11 +298,11 @@ Now we have our preprocessed data, and have visually confirmed the data quality 
 
 ## Sorting
 
-Now we are ready to move onto spike sorting. The goal of spike sorting is to take our preprocessing recording with clear action potentials, and detect these action potentials and sort them as coming from different neurons, based on their waveform and position on the probe.
+Now we are ready to move onto spike sorting. The goal of spike sorting is to take our preprocessing recording with clear action potentials, and detect these action potentials and sort them as coming from different neurons, based on their waveform and positio on the probe.
 
-We can pass the recording to SpikeInterface's [`run_sorter()`](https://spikeinterface.readthedocs.io/en/stable/api.html#spikeinterface.sorters.run_sorter) function, which allows us to easily switch between different sorters. There are [many possible spike sorters](https://spikeinterface.readthedocs.io/en/stable/modules/sorters.html#supported-spike-sorters) to choose from, today we will use Kilosort 4.
+We can pass the recording to SpikeInterface's []`run_sorter()`](https://spikeinterface.readthedocs.io/en/stable/api.html#spikeinterface.sorters.run_sorter) function, which allows us to easily switch between different sorters. There are [many possible spike sorters](https://spikeinterface.readthedocs.io/en/stable/modules/sorters.html#supported-spike-sorters) to choose from, today we will use Kilosort 4.
 
-By default, [Kilosort 4](https://github.com/MouseLand/Kilosort) will perform similar preprocessing steps to which we have already applied (it does highpass filtering and common average referencing).
+Kilosort 4 by default will perform similar preprocessing steps to which we have already applied (it does highpass filtering and common average referencing).
 
 As such, we will skip these steps, as we have already run these steps in SpikeInterface (we cannot turn filtering off, so just set it to a very low cutoff).
 
@@ -328,11 +328,16 @@ sorting = si_sorters.run_sorter(
 
 ```
 
-The sorting output is written to disk. The output contains all of the output files of the sorter, and its organisation is sorter-dependent. As well as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
+The sorting output is written to disk. The output contains all of the output files of the sorter, and its organisation is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
 
-In SpikeInterface, we can access the spike times and unit assignments in a
-sorter-independent manner, using the [`sorting`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseSorting) object. For example, to
-get the spike times and unit assignments:
+In SpikeInterface, we can access the spike times and unit assignments in a sorter-independent manner, using the [`sorting`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseSorting) object:
+
+```{python}
+print(sorting)
+```
+
+
+For example, to get the spike times and unit assignments:
 
 ```{python}
 
@@ -425,7 +430,7 @@ print(spike_times)
 
 The action potential waveforms are important for assessing unit quality. For example, we expect that the waveforms of spikes which belong to a single unit are all similar.
 
-To compute waveforms in SpikeInterface, we can use the `waveforms` extension. This will 'chop out' the spike waveform from the data, with a time window specified by the `ms_before` and `ms_after` (the spike peak) arguments. For example in the schematic below, we could cut out the blue spike in a window defined by the red box:
+To compute waveforms in SpikeInterface, we can use the `waveforms` extension. This will 'chop out' the spike waveform from the data, with a time window specified by the `ms_before` and `ms_after` (the spike peak) arguments. For example in the schematic below, we could cut out the blue spike in a window defined by the red blox:
 
 ![Example raw trace segment with an artifact highlighted in red.](images/intro-waveforms.png)
 
@@ -433,10 +438,10 @@ To compute waveforms in SpikeInterface, we can use the `waveforms` extension. Th
 analyzer.compute("waveforms", ms_before=1.0, ms_after=2.0)
 ```
 
-The waveforms array is three dimensional `(num waveforms, num samples, num channels)`
+The waveforms array is three dimensional `(num waveforms, num samples, num channels)
 
 ```{python}
-waveforms = analyzer.get_extension("waveforms").get_data()
+waveforms = analyzer.get_extension("waveforms").data["waveforms"]
 
 print(waveforms.shape)
 
@@ -453,14 +458,14 @@ plt.show()
 
 ### Templates
 
-The template is a representative waveform from a putative neuron. Often, it is computed as the average waveform from all of the spikes that were assigned to a unit.
+The template is a representative wavecform from a putative neuron. Often, it is computed as the average waveform from all of the spikes that were assigned to a unit.
 
 We can compute the extension and access the templates with:
 
 ```{python}
 analyzer.compute("templates")
 
-templates = analyzer.get_extension("templates").get_data()
+templates = analyzer.get_extension("templates").data["average"]
 
 print(
     templates.shape
@@ -479,7 +484,7 @@ plt.show()
 
 ### Amplitudes
 
-Finally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable throughout a recording. Changes in spike amplitudes may indicate problems with the neuron health, drift, or other issues. 
+Finally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable througghout a recording. Changes in spike amplitudes may indicate problems with hte neuron health, drift, or other issues. 
 
 To compute the spike amplitudes, we can run:
 
@@ -487,7 +492,7 @@ To compute the spike amplitudes, we can run:
 
 analyzer.compute("spike_amplitudes")
 
-amplitudes = analyzer.get_extension("spike_amplitudes").get_data()
+amplitudes = analyzer.get_extension("spike_amplitudes").data["amplitudes"]
 
 print(amplitudes)
 ```

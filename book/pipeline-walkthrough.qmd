@@ -481,7 +481,7 @@ To compute the spike amplitudes, we can run:
 
 analyzer.compute("spike_amplitudes")
 
-amplitudes = analyzer.get_extension("spike_amplitudes").data["amplitudes"]
+amplitudes = analyzer.get_extension("spike_amplitudes").get_data()
 
 print(amplitudes)
 ```

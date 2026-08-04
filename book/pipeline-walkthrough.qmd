@@ -433,7 +433,7 @@ To compute waveforms in SpikeInterface, we can use the `waveforms` extension. Th
 analyzer.compute("waveforms", ms_before=1.0, ms_after=2.0)
 ```
 
-The waveforms array is three dimensional `(num waveforms, num samples, num channels)
+The waveforms array is three dimensional `(num waveforms, num samples, num channels)`
 
 ```{python}
 waveforms = analyzer.get_extension("waveforms").get_data()

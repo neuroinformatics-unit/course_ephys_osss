@@ -21,7 +21,17 @@ book:
         city: London
         country: United Kingdom
         url: https://www.sainsburywellcome.org/web/
-  - name: Please add your name here
+  - name: Alessio Buccino
+    url: https://github.com/alejoe91
+    email: alessio.buccino@alleninstitute.org
+    orcid: 0000-0003-3661-527X
+    corresponding: false
+    affiliations:
+      - id: AIND
+        name: Allen Institute for Neural Dynamics
+        city: Seattle
+        country: USA
+        url: https://alleninstitute.org/
   date: "15/04/2026"
   chapters:
     - index.qmd
@@ -29,6 +39,7 @@ book:
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
     - preproecssing-steps-coding.qmd
+    - spike-sorting-coding.qmd
     - pynapple.qmd
     - concept-notes.qmd
     - references.qmd

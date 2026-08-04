@@ -326,7 +326,6 @@ sorting = si_sorters.run_sorter(
     highpass_cutoff=0.1,
 )
 
-print(sorting)
 ```
 
 The sorting output is written to disk. The output contains all of the output files of the sorter, and its organisation is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
@@ -442,7 +441,13 @@ waveforms = analyzer.get_extension("waveforms").data["waveforms"]
 print(waveforms.shape)
 
 # This is the waveform of the 19th spike (chosen as it looks nice)
-plt.imshow(waveforms[18, :, :].T, aspect="auto")
+plt.imshow(
+    waveforms[18, :, :].T, 
+    cmap="RdBu_r",
+    vmin=-200,
+    vmax=200,
+    aspect="auto"
+    )
 plt.show()
 ```
 

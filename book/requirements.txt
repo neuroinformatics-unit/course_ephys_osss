@@ -1,9 +1,15 @@
 jupyter
 nbformat
 ipykernel
-spikeinterface[full]
+scipy
+pandas
+remfile
+hbdscan
+spikeinterface[full, widgets]
 probeinterface
 matplotlib
+ipympl
+ipywidgets
 scipy
 pandas
 kilosort

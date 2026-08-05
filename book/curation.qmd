@@ -148,39 +148,42 @@ So... what's a Curation. And why does it have a capital C?
 
 Spike sorters make mistakes -- sometimes lots of mistakes! So we need to look at the spike sorting output. Then we can adjust the sorter's default settings (then take a look at the results) in the hope that their output improves, or we can curate what comes out of them.
 
+TODO: Make consistent with Glossary
 It's helpful to remind ourselves what the definition of "neuron" and "unit" are:
 
   - **Neuron**: a neuron, an actual cell.
   - **Unit**: something a spike sorter thinks is a neuron
 
-Note that some people call units "clusters". The common "mistakes" that spike sorters make are:
+Note that some people call units "clusters". 
 
-  1) Include a unit which is clearly noise or an artefact
+The common "mistakes" that spike sorters make are:
+
+  1) Include a unit which is clearly noise or caused by an artefact
   2) Take the spikes from one neuron but sorts them into two units (over-splitting)
   3) Takes the spikes from two neurons but sorts them into one unit (over-merging)
 
 To counter these errors we need to
 
-  1) Label the units
+  1) Label the units, to indicate their quality
   2) Merge over-split units
   3) Split over-merged units
 
 In SpikeInterface a **Curation** is a list of decisions. These decisions are labels, merges and splits. As we proceed, we'll create **Curation**s by using the GUI or by using tools inside SpikeInterface.
 
-# Manual Label
+# Manual Labelling
 
 First, we will try to attach quality labels to units using some different approaches. The labels we'll use are
 
-  - "good" -- This unit looks like a single, well sorted neuron
-  - "mua" (multi-unit activity) -- This looks like a real neural signal, but it doesn't come from a single neuron
-  - "noise" -- This does not come from a neural signal
+  - **good"*: this unit looks like a single, well sorted neuron
+  - **mua** (multi-unit activity): this looks like a real neural signal, but it doesn't come from a single neuron
+  - **noise**: this does not come from a neural signal
 
-::: {.callout-tip collapse="true"}
+::: {#tip-science .callout-tip collapse="true"}
 ## The curation you use depends on your science
 
-Suppose you are interested in very specific cells. Ones that only respond to certain stimuli and live in a specific brain area. You're expecting to get a handful of these per recording. In this case, your scientific question depends sensitively on the fact you're looking at a good unit. Hence you need to go in a surgically check that each unit you keep is "good".
+Suppose you are interested in very specific cells. Ones that only respond to certain stimuli and live in a specific brain area. You're expecting to record from only a handful of these neurons per recording. In this case, your scientific question depends sensitively on the fact you're looking at a good unit. Hence you need to go in a surgically check that each unit you keep is "good".
 
-On the other hand, maybe you're doing population level questions. How does the overall firing rate different between brain states? What are the low-dimensional dynamics? In this case, the individual nature of each unit is less important (or can be important, depending on your methods...). Hence you can be a bit less careful: get rid of the stuff that's obviously noise and continue.
+On the other hand, maybe you're doing population level questions. How does the overall firing rate different between brain states? What are the low-dimensional dynamics? In this case, the individual nature of each unit may be less important. Hence you can be a bit less careful: get rid of the stuff that's obviously noise and continue.
 
 Overall, the curation you use depends on your scientific question and your downstream methods.
 :::
@@ -204,19 +207,21 @@ run_mainwindow(
 )
 ```
 
-"Curation mode" allows us to label units (and merge and split them). We can label a unit as "good" by typing "g", "mua" by typing "m" and "noise" by typing "n". We'll now all manually curate our analyzers. Here are some things to look out for:
+"Curation mode" allows us to label units (and merge and split them). We can label a unit as "good" by typing "g", "mua" by typing "m" and "noise" by typing "n". We'll now all manually curate our analyzers. Next we will look at a number of features of the sorted units that can help us determine whether they are "good", "mua" or "noise":
 
 ### Curation: auto-correlograms
 
-After spiking, a neuron has to rest for a while. So if a unit has two spikes within e.g. 1ms of each other, that's a sign that something in the sorting has gone wrong. The auto-correlogram helps you see these "refractory period violations". To make the histogram in the auto-correlogram plot, you ask: how many spikes occur between 0-1ms after another spike. Then: how many spikes occurs between 1-2ms after another spike? Then 2-3ms? And so on. Here's a low-event histogram.
+After spiking, a neuron has to [rest for a while](https://en.wikipedia.org/wiki/Refractory_period_(physiology)). So if a unit has two spikes within e.g. 1ms of each other, that's a sign that something in the sorting has gone wrong as it is not physiologically possible for action potentials to fire that rapidly. 
 
-![A simple auto-correlogram histogram. For this unit, ZERO spikes occured 0-1ms after another spike. Three spikes occured 1-2ms after another spike. Zero spikes occured 2-9ms after another spike, and one spike occured 9-10ms after another spike.](images/curate/curate_lilhist.png)
+The auto-correlogram helps you see these "refractory period violations". To make the auto-correlogram plot, you ask: how many spikes occur between 0-1ms after another spike. Count them and plot them as a bar. Then: how many spikes occurs between 1-2ms after another spike? Then 2-3ms? And so on. Here's a not-too-busy auto-correlogram:
+
+![A simple auto-correlogram plot. For this unit, ZERO spikes occured 0-1ms after another spike. Three spikes occured 1-2ms after another spike. Zero spikes occured 2-9ms after another spike, and one spike occured 9-10ms after another spike.](images/curate/curate_lilhist.png){width="50%"}
 
 "Good" unit have no violations near 0ms. Many violations mean that the unit is contaminated with noise, or another unit. Here are a couple of examples:
 
-![The auto-correlogram of a good unit](images/curate/curate_goodcorr.png)
+![The auto-correlogram of a good unit](images/curate/curate_goodcorr.png){width="50%"}
 
-![The auto-correlogram of a not-good unit](images/curate/curate_badcorr.png)
+![The auto-correlogram of a not-good unit](images/curate/curate_badcorr.png){width="50%"}
 
 Whether the "not good" units should be labelled "noise" or "mua" will depend on other properties.
 
@@ -226,11 +231,13 @@ The spatio-temporal electrical signal we measure when a neuron spikes is called 
 
 ![The template of a "good" unit](images/curate/curate_goodtemplate.png)
 
-We see that the purple unit location on the probe matches where the peak of the signal is on the template plot. This unit looks "good" (to me) because 1) it's temporally localized 2) it has spatial decay 3) it has a trough, then a peak 4) it goes to zero on both sides. Note on the "main channel" view we can see that the unit's extrema value is -60uV.
+In the left plot, the squares represent channels on the probe. Each colourful circle represents the (approximate) location of each unit. We have selected the purple unit with a white boundary. In the middle plot, the template of the unit is plotted on several channels. The layout of the channels in the middle plot match the layout in the left plot. In the right plot, we plot the template on the channel where the template is "biggest".
+
+We see that the purple unit location on the probe matches where the peak of the signal is on the template plot. This unit looks "good" (to me) because 1) it's temporally localized (the signal is localised in the x-axis) 2) it has spatial decay (the signal, and its peak gets smaller as you move away from the "biggest" channel) 3) it has a trough, then a peak 4) it goes to zero on both sides. Note on the "main channel" view we can see that the unit's extrema value is -60uV.
 
 Here's clear noise:
 
-![The template of a "noise" unit](images/curate/curate_noisetemplate.png)
+![The template of a "noise" unit](images/curate/curate_noisetemplate.png){width="50%"}
 
 Here, the signal is the same on all electrodes (no spatial decay), it's temporally quite wide, it doesn't reach zero.
 
@@ -252,44 +259,46 @@ When you're done, export your curation using the "Export Curation" button. This 
 
 # Automated labels with metrics
 
-Manual curation isn't fun. It also has genuine scientific issues: human decisions are flakey. If you do the same curation exercise tomorrow, you'll get a different result. If you're hungry, you'll probably be harsher on your units. If you've not seen a good unit for a while, you'll be desperate to label one as "good"! 
+Manual curation isn't fun. It also has genuine scientific issues: human decisions are inconsistent. If you do the same curation exercise tomorrow, you'll get a different result. If you're hungry, you'll probably be harsher on your units. If you've not seen a good unit for a while, you'll be desperate to label one as "good"! 
 
-So, we can try to automate the process. We'll try three different methods, all based on _metrics_.
+So, we can try to automate the process. We'll try three different methods, all based on **Metrics**.
 
 In our context a metric is a number which measures a property of the spike sorted unit. Let's see some common examples (the text here is adapted from the [UnitRefine paper](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2) by Jain et. al.)
 
-  - Firing rate -- Average number of spikes in the cluster, per second.
-  - Signal to noise ratio (snr) -- the extremal amplitude of the template on the extremal channel, divided by the standard deviation of the noise on this channel.
-  - Isi violation count -- The number of inter-spike-interval (isi) violations that occured for each cluster.
-  - Isi violation ratio -- Given the isi violations count, the isi violations ratio approximates the contamination rate of the cluster, assuming random contamination.
+  - **Firing rate**: Average number of spikes in the cluster, per second.
+  - **Signal to noise ratio** (SNR): the amplitude of the template on the extremal channel, divided by the standard deviation of the noise on this channel.
+  - **ISI violation count** The number of inter-spike-interval (ISI) violations that occured for each cluster.
+  - **ISI violation ratio**: Given the ISI violations count, the ISI violations ratio approximates the contamination rate of the cluster, assuming random contamination.
 
 And some less common, but potentially just-as-important, ones:
 
-  - sd ratio -- Compute the spike amplitudes for a simulated cluster composed of many snippets of noise,  giving a noise-amplitude distribution. The sd ratio is equal to the standard deviation of the cluster's amplitude distribution divided by the standard deviation of the noise-amplitude distribution.
-  - amplitude cutoff -- For each cluster, make a histogram of spike amplitude values. Assume the distribution is normally distributed and fit the distribution using the high-value tail. Under this assumption, estimate how many spikes are missing from the low-value tail. The amplitude cutoff is equal to the estimated fraction of spikes missing from the tail.
-  - drift ptp --The difference between the maximum and minimum values in the spike location difference distribution.
-  - sync\_n -- Take all spike times from cluster $I$. Count all spikes which occur at the same timepoint (sample) as at least $n-1$ spikes from all other clusters. sync\_n is equal to this count.
-  - exp decay -- 
+  - **SD ratio**: Compute the spike amplitudes for a simulated cluster composed of many snippets of noise,  giving a noise-amplitude distribution. The sd ratio is equal to the standard deviation of the cluster's amplitude distribution divided by the standard deviation of the noise-amplitude distribution.
+  - **Amplitude cutoff**: For each cluster, make a histogram of spike amplitude values. Assume the distribution is normally distributed and fit the distribution using the high-value tail. Under this assumption, estimate how many spikes are missing from the low-value tail. The amplitude cutoff is equal to the estimated fraction of spikes missing from the tail.
+  - **Drift ptp**: The difference between the maximum and minimum values in the spike location difference distribution.
+  - **Sync\_n**: Take all spike times from a cluster. Count all spikes which occur at the same timepoint (sample) as at least $n-1$ spikes from all other clusters. sync\_n is equal to this count.
+  - **Exp decay**: On every channel, find both the maximum amplitude and the distance from the extremal channel. Use this to produce amplitude as a function of distance A(d). Fit this function to an exponential decay $A(d) \sim exp(−ad)$. The metric exp decay is equal to the decay rate $a$.
 
-Read more about the metrics either at the [UnitRefine paper](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2), or in the [SpikeInterface docs](https://spikeinterface.readthedocs.io/en/stable/modules/metrics.html). As you can see, they all measure properties of different stuff: the size of the signal, non-biological spike times, properties of the amplitude and depth distributions etc etc. There are around 40 metrics in SpikeInterface and each has its own intricacies.
+Read more about the metrics either at the [UnitRefine paper](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2), or in the [SpikeInterface docs](https://spikeinterface.readthedocs.io/en/stable/modules/metrics.html). As you can see, they all measure properties of different aspects of the unit: the size of the signal, non-biological spike times, properties of the amplitude and depth distributions etc etc. There are around 40 metrics in SpikeInterface and each has its own intricacies.
 
-In SpikeInterface, the metrics are contained in extensions. At the moment we separate them into two groups: quality metrics and template metrics. Hence you can compute them in a similar way you computed everything else:
+In SpikeInterface, the metrics are contained in extensions. At the moment we separate them into two groups: quality metrics and template metrics. Hence you can compute them in a similar way you computed other `SortingAnalyzer` extensions:
 
 ```{python}
 sorting_analyzer.compute(['quality_metrics', 'template_metrics'])
 ```
 
-This will compute all the metrics which it can. The metrics you compute will depend on which other extensions you've computed. E.g. if you've not computed spike depths you won't get any of the drift metrics. If you've not computed noise levels, you won't get the signal-to-noise ratio. The other extensions we've computed already will give us access to most of the metrics.
+This will compute all the metrics which it can - the metrics you compute will depend on which other extensions you've computed. E.g. if you've not computed spike depths you won't get any of the drift metrics. If you've not computed noise levels, you won't get the signal-to-noise ratio. The other extensions we've computed already will give us access to most of the metrics.
 
 After you've computed them you can see the metrics in a pandas dataframe as follows:
 
 ```{python}
 all_metrics = si.get_metrics_extension_data(sorting_analyzer)
+
+print(all_metrics)
 ```
 
 ## Thresholding
 
-The simplest approach is to _threshold_. This means: define some boundaries and only take units whose metrics live in those boundaries. Here's an example:
+The simplest approach to decide whether units are "good" based on metrics is to _threshold_. This means: define some boundaries and only take units whose metrics fall within those boundaries. Here's an example:
 
 ```{python}
 qm_thresholds = {
@@ -303,7 +312,9 @@ Based on these thresholds, we can get labels ("good" or "noise") for all your un
 
 ```{python}
 all_metrics = sorting_analyzer.get_metrics_extension_data()
-qm_labels = si.threshold_metrics_label_units(all_metrics, thresholds=qm_thresholds, column_name="simple_threshold")
+qm_labels = si.threshold_metrics_label_units(
+    all_metrics, thresholds=qm_thresholds, column_name="simple_threshold"
+)
 good_units = qm_labels.query('simple_threshold == "good"')
 print(f"{len(good_units)}/{len(qm_labels)} are good!")
 ```
@@ -311,7 +322,9 @@ print(f"{len(good_units)}/{len(qm_labels)} are good!")
 Finally, we can attach the labels to the `sorting_analyzer` and launch the GUI, allowing us to take a look at what we've done:
 
 ```{python}
-sorting_analyzer.set_sorting_property(key='simple_threshold', values=qm_labels['simple_threshold'].values.astype(str))
+sorting_analyzer.set_sorting_property(
+    key='simple_threshold', values=qm_labels['simple_threshold'].values.astype(str)
+)
 run_mainwindow(
     sorting_analyzer
 )
@@ -321,12 +334,13 @@ Usually thresholding is a strict tool. Your unit has to pass every test you give
 
 ## Bombcell: _extreme_ Thresholding
 
-I think of Bombcell, developed here in UCL by Julie Fabre, as _extreme_ thresholding. Roughly your unit goes through a decision tree, and depending on the metrics, it will get a different label. The decision tree is carefully thought out and takes into account all sorts of things. Take a look at the decision tree on the [Bombcell GitHub page](https://github.com/Julie-Fabre/bombcell).
+I think of Bombcell, developed by Julie Fabre, as _extreme_ thresholding. Roughly your unit goes through a decision tree, and depending on the metrics, it will get a different label. The decision tree is carefully thought out and takes into account a diverse range of metrics. Take a look at the decision tree on the [Bombcell GitHub page](https://github.com/Julie-Fabre/bombcell).
 
 The good news for us is that Julie agreed to port Bombcell over to SpikeInterface. Hence we can use it on our analyzer in a one-liner:
 
 ```{python}
 bombcell_labels = si.bombcell_label_units(sorting_analyzer)
+print(bombcell_labels)
 ```
 
 Let's take a look at the results:
@@ -338,7 +352,7 @@ run_mainwindow(
 )
 ```
 
-There are also plotting tools so that you can see _why_ Bombcell labelled your units as it did. E.g. here is an "upset plot":
+There are also plotting tools so that you can see _why_ Bombcell labelled your units as it did. For example, here is an "upset plot":
 
 ```{python}
 si.plot_bombcell_labels_upset(sorting_analyzer, unit_labels=bombcell_labels['bombcell_label'])
@@ -389,9 +403,11 @@ bombcell_labels = si.bombcell_label_units(
 
 ## UnitRefine: Train yourself out of a job
 
-In UnitRefine, we start with a small (say, 1000 units) manually labelled dataset. We then use machine learning to train a classifier based on this labelled data and the metrics of each unit. So these classifiers mimic the people who originally did the labelling. The hardest problem isn't training the classifiers - it's getting good labelled data. Studies show that humans agree approximately 80% of the time (), so this gives a ceiling on how well a classifier can mimic a group of manual curators.
+In UnitRefine ([preprint](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2) + [gitub repo](https://github.com/anoushkajain/UnitRefine.git)), you start with a small (say, 1000 units) manually labelled dataset. UnitRefine then use machine learning to train a classifier based on this labelled data and the metrics of each unit. So these classifiers mimic the people who originally did the labelling. 
 
-There are some pre-trained classifiers available on HuggingFaceHub from Anoushka Jain. The underlying data was curated by five different people. Let's try it out:
+The hardest problem isn't training the classifiers - it's getting good labelled data. Studies show that humans agree approximately 80% of the time (TODO: add reference), so this gives a ceiling on how well a classifier can mimic a group of manual curators.
+
+There are some pre-trained classifiers available on [HuggingFaceHub from Anoushka Jain](https://huggingface.co/AnoushkaJain3). The underlying data was curated by five different people. Let's try it out:
 
 ```{python}
 unitrefine_labels = si.unitrefine_label_units(
@@ -400,7 +416,9 @@ unitrefine_labels = si.unitrefine_label_units(
     sua_mua_classifier="AnoushkaJain3/sua_mua_classifier_lightweight",
 )
 
-sorting_analyzer.set_sorting_property(key='unitrefine_labels', values=unitrefine_labels['unitrefine_labels'].values.astype(str))
+sorting_analyzer.set_sorting_property(
+    key='bombcell_labels', values==bombcell_labels['bombcell_label'].values.astype(str)
+)
 run_mainwindow(
     sorting_analyzer
 )
@@ -424,9 +442,9 @@ A quick philosophical break.
 
 We use a "functional" curation approach. This means: don't edit the analyzer as you go. Instead, keep the original analyzer - treat it like raw data - then build a curation that you, at the last minute, can apply to it. When you apply it: make a new curated analyzer _and_ keep the original one. This is good for a few reasons:
 
-  - Data integrity: you don't edit your analyzer, which represents your spike sorting outputs
-  - Try different approaches: you can try out different things. Keep one manual Curation file and one Curation file generated by an alogorithm, then switch between them and check if your downstream scientific results don't change.
-  - Change your mind: if you change your mind about your curation, you don't need to redo your sorting, you just need to edit your curation.
+  - **Data integrity**: you don't edit your analyzer, which represents your spike sorting outputs
+  - **Try different approaches**: you can try out different things. Keep one manual Curation file and one Curation file generated by an alogorithm, then switch between them and check if your downstream scientific results don't change.
+  - **Change your mind**: if you change your mind about your curation, you don't need to redo your sorting, you just need to edit your curation.
 
 When labelling, there isn't much different between our approach and just editing the analyzer, but you feel the difference more when you merge and split.
 
@@ -438,11 +456,11 @@ _Mantra of the day_: SpikeInterface-GUI is used to create a **Curation** file, _
 
 We'll try out some auto-merge tools from the GUI. Launch the gui using the "merge_focus" layout-preset as follows:
 
-```
+```{python}
 sigui --curation --layout-preset merge_focus path/to/analyzer
 ```
 
-(As these cli commands get more complicated, you might see why you want to run SpikeInterface-GUI from a Python script rather than from terminal!)
+(As these command line commands get more complicated, you might see why you want to run SpikeInterface-GUI from a Python script rather than from terminal!)
 
 You should see something like this:
 
@@ -458,7 +476,7 @@ You can adjust the threshold for displaying potential merges, change the distanc
 
 ![Units suggested by SLAy.](images/curate/slay.png)
 
-I find that SLAy usually gives results I trust, although perhaps it misses some units. Everything you see in the GUI, you can recreate in SpikeInterface using the `compute_merge_unit_groups` function:
+I find that everything SLAy suggests turns out to be a true merge, but it sometimes misses potential merges. Everything you see in the GUI, you can recreate in SpikeInterface using the `compute_merge_unit_groups` function:
 
 ```{python}
 merge_unit_groups = si.compute_merge_unit_groups(
@@ -473,21 +491,23 @@ Here are a two different workflows that you might try out.
   1. Using the GUI, find preset that gives you lots of potential merges. Manually go through these are "accept" the ones you agree with. 
   2. Using the GUI, adjust the parameters of your preset, and check the results. Keep adjusting the parameters until you agree with all decisions. Then using a Python script and SpikeInterface to automatically compute these merges and save them in a Curation.
 
-I use 2. with SLAy.
+I use 2., with SLAy.
 
 # Splitting
 
-Finally, SpikeInterface-GUI allows you to split units which have been over-merged. The current generation of spike sorters are usually tuned to over-split units because manual merging is relatively easy. But manual splitting is difficult. Also, spikes which look "out of distribution" in some way are sometimes there for another reason: these events might be when the spikes overlap with spikes from another unit. Or they could be slightly deformed spikes taking place during sharp wave ripples. Overall: I don't recommend splitting.
+Finally, SpikeInterface-GUI allows you to split units which have been over-merged. Splitting means taking a unit consisting of n spikes, and splitting the spikes into two groups. The two seperate groups are then each assigned to a new unit. We've split one unit into two units.
+
+The current generation of spike sorters are usually tuned to over-split units because manual merging is relatively easy. But manual splitting is difficult. Also, spikes which look like outliers in some way sometimes look like outliers for other reasons: these events might be when the spikes overlap with spikes from another unit. Or they could be slightly deformed spikes taking place during sharp wave ripples. Overall: I don't recommend splitting.
 
 But if you insist, go into curation mode in the GUI and then you can select spikes in any of the "spikey" Views, and click "split"
 
 ![A unit being split into a happy unit, and a less happy one.](images/curate/split.png)
 
-These decisions will be entered into "CurationView" and you can, again, export the Curation as a json file.
+These decisions will be entered into "CurationView" and you can, again, export the **Curation** as a `json` file.
 
 # Make and apply a Curation
 
-You've curated your data. Congrats!!! After lunch we'll do some downstream analysis. For downstream analysis, you might want to use curated results. To do this, we'll load the original analyzer, load the curation, and apply the curation to the analyzer:
+You've curated your data. Congrats!!! In the next section we'll do some downstream analysis. For downstream analysis, you might want to use curated results (i.e. only include the "good" units). To do this, we'll load the original analyzer, load the curation, and apply the curation to the analyzer:
 
 ```{python}
 import spikeinterface.full as si
@@ -499,8 +519,7 @@ curated_analyzer = si.apply_curation(analyzer)
 
 This might take a little while: the analyzer has to recompute some extensions for the new units.
 
-
-If you were being strict, you might also delete "mua" units.
+Depending on your requirements (see @tip-science), you might also delete "mua" units.
 
 There are different things you could do at this stage: just save the spikes, or export to another format. For this workshop, we're going to export the results so that they can be used with [Pynapple](). You'll learn more about Pynapple later. For now, let's try to convert the curated analyzer to a Pynapple TsGroup:
 

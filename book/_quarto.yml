@@ -29,7 +29,7 @@ book:
     - index.qmd
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
-    - preproecssing-steps-coding.qmd
+    - preprocessing-steps-coding.qmd
     - concept-notes.qmd
     - references.qmd
     - planning.qmd

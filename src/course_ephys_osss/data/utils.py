@@ -27,7 +27,7 @@ def download_and_slice_nwb_from_dandi(
     non_lfp = [p for p in series_paths if "lfp" not in p.lower()]
     electrical_series_path = (non_lfp or series_paths)[0]
 
-    # stream_mode="remfile" (or "fsspec") reads bytes lazily over HTTP ÔÇö no full download.
+    # stream_mode="remfile" (or "fsspec") reads bytes lazily over HTTP - no full download.
     rec = NwbRecordingExtractor(
         file_path=s3_url,
         stream_mode="remfile",

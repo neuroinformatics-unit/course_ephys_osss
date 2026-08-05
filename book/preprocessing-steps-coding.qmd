@@ -7,18 +7,18 @@ and the noise sources include electrical (e.g. XX, XX), thermal (??) and kinetic
 This chapter will focus on the practical implementation of preprocessing steps using SpikeInterface, and the importance of visually checking the results.
 See the [previous chapter]() for details on the underlying theory.
 
-In this sesssion, we will add additional useful preprocessing steps as well as inspect the effects of other common preprocesing steps. 
+In this session, we will add additional useful preprocessing steps as well as inspect the effects of other common preprocesing steps. 
 The steps we will explore are:
 
-- **bandpass filtering**: Filters out low-frency oscilations (e.g. 50-60 Hz noise) and high-frequency oscilations (e.g. noise spikes) from the data. Applied separately per channel.
+- **bandpass filtering**: Filters out low-frequency oscillations (e.g. 50-60 Hz noise) and high-frequency oscillations (e.g. noise spikes) from the data. Applied separately per channel.
 
 - **bad channel detection** : Automatically detect channels that are dead, noisy or out-of-brain. These bad channels can be removed of interpolated (i.e filled in) with the data from surrounding channels.
 
-- **common median referencing**: Removes noise that takes the form of strips through the data (i.e. occuring on all channels for a short time period). This is applied across all channels, separately per time point.
+- **common median referencing**: Removes noise that takes the form of strips through the data (i.e. occurring on all channels for a short time period). This is applied across all channels, separately per time point.
 
-- **highpass spatial filter**: A destriping algorithm (i.e. similar to common median referencing) introduced by the [IBL]() that accounts for slow oscilations of the signal across channels within the noise stripe.
+- **highpass spatial filter**: A destriping algorithm (i.e. similar to common median referencing) introduced by the [IBL]() that accounts for slow oscillations of the signal across channels within the noise stripe.
 
-- **motion correction** : A step to account for physical drift of the probe (typically vertical) in the brain. Attemps to estimate the drift and interpolate the channels to account for it.
+- **motion correction** : A step to account for physical drift of the probe (typically vertical) in the brain. Attempts to estimate the drift and interpolate the channels to account for it.
 
 - **whiten** : Removes correlated noise across channels and helps isolate spikes on  a subset of channels. Has large effects of the data scaling and waveform shape.
 
@@ -30,60 +30,29 @@ See XXX page for information on the dataset and how to download it.
 
 <include some information on the experiment, probably do this on a central 'dataset' page>
 
-In this section we will download the data we will use for the majority of the rest of the course. This dataset is a XXX.
+First we need to download the dataset we will use to preprocess. This dataset is <breif introduction>. For more information
+on the dataset and how to download any one of thousand of open-access datasets at the drop of a hat, please see <THIS PAGE>.
 
-SpikeInterface has a lot of useful utilities for downloading and saving data from public repositories. This is very useful to know, because it opens up an entire world of analysis! With the code below, we can download any of the XXXX recordings on DANDI, including the entire IBL Brain Wide Map! (as specified by hte DANDI ID).
+For today, we will use the below convenience function to download the data (make sure to have installed the course repository as a package).
 
 ```{python}
 
-import spikeinterface as si
-
-from pathlib import Path
-import numpy as np
-from spikeinterface.extractors import NwbRecordingExtractor
-
-s3_url = "https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5"
-DURATION_S = 90
 LOCAL_FOLDER = Path("_tmp/nwb_first_slice")
 
 if LOCAL_FOLDER.exists():
     recording = si.load(LOCAL_FOLDER)
 else:
-    series_paths = NwbRecordingExtractor.fetch_available_electrical_series_paths(
-            file_path=s3_url,
-            stream_mode="remfile",
+    if not dataset_folder.exists():
+        download_and_slice_nwb_from_dandi(
+            s3_url="https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5",
+            duration_s=90,
+            local_folder=LOCAL_FOLDER
         )
-
-    # TODO: Explain the series (dataset page)
-    for p in series_paths:
-        print("  -", p)
-
-    non_lfp = [p for p in series_paths if "lfp" not in p.lower()]
-    electrical_series_path = (non_lfp or series_paths)[0]
-
-    # stream_mode="remfile" (or "fsspec") reads bytes lazily over HTTP — no full download.
-    rec = NwbRecordingExtractor(
-        file_path=s3_url,
-        stream_mode="remfile",
-        electrical_series_path=electrical_series_path,
-    )
-
-    end_frame = np.round(DURATION_S * rec.get_sampling_frequency()).astype(int)
-    rec_slice_remote = rec.frame_slice(start_frame=0, end_frame=end_frame)
-
-    recording = rec_slice_remote.save(
-        format="binary",
-        folder=LOCAL_FOLDER,
-        n_jobs=1,
-        chunk_duration="1s",
-        progress_bar=True,
-        overwrite=True
-    )
-
+    recording = si.load(LOCAL_FOLDER)
 
 ```
 
-In future, to avoid redownloading the data each time, we can download from disk
+In future, to avoid re-downloading the data each time, we can download from disk
 
 ```python
 if LOCAL_FOLDER.exists()
@@ -92,14 +61,10 @@ else:
     # download the data...
 ```
 
-use a dropdown here
-Note we can retrieve the nwb file in code given the daandiset with the following code block (see main_nwb.py joe)
-DANDISET_ID = "000939"  
-
 # Initial steps
 
 Before we start, we will define a function to plot and compare multiple preprocessing steps. We can reuse this function through the rest of the tutorial.
-Also, feel free to instead visualise with [viewephys](https://github.com/int-brain-lab/viewephys) as we did in the [previous tutorial]().
+Also, feel free to instead visualize with [viewephys](https://github.com/int-brain-lab/viewephys) as we did in the [previous tutorial]().
 
 ```{python}
 
@@ -156,7 +121,7 @@ plot_prepro(
 
 ```
 
-The filtering operation removes a lot of contaminating low-frequency noise, realising a significant improvement to the data. 
+The filtering operation removes a lot of contaminating low-frequency noise, realizing a significant improvement to the data. 
 Plotting a shorter time window demonstrates how this improves resolution of individual spikes:
 
 ```{python}
@@ -174,7 +139,7 @@ plot_prepro(
 # Bad Channel Detection
 
 Individual contacts on a probe are liable to break and become 'dead' (no signal), 'noisy' (excessive random fluctuations)
-or may be 'out of brain' (i.e. a contigious set of channels at the end of the probe with no signal). 
+or may be 'out of brain' (i.e. a contiguous set of channels at the end of the probe with no signal). 
 
 The [IBL have developed an algorithm]() of automatically detecting bad channels, which has been ported to SpikeInterface.
 
@@ -194,7 +159,7 @@ plot_prepro({"filtered": recording_bp, "bad channels removed": rec_clean_1}, TIM
 
 It turns out that the IBL algorithm was developed for Neurpixel probes
 (NP1 probes) but we are using Cambridge Neurotech 64-channel probes. In this case, the default settings
-are not approrpiate for our data, and we need to adjust them slightly:
+are not appropriate for our data, and we need to adjust them slightly:
 
 ```{python}
 # Let's try again with different settings
@@ -209,7 +174,7 @@ plot_prepro({"filtered": recording_bp, "bad channels removed": rec_clean}, TIME_
 
 
 ::: {.callout-warning}
-This example demonstrates why it is critically important to **always visualise your data**
+This example demonstrates why it is critically important to **always visualize your data**
 to ensure the default arguments of the algorithms we are using are suitable for your recordings.
 :::
 
@@ -218,11 +183,11 @@ to ensure the default arguments of the algorithms we are using are suitable for 
 
 Common referencing takes a central tendency measurement (e.g. mean or median) across all channels at a single timepoint and subtracts it from the data.
 
-This has the effect of removing noise shared across all channels, and is sometimes called 'detriping' as it removes vertical 'stripes' across channels on the heatmap. **is this true?**
+This has the effect of removing noise shared across all channels, and is sometimes called 'destriping' as it removes vertical 'stripes' across channels on the heatmap. **is this true?**
 
-We want bad channels already removed, so they do not contaminate the computaion of the mean or median. SpikeInterface provides many options for 
-applying common referning to subsets of channels, and/or using particular channels as a reference. In this example we will use the default
-option with `operator="median"`, which computes and subtraces the median from all channels in the recording:
+We want bad channels already removed, so they do not contaminate the computation of the mean or median. SpikeInterface provides many options for 
+applying common referencing to subsets of channels, and/or using particular channels as a reference. In this example we will use the default
+option with `operator="median"`, which computes and subtracts the median from all channels in the recording:
 
 ```{python}
 
@@ -266,9 +231,6 @@ There's no need to get through all of these — pick whatever looks interesting.
 - Compute the Fourier transform of a raw data channel and plot the frequency spectrum
 - Perform spike detection (e.g. absolute threshold method) on the preprocessed data obtained with `get_traces()`
 
-
-
-
 **Beginner — get a feel for the data**
 
 - The time window we plot is important. Each spike is around 1-5 ms long, so if we plot long time windows we don't have enough pixels on the screen to resolve spikes. Nonetheless, longer windows can reveal other patterns in the data (e.g. 50 Hz noise). Play around with plotting different time windows (e.g. 10 ms, 200 ms, 1 s) to get a feel for this.
@@ -296,7 +258,7 @@ direction along the probe insertion path, as this offers less physical resistanc
 The majority of motion correction algorithms are based around detected spikes. The pattern of detected spikes is used as a 'barcode' which may move up or down,
 allowing motion to be tracked and corrected with interpolation. Therefore most motion correction algorithms have three main steps:
 
-- **Spike detection and localisation**: This step detections spikes in the data and estimates their physical location in space (x, y, z coordinates) from the waveform.
+- **Spike detection and localization**: This step detections spikes in the data and estimates their physical location in space (x, y, z coordinates) from the waveform.
 
 - **Motion estimation**: Using spike information, this estimates the probe movement based on how the detected spikes move up or down along the probe during the recording.
 
@@ -347,7 +309,7 @@ In the top two plots, we see a spike raster plot before and after motion correct
 The bottom left plot shows the estimated physical motion in um over time.
 
 Because this is only a 90-second recording, we see very little drift. On longer recordings, the drift and its correction
-will be more apparantly, for example on these simulated recordings with simulated drift (from https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording):
+will be more apparently, for example on these simulated recordings with simulated drift (from https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording):
 
 ::: {#fig-dredge fig-align="center"}
 ![](images/handle_drift_17_5.png){width=70%}
@@ -358,7 +320,7 @@ Example DREDGE drift-correction output on simulated data.
 
 If in general the drift in your recordings show little drift, you may want to consider turning off motion correction. 
 This is because the interpolation step will be performed and may add noise to your recordings. In some instances, motion correction 
-may inject erroenous contaimination when motion is miscalculated, especially for low-channel count probes or probes with low firing 
+may inject erroneous contamination when motion is miscalculated, especially for low-channel count probes or probes with low firing 
 rate neurons (see [here](https://github.com/SpikeInterface/spikeinterface/issues/4432) for a discussion on the phenomenon), for example :
 
 ::: {#fig-kilosort-like fig-align="center"}
@@ -376,10 +338,10 @@ and make the decision whether to apply this to your sorted data or not.
 
 # Whitening
 
-Finally, we will explore the whiteinng step. The whitening step is an agressive step to remove noise correlations and xx across channels.
-Has the effect of removing scaled versions of neighoubring races h3h3h3
+Finally, we will explore the whitening step. The whitening step is an aggressive step to remove noise correlations and xx across channels.
+Has the effect of removing scaled versions of neighboring races h3h3h3
 
-In spikeinterface, whitening is done by the `whiten` function:
+In SpikeInterface, whitening is done by the `whiten` function:
 
 ```{python}
 
@@ -390,7 +352,7 @@ plot_prepro({"rec_corrected": rec_corrected, "whitened": recording_whiten}, TIME
 ```
 
 
-For visualisation, let's rescale the recroding. **Note we would not do this in our actual analysis, this is just for visualising the data as part of this course**
+For visualization, let's rescale the recording. **Note we would not do this in our actual analysis, this is just for visualizing the data as part of this course**
 
 ```{python}
 

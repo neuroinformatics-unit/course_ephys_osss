@@ -50,4 +50,3 @@ def download_and_slice_nwb_from_dandi(
     )
 
     print(f"Saved {s3_url} to {local_folder}!")
-

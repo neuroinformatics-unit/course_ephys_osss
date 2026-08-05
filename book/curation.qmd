@@ -274,7 +274,7 @@ And some less common, but potentially just-as-important, ones:
 
   - **SD ratio**: Compute the spike amplitudes for a simulated cluster composed of many snippets of noise,  giving a noise-amplitude distribution. The sd ratio is equal to the standard deviation of the cluster's amplitude distribution divided by the standard deviation of the noise-amplitude distribution.
   - **Amplitude cutoff**: For each cluster, make a histogram of spike amplitude values. Assume the distribution is normally distributed and fit the distribution using the high-value tail. Under this assumption, estimate how many spikes are missing from the low-value tail. The amplitude cutoff is equal to the estimated fraction of spikes missing from the tail.
-  - **Drift ptp**: The difference between the maximum and minimum values in the spike location difference distribution.
+  - **Drift ptp (peak-to-peak)**: The difference between the maximum and minimum values in the spike location difference distribution.
   - **Sync\_n**: Take all spike times from a cluster. Count all spikes which occur at the same timepoint (sample) as at least $n-1$ spikes from all other clusters. sync\_n is equal to this count.
   - **Exp decay**: On every channel, find both the maximum amplitude and the distance from the extremal channel. Use this to produce amplitude as a function of distance A(d). Fit this function to an exponential decay $A(d) \sim exp(−ad)$. The metric exp decay is equal to the decay rate $a$.
 

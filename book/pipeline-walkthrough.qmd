@@ -105,7 +105,7 @@ As expected, we have a 4-shank Neurpixels probe in which all the recording chann
 
 ### Visualising the data
 
-Electrophysiological recordings are susceptible to contamination from multiple noise sources: electrical interference, mechanical noise caused by probe movement, and artefacts arising from hardware defects or poor contact.
+Electrophysiological recordings are susceptible to contamination from multiple noise sources: electrical interference, mechanical noise caused by probe movement, and artefacts arising from hardware defects such as broken or noisy recording electrodes.
 
 As such, it is important to visualise the data, especially after preprocessing, to check the data quality. First, lets's plot one second of data from our raw recording:
 

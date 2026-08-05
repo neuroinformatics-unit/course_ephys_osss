@@ -3,5 +3,6 @@
 /book/site_libs/
 /book/_site/
 /book/_tmp
+/book/_freeze/
 /docs/
 **/*.quarto_ipynb

@@ -3,7 +3,7 @@ requires = ["setuptools>=77", "setuptools-scm>=8", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "course-ephys-osss"
+name = "course_ephys_osss"
 description = "Materials for the OSSS Extracellular Ephys 2026 Course."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -37,6 +37,7 @@ dependencies = [
     "kilosort",
     "matplotlib==3.9.4",
     "nbformat",
+    "numpy",
     "pandas",
     "probeinterface",
     "pynapple",
@@ -51,6 +52,9 @@ Repository = "https://github.com/neuroinformatics-unit/course-ephys-osss"
 Issues = "https://github.com/neuroinformatics-unit/course-ephys-osss/issues"
 
 [tool.setuptools]
-packages = []
+package-dir = { "" = "src" }
 
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["course_ephys_osss*"]
 [tool.setuptools_scm]

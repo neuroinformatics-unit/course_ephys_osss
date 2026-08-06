@@ -5,3 +5,4 @@
 /book/_freeze/
 /docs/
 **/*.quarto_ipynb
+.vscode

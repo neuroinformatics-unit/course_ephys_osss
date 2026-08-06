@@ -16,14 +16,13 @@ The main open access datasets we will cover come from:
 # Head direction experiment from the DANDI archive
 # Used in preprocessing, sorting, postprocessing and Pynapple analysis
 
-The DANDI archive is an open, NIH-backed repository for sharing neurophysiology datasets
-in the standardized Neurodata without borders (NWB) file format, which SpikeInterface can load.
-You can explore the many datasets on their website, and download them using the Python API (used in this) or Dandi's own command line interface API (here) using the Dandiset ID and the path to the asset you want or DANDI's own API.
+The [DANDI archive](https://about.dandiarchive.org/) is an open, NIH-backed repository for sharing neurophysiology datasets
+in the standardized [Neurodata without borders (NWB)](https://nwb.org/) file format (which SpikeInterface can load).
+You can explore the many datasets on their website, and download them using the [Python API](https://docs.dandiarchive.org/api/dandi-client/) (used in this course) or DANDI's own [command line interface API](https://docs.dandiarchive.org/api/dandi-client/) using the Dandiset ID and the path to the asset you want or DANDI's own API.
 
 
-The dataset we will use through the majority of this course is hosted on DANDI [here](https://www.nature.com/articles/s41593-024-01588-5). The dataset was used in [CITE]() PAPER. The experiments recorded from the postsubicmum, a brain region XXX, using a 64-channel single channel Cambridge Neurotech probe. They recorded from mice using open-field exploration (as well as during sleep) in
-which they measured the head-direction of the mice. They were interested in investigating neural tuning
-for head direction (i.e. head-direction tuned neurons fire when the head of an animal is facing a particlar direction or angle).
+The dataset we will use through the majority of this course is hosted on DANDI [here](https://dandiarchive.org/dandiset/000939?search=000939). The dataset was used in [CITE](https://www.nature.com/articles/s41593-024-01588-5) PAPER. The experiments recorded from the postsubiculum, a parahippocampal cortical region of the parahippocampal formation and a key hub of the spatial navigation system, using a 64-channel single channel Cambridge Neurotech probe. They recorded from mice using open-field exploration (as well as during sleep) in which they measured the head-direction of the mice. They were interested in investigating neural tuning
+for head direction (i.e. head-direction tuned neurons fire when the head of an animal is facing a particular direction or angle).
 housands of recordings hosted on DANDI.
 
 The script found [here] can be used to download and store datasets (either the entire recording
@@ -38,7 +37,7 @@ Neuropixels recordings in varied brain regions available publicly via the
 [Open Neurophysiology Environment (ONE)](https://int-brain-lab.github.io/ONE/) API.
 Data can be streamed directly — no bulk download required.
 
-The script below demonstrates how to:
+The script below demonstrates how to: **TODO: ADD THIS LINK**
 
 1. Connect to the public IBL server and select a probe insertion by its `pid`
 2. Stream a short snippet of raw AP-band voltage

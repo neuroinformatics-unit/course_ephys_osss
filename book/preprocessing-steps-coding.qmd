@@ -275,7 +275,7 @@ returns a list of ids.
 The recording probe can move during an experiment. The major axis of movement is typically the direction along the probe's insertion path, as this offers less physical resistance than moving into the surrounding brain. Movement along this axis has the effect of shifting the recorded waveforms up or down the probe.
 
 The majority of motion correction algorithms are based around the movement of detected spike waveforms. The pattern of detected spikes is used as a 'barcode' across time, allowing motion to be tracked through the recording (see this 
-[excellent infographic](https://spikeinterface.readthedocs.io/en/stable/_images/motion_correction_overview.png) for details). Therefore most motion correction algorithms have three main steps:
+[infographic](https://spikeinterface.readthedocs.io/en/stable/_images/motion_correction_overview.png) for details - the grey dots in the plots are individual spikes which have been detected). Most motion correction algorithms have three main steps:
 
 - **Spike detection and localization**: This step detections spikes in the data and estimates their physical location in space (x, y, z coordinates) from the waveform.
 

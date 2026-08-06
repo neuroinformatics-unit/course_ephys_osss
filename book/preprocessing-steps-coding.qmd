@@ -117,7 +117,7 @@ import spikeinterface.preprocessing as si_prepro
 
 recording_bp = si_prepro.bandpass_filter(
     recording, 
-    # commonly used values used based on AP waveform kinetics
+    # commonly used values to isolate spikes
     freq_min=300, 
     freq_max=6000
 ) 

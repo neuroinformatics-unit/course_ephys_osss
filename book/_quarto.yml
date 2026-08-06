@@ -35,6 +35,7 @@ book:
   date: "15/04/2026"
   chapters:
     - index.qmd
+    - setup.qmd
     - introduction-presentation.qmd
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd

@@ -3,4 +3,8 @@
 This presentation can be found [here](https://docs.google.com/presentation/d/1KsR5lh2i3QatL2LFhxDyiqdFYjOI7ttqNNcJecuh1L4/edit?usp=sharing).
 
 (it may be converted into a quarto page)
+TODO:
+- don't do inter-sample shift first
+- add steps covered in the coding chapter
+- (time permitting) make a quarto slides
 

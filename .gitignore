@@ -3,5 +3,12 @@
 /book/site_libs/
 /book/_site/
 /book/_tmp
+/book/_freeze/
 /docs/
 **/*.quarto_ipynb
+.vscode
+*.pyc
+*.egg
+
+book/my_tsd.npz
+/book/A2929-200711.nwb 

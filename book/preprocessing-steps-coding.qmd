@@ -391,7 +391,7 @@ The correlation matrix is the key structure of the whitening step. It is compute
 ![](images/whiten-mat.png){width=100%}
 :::
 
-Here $c_i$ represents a channels data indexed by some integer $i$. $c_ic_j$ represents the sum of squares of the data from channels $i$ and $j$ (i.e. multiple each value in the vector with the corresponding value and add these all together). For example $c_1c_1$ is the variance for channel $c_1$, and $c_1c_2$ represents the covariance between channels 1 and 2. 
+Here $c_i$ represents a channel's data indexed by some integer $i$. $c_ic_j$ represents the sum of squares of the data from channels $i$ and $j$ (i.e. multiple each value in the vector with the corresponding value and add these all together). For example $c_1c_1$ is the variance for channel $c_1$, and $c_1c_2$ represents the covariance between channels 1 and 2. 
 
 For those interested, you can see how this comes from the [covariance definition](https://www.educba.com/covariance-formula/) when the mean of the channel data is zero and we ignore the scaling factor $N$.
 

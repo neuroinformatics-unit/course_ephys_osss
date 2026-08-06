@@ -141,11 +141,7 @@ Our signal of interest are action potentials recorded on the probe, however, we 
 
 ## Preprocessing
 
-<<<<<<< HEAD
-Below, we will apply three preprocessing steps to help isolate our signal of interest (action potentials) from the noise: 
-=======
 Below, we will apply three preprocessing steps to help isolate our signal of interest (action potentials) from noise: 
->>>>>>> a06e12e264246652f3963e34c6666d40548c79ca
 
 **phase_shift** : corrects a hardware artefact in the Neuropixels probe 
 which causes small shifts in time across nearby channels.

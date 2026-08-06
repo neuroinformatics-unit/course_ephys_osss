@@ -4,3 +4,4 @@
 /book/_site/
 /docs/
 **/*.quarto_ipynb
+.vscode

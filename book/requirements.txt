@@ -4,7 +4,7 @@ ipykernel
 scipy
 pandas
 remfile
-hbdscan
+hdbscan
 spikeinterface[full, widgets]
 probeinterface
 matplotlib

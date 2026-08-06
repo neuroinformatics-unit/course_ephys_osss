@@ -8,7 +8,7 @@ use cases in the following chapters.
 
 In this walkthrough, we will use a short example dataset available in the `data/pipeline-walkthrough`
 of the [course repository](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough).
-Alterantively, the data can be downloaded from [here]() ADD ZENODO.
+Alternatively, the data can be downloaded from [here]() ADD ZENODO.
 
 This recording is only 2.5 seconds long, from 384 channels on a 4-shank Neuropixels 2 probe acquired
 in SpikeGLX. We use two of the four shanks, with 192 recording channels on each.
@@ -49,12 +49,12 @@ run the function without the `stream_id` argument and SpikeInterface will prompt
 Because we want to load the AP data stream for spike sorting, we pass `"imec0.ap"`.
 
 :::{.callout-note #lazy-loading}
-SpikeInterface uses 'lazy loading', which means at this stage no data is actually loaded into memory. Data is only loaded when we request it (e.g. for visualisation, or spike sorting). This makes operations very fast.
+SpikeInterface uses 'lazy loading', which means at this stage no data is actually loaded into memory. Data is only loaded when we request it (e.g. for visualization, or spike sorting). This makes operations very fast.
 :::
 
 ### The Recording object
 
-SpikeInterface extractor functions return the recording as a [Python object](https://www.geeksforgeeks.org/python/python-classes-and-objects/). This object has many useful methods for exploring the recording as well as accessing the underlying data. In our case, recording is a `SpikeGLXRecordingExtractor` recording object. See the [inheritance](concept-notes.qmd#inheritence)💡 for details on inheritence in SpikeInterface.
+SpikeInterface extractor functions return the recording as a [Python object](https://www.geeksforgeeks.org/python/python-classes-and-objects/). This object has many useful methods for exploring the recording as well as accessing the underlying data. In our case, recording is a `SpikeGLXRecordingExtractor` recording object. See the [inheritance](concept-notes.qmd#inheritence)💡 for details on inheritance in SpikeInterface.
 
 You can also use Python's `dir()` function to see all attributes and methods associated with any Python object.
 
@@ -78,7 +78,7 @@ This is a good time to explore the recording object using the [API docs]((https:
 - Look through the results of the `dir()` call above. Try out any functions that look interesting!
 :::
 
-### Visualising the probe
+### Visualizing the probe
 
 There are many brands of recording probes used in extracellular electrophysiology (e.g. 
 [Neuropixels](https://www.neuropixels.org/), 
@@ -101,13 +101,13 @@ plt.show()
 
 ```
 
-As expected, we have a 4-shank Neurpixels probe in which all the recording channels are located in the middle two shanks.
+As expected, we have a 4-shank Neuropixels probe in which all the recording channels are located in the middle two shanks.
 
-### Visualising the data
+### Visualizing the data
 
-Electrophysiological recordings are susceptible to contamination from multiple noise sources: electrical interference, mechanical noise caused by probe movement, and artefacts arising from hardware defects such as broken or noisy recording electrodes.
+Electrophysiological recordings are susceptible to contamination from multiple noise sources: electrical interference, mechanical noise caused by probe movement, and artifacts arising from hardware defects such as broken or noisy recording electrodes.
 
-As such, it is important to visualise the data, especially after preprocessing, to check the data quality. First, lets's plot one second of data from our raw recording:
+As such, it is important to visualize the data, especially after preprocessing, to check the data quality. First, lets's plot one second of data from our raw recording:
 
 ```{python}
 import spikeinterface.widgets as si_widgets
@@ -123,7 +123,7 @@ si_widgets.plot_traces(
 plt.show()
 ```
 
-This plot is a heatmap view of the data: time in seconds is on the x-axis, and each row of the y-axis is the data from a separate recording channel (ordered by depth). The colour of the pixel indicate the voltage on that recording channel at that timepoint.
+This plot is a heatmap view of the data: time in seconds is on the x-axis, and each row of the y-axis is the data from a separate recording channel (ordered by depth). The color of the pixel indicate the voltage on that recording channel at that timepoint.
 
 `return_in_uV` to ensure the data is returned in microvolts, as by default 
 most electrophysiological recordings are [stored as unitless `int16` values](concept-notes.qmd#data-storage-in-int16-and-scaling-to-uv)💡.
@@ -137,7 +137,7 @@ channels, and [`order_channels_by_depth()`](https://spikeinterface.readthedocs.i
 
 :::
 
-Our signal of interest are action potentials recorded on the probe, however, we cannot see any in the raw data! It is severely contaminated by noise e.g. electrical noise. We will need to preprocess the recording to reduce the noise and isolate our signal of interest.
+Our signal of interest are action potentials recorded on the probe, however, we cannot see any in the raw data! This is primarily due to electrical noise. We will need to preprocess the recording to reduce the noise and isolate our signal of interest.
 
 ## Preprocessing
 
@@ -148,7 +148,7 @@ which causes small shifts in time across nearby channels.
 
 **bandpass_filter** : removes high and low frequency oscillations from the data. It is applied to each channel separately, across all time points. 
 
-**commmon_reference** : removes noise that appear as verticle stripes across the data. It is applied to each timepoint separately, across all channels.
+**commmon_reference** : removes noise that appear as vertical stripes across the data. It is applied to each timepoint separately, across all channels.
 
 To preprocess the data, we will pass our recording object into functions that return a new, preprocessed recording object. e.g. ```filtered_recording = bandpass_filter(recording)```. We can do this for every step in the preprocessing chain:
 
@@ -223,7 +223,7 @@ The shanks are too far apart for the same action potential to be recorded across
 
 :::
 
-We can solve this by spliting the recording by shank using the the recording's `groups` property. 
+We can solve this by splitting the recording by shank using the the recording's `groups` property. 
 
 When SpikeInterface loads the data, it will automatically assign different shanks to different groups. We can split by these groups, which will return a dictionary of two recordings (one for each channel group):
 
@@ -298,7 +298,7 @@ Now we have our preprocessed data, and have visually confirmed the data quality 
 
 ## Sorting
 
-Now we are ready to move onto spike sorting. The goal of spike sorting is to take our preprocessing recording with clear action potentials, and detect these action potentials and sort them as coming from different neurons, based on their waveform and positio on the probe.
+Now we are ready to move onto spike sorting. The goal of spike sorting is to take our preprocessing recording with clear action potentials, and detect these action potentials and sort them as coming from different neurons, based on their waveform and position on the probe.
 
 We can pass the recording to SpikeInterface's []`run_sorter()`](https://spikeinterface.readthedocs.io/en/stable/api.html#spikeinterface.sorters.run_sorter) function, which allows us to easily switch between different sorters. There are [many possible spike sorters](https://spikeinterface.readthedocs.io/en/stable/modules/sorters.html#supported-spike-sorters) to choose from, today we will use Kilosort 4.
 
@@ -328,7 +328,7 @@ sorting = si_sorters.run_sorter(
 
 ```
 
-The sorting output is written to disk. The output contains all of the output files of the sorter, and its organisation is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
+The sorting output is written to disk. The output contains all of the output files of the sorter, and its organization is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
 
 In SpikeInterface, we can access the spike times and unit assignments in a sorter-independent manner, using the [`sorting`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseSorting) object:
 
@@ -373,14 +373,14 @@ may want to reduce this down to a single command where
 we compute all of the extensions, and then
 go through them in more detail in the SpikeInterface GUI
 
-Spike sorting is a complex task undertaken in the precense of significant noise. Therefore, many units will not cleanly represent a single neuron. As well as **good** units (i.. where each spike is from the same putative neuron) units may be **noise** (XXX) or **multi-unit activity (MUA)**. 
+Spike sorting is a complex task undertaken in the presence of significant noise. Therefore, many units will not cleanly represent a single neuron. As well as **good** units (i.. where each spike is from the same putative neuron) units may be **noise** (XXX) or **multi-unit activity (MUA)**. 
 
 To determine whether units are good or not, we must look at the individual spikes that belong to a unit, and compute metrics. Cut then out, waveforms. In this section we will go over some key concepts at a very high level - we will develop this much further in the Postprocessing chapter.
 
 
-### Creating a `SortingAnalzyer`
+### Creating a `SortingAnalyzer`
 
-The `SortingAnalzyer` is the key object for postprocessing in SpikeInterface. We can create the `SortingAnalzyer` by passing the sorting output and preprocessed recording:
+The `SortingAnalyzer` is the key object for postprocessing in SpikeInterface. We can create the `SortingAnalyzer` by passing the sorting output and preprocessed recording:
 
 ```{python}
 from spikeinterface import create_sorting_analyzer
@@ -396,9 +396,9 @@ postprocessing results needed to assess the quality of our sorting.
 
 :::{warning}
 
-Some sorters will output their own waveforms, templates, amplitudes ETC (for example, Kilosort has a `templates.npy` file containnig the templates it generated during sorting).
+Some sorters will output their own waveforms, templates, amplitudes ETC (for example, Kilosort has a `templates.npy` file containing the templates it generated during sorting).
 
-These are not loaded by SpikeInterface. Instead, the sorting analzyer will always recompute these features directly from the passed `recording`.
+These are not loaded by SpikeInterface. Instead, the sorting analyzer will always recompute these features directly from the passed `recording`.
 
 :::
 
@@ -406,7 +406,7 @@ These are not loaded by SpikeInterface. Instead, the sorting analzyer will alway
 
 In our sorting, we can have many many detected spikes. This may be in the order of millions of spikes for an hour long recording. When performing experiments with very long recordings (e.g. days or weeks) billions of spikes may be detected!
 
-In general, we will compute summary statistics over metrics computed from individual spikes. Therefore, including millions of spikes is computationally intensive while providing marginal gains. Instead, we can subselect spikes to include in postprocessing computations (typically, 3-500 spikes per unit is used a default).
+In general, we will compute summary statistics over metrics computed from individual spikes. Therefore, including millions of spikes is computationally intensive while providing marginal gains. Instead, we can sub-select spikes to include in postprocessing computations (typically, 3-500 spikes per unit is used a default).
 
 ```{python}
 analyzer.compute(
@@ -416,7 +416,7 @@ analyzer.compute(
 )
 ```
 
-To access the data assicated with a computed extension, we can use the `get_extension` function as below. We can see the indices (and compute the 
+To access the data associated with a computed extension, we can use the `get_extension` function as below. We can see the indices (and compute the 
 spike times) for the selected spikes:
 
 ```{python}
@@ -458,7 +458,7 @@ plt.show()
 
 ### Templates
 
-The template is a representative wavecform from a putative neuron. Often, it is computed as the average waveform from all of the spikes that were assigned to a unit.
+The template is a representative waveform from a putative neuron. Often, it is computed as the average waveform from all of the spikes that were assigned to a unit.
 
 We can compute the extension and access the templates with:
 
@@ -472,7 +472,7 @@ print(
 )
 ```
 
-SpikeInterface also includes many useful post-processing plots in the widget smodule. For example  we can plot a unit template as below:
+SpikeInterface also includes many useful post-processing plots in the widgets module. For example  we can plot a unit template as below:
 
 ```{python}
 
@@ -484,7 +484,7 @@ plt.show()
 
 ### Amplitudes
 
-Finally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable througghout a recording. Changes in spike amplitudes may indicate problems with hte neuron health, drift, or other issues. 
+Finally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable throughout a recording. Changes in spike amplitudes may indicate problems with hte neuron health, drift, or other issues. 
 
 To compute the spike amplitudes, we can run:
 
@@ -497,7 +497,7 @@ amplitudes = analyzer.get_extension("spike_amplitudes").data["amplitudes"]
 print(amplitudes)
 ```
 
-This gives a list of amplitudes, one for every spike. We will explore how visualisng spike amplitude across time is a useful measure for quality asessment later.
+This gives a list of amplitudes, one for every spike. We will explore how visualizing spike amplitude across time is a useful measure for quality assessment later.
 
 ## Manual Curation in spikeinterface-gui
 

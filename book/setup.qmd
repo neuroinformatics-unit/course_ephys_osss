@@ -5,7 +5,7 @@ and all dependency packages (such as SpikeInerface) onto your machine.
 
 To do this we will create an isolated environment in which to install packages,
 either using [uv](https://docs.astral.sh/uv/) (recommended)
-or [conda](https://docs.conda.io/). Use the tabs below to switch between the two approaches.
+or [conda](https://docs.conda.io/). 
 
 ## Download the repository
 

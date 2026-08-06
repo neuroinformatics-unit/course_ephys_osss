@@ -453,7 +453,7 @@ plt.show()
 Here, we can see that spikes are 'squashed' onto a smaller number of channels (which can aid spike sorting). The second spike is now only found on 4 channels instead of 3. The 1st and 3rd spikes, which was probably a single waveform distributed over 4 channels, however now appear to be split into two separate spikes.
 
 
-# Turn off the steps in KS! 
+# How to turn off the steps in KS 
 
 Finally, when we sort our preprocessed data we must remember to turn off the relevant steps in Kilosort so we do not apply them twice! (for filtering, it is not possible to fully turn it off
 so we set the cutoff to a very low value so that the step does little to the data).

@@ -1,0 +1,4 @@
+# Spike sorting - coding
+
+
+For the coding section we will use the: `notebooks/spike-sorting-coding.ipynb`

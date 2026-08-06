@@ -70,7 +70,7 @@ Next, we will define a function to plot and compare multiple preprocessing steps
 
 ```{python}
 
-def plot_prepro(recordings: dict, time_range: tuple[float]) -> None:
+def plot_prepro(recordings, time_range):
     """
     Plot multiple recordings in subplots.
 
@@ -83,11 +83,18 @@ def plot_prepro(recordings: dict, time_range: tuple[float]) -> None:
         A tuple with the (start, stop) times of the data to plot.
     """
     fig, axes = plt.subplots(
-        1, len(recordings), figsize=(6 * len(recordings), 5),
-        squeeze=False, layout="constrained",
+        1, len(recordings), 
+        figsize=(6 * len(recordings), 5), 
+        layout="constrained",
     )
+    # If only 1 plot is passed, axes will not be 1d
+    # (they will be a single Axes object)
+    axes = np.atleast_1d(axes)
 
-    for ax, (name, recording) in zip(axes.ravel(), recordings.items()):
+    for idx, (name, recording) in enumerate(recordings.items()):
+        
+        ax = axes[idx]
+
         si_widgets.plot_traces(
             recording,
             time_range=time_range,

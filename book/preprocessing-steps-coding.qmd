@@ -264,7 +264,7 @@ There's no need to get through all of these — pick whatever looks interesting.
 - Plot the data using the `mode="line"` argument. Same data — a completely different perspective!
 - What happens if you set the bandpass filter minimum cutoff to zero? What frequencies are including now? Or set the maximum cutoff to 15000?
 - Try common median referencing (CMR) particular subsets of channels, using the `reference`, `groups` arguments as well
-as use different channels as reference using the `ref_channel_ids` argument. Recordings have a `get_channel_ids()` function hat
+as use different channels as reference using the `ref_channel_ids` argument. Recordings have a `get_channel_ids()` function that
 returns a list of ids.
 - Compute the Fourier transform of a data before and after bandpass filtering (using the `.get_traces()` function and [scipy's](https://scipy.org/) fourier transform functions) and plot the frequency spectrum.
 

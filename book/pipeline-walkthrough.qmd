@@ -285,9 +285,8 @@ Now we have our preprocessed data, and have visually confirmed the data quality 
 
 - How does the data look using `median` vs. `mean` as the `operator` argument in `common_average()`?
 - What happens if you set the bandpass filter minimum cutoff to zero? What frequencies are including now? Or set the maximum cutoff to 15000?
-- Set `return_in_uV=False`. Does the data look much different?
+- Set `return_in_uV=False` when plotting. Does the data look much different? What is the datatype now? Can you explain what has happened to the data? Use `.get_traces()` with `return_in_uV=False` and `return_in_uV=True` and inspect how the data type changes.
 - Save the data to disk with the Recording objects `.save()` attribute
-- Use `get_traces()` with and without `return_in_uV` as `True` and `False` to inspect the data type.
 
 ***stretch goal**
 

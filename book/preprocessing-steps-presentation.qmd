@@ -1,6 +1,72 @@
 # Preprocessing - theory
 
+
 This presentation can be found [here](https://docs.google.com/presentation/d/1KsR5lh2i3QatL2LFhxDyiqdFYjOI7ttqNNcJecuh1L4/edit?usp=sharing).
 
 (it may be converted into a quarto page)
 
+
+# Raw data quality metrics
+
+# Preprocessing Steps
+
+```
+import spikeinterface.extractors as si_extractors
+from viewephys.gui import EphysBinViewer
+
+# This should be the path to the folder containing
+# the data. On Windows, you may need to prepend
+# r to the string e.g. r"C:\my\path"
+path_to_data_folder = "data/pipeline-walkthrough"
+
+recording = si_extractors.read_spikeglx(
+    path_to_data_folder,
+    stream_id="imec0.ap"
+)
+
+import spikeinterface.preprocessing as si_prepro
+
+phase_shift_recording = si_prepro.phase_shift(recording)
+filtered_recording = si_prepro.bandpass_filter(
+    phase_shift_recording, freq_min=300, freq_max=6000
+)
+cmr_recording = si_prepro.common_reference(
+    filtered_recording, operator="median"
+)
+
+# show in EphysBinViewer(
+    {
+        "raw": recording,
+        "phase_shift": phase_shift_recording,
+        "filtered": filtered_recording,
+        "cmr": cmr_recording
+    }
+)
+
+```
+## Bad channe ldetection
+
+Insert this step into the above pipeline
+
+## Highpass spatial filter
+
+Replace CMR with HSF above
+
+## Drift correction
+
+1) run drift correction
+2) how to inspect the outputs (very important)
+3) driftmaps (can use driftplots)
+4) add to viewephys
+
+## Whitening
+
+Don't need much on this but just show the huge affect this has on the data
+
+TODO: would be cool to add an 'attach overlay data' to a viewer and it will
+show it as overlay on the wiggle
+
+
+## Note on what steps the sorting applies
+
+run kilosort and turn off various settings

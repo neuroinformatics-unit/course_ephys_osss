@@ -52,25 +52,29 @@ import matplotlib.pyplot as plt
 
 ## Downloading the data
 
-TODO: include some information on the experiment, probably do this on a central 'dataset' page
+This is the first chapter in which we will use a core dataset used in this course,
+a postsubiculum recording on a 64-channel Cambridge Neurotech probe used in an
+experimental in neural tuning of head direction cells (see [here](course-data.qmd#head-direction-experiment-from-the-dandi-archive) for details).
 
-First we need to download the dataset we will. This dataset is (TODO: brief introduction). For more information on the dataset and how to download any one of the thousands of open-access datasets available on the DANDI archive, please see TODO.
+We will download the first 90 seconds of a recording from this dataset from
+the open access DANDI archive repository (an [excellent resource](course-data.qmd))
 
 ```{python}
 
-LOCAL_FOLDER = Path("_tmp/nwb_first_slice")
+# (optionally) change this to where you would like to download the data to.
+RAW_DATA_FOLDER = Path("data/raw-dandiset-000939")
 
-if LOCAL_FOLDER.exists():
+if RAW_DATA_FOLDER.exists():
     # if we have already downloaded the data, reload it.
-    recording = si.load(LOCAL_FOLDER)
+    recording = si.load(RAW_DATA_FOLDER)
 else:
     # Otherwise, download the first 90 seconds from DANDI
     download_and_slice_nwb_from_dandi(
         s3_url="https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5",
         duration_s=90,
-        local_folder=LOCAL_FOLDER
+        local_folder=RAW_DATA_FOLDER
     )
-    recording = si.load(LOCAL_FOLDER)
+    recording = si.load(RAW_DATA_FOLDER)
 
 ```
 
@@ -491,6 +495,27 @@ plt.show()
 ```
 
 Here, we can see that spikes are 'squashed' onto a smaller number of channels (which can aid spike sorting). The second spike is now only found on 4 channels instead of 3. The 1st and 3rd spikes, which was probably a single waveform distributed over 4 channels, however now appear to be split into two separate spikes.
+
+
+# Saving the data
+
+SpikeInterface makes it very easy to save preprocessed data, which is useful as applying 
+preprocessing to an entire long recording can take some time. Here we will save the data
+preprocessed with *bandpass filter*, *bad channel removal* and *common referencing* for use
+later in the course. 
+
+In general, we can perform these lighter preprocessing steps in SpikeInterface
+and let the sorter use internaly preprocessing for oher steps.
+
+```{python}
+
+PREPROCESSED_DATA_FOLDER = Path("data/preprocessed-dandiset-000939")
+
+if not PREPROCESSED_DATA_FOLDER.exists():
+    recording_cmr.save(folder=PREPROCESSED_DATA_FOLDER)
+
+```
+
 
 
 # How to turn off the steps in KS 

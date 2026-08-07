@@ -4,7 +4,12 @@
 /book/_site/
 /book/_tmp
 /book/_freeze/
+/book/data/raw-dandiset-000939
+/book/data/preprocessed-dandiset-000939
+/notebooks/data
+/notebooks/results
 /docs/
+
 **/*.quarto_ipynb
 .vscode
 *.pyc

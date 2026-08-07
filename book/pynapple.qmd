@@ -5,7 +5,8 @@ Pynapple is a python package for analysing neural data.
 The package is actively maintained by the Flatiron Institute's [neuroRSE team](https://neurorse.flatironinstitute.org/). 
 
 Pynapple can do a lot more than what is covered in this chapter, take a look at the [Pynapple documentation](https://pynapple.org/user_guide/03_core_methods.html) for more.   
-The only thing you'll need to follow along is a working Python environment with `pynapple` installed.
+The only thing you'll need to follow along is a working Python environment with `pynapple` installed.  
+If you use Claude, you can add the Pynapple `claude-skills` [plugin](https://github.com/pynapple-org/claude-skills) to make it more aware of the Pynapple API.
 <span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.
 
 Open your favourite way of running Python, and follow along!
@@ -435,7 +436,7 @@ ax_spikes.set_yticks([])
 ax_spikes.spines['left'].set_visible(False)
 ax_spikes.spines['right'].set_visible(False)
 ax_spikes.spines['top'].set_visible(False)
-ax_count.plot(counts)
+ax_count.step(counts.times(), counts.values)
 ax_count.set_ylabel("count")
 ax_count.set_xlabel("time (s)")
 ax_count.spines['right'].set_visible(False)
@@ -1118,3 +1119,5 @@ Then, try to compute head direction tuning curves, and use those to decode head 
 
 If you are confident, you can write your own code using the snippets provided in this chapter.  
 If you want a bit more help, follow along in [this notebook](https://colab.research.google.com/drive/1o3IJtprvaTzwHxThGTdInE6GYADBULyA?usp=sharing).
+
+Pynapple has a lot [more learning material](), take a look here if you want to become an expert!

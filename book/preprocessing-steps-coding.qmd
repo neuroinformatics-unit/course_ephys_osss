@@ -95,11 +95,12 @@ def plot_prepro(recordings, time_range):
     fig, axes = plt.subplots(
         1, len(recordings), 
         figsize=(6 * len(recordings), 5), 
+        squeeze=False,
         layout="constrained",
     )
-    # If only 1 plot is passed, axes will not be 1d
-    # (they will be a single Axes object)
-    axes = np.atleast_1d(axes)
+
+    # Grab the first (and only) row of axes
+    axes = axes[0, :]
 
     for idx, (name, recording) in enumerate(recordings.items()):
         
@@ -232,7 +233,9 @@ to ensure the default arguments of the algorithms we are using are suitable for 
 
 # Common average referencing
 
-Electrophysiological recordings are often contaminated by noise artefacts that appear on all channels at once for a short period of time. These appear as vertical 'stripes' on the heatmap view of the data, as can be seen below. 
+Electrophysiological recordings are often contaminated by noise artefacts that appear on all channels at once for a short period of time.
+Striping artefacts are typically caused by electrical noise that is shared across many recording channels, for example fluctuations in the reference electrode or electromagnetic interference.
+These appear as vertical 'stripes' on the heatmap view of the data, as can be seen below.
 
 Common average referencing (CAR) takes the average signal across all of the channels, and subtracts it. Sometimes you wil see this called 'common median referencing' (CMR) when the median is used instead of the mean. 
 
@@ -364,12 +367,20 @@ Because this is only a 90-second recording, we see very little drift. On longer 
 Example DREDGE drift-correction on a longer recording with injected drift.
 :::
 
-If the drift plots in your recordings indicate little drift, you may want to consider turning off motion correction. 
-This is because the interpolation step will be performed based on small, but non-zero estimated motion and can add noise to the recording. 
+In our case, if we compute the drift across the entire recording we get the below plot:
 
-Further, motion correction 
-may inject erroneous contamination when motion is miscalculated, especially for low-channel count probes or probes with low firing 
-rate neurons (see [here](https://github.com/SpikeInterface/spikeinterface/issues/4432) for a discussion on the phenomenon) e.g:
+::: {#fig-dredge fig-align="center"}
+![](images/dandiset-data-drift-full-recording.png){width=100%}
+
+We see that there is little drift in the recording, and that motion correction has
+in fact introduced an artefact around the XXX mark. In general if the drift plots in your
+recordings indicate little drift, you may want to consider turning off motion correction.
+This is because the interpolation step will be performed based on small, but non-zero
+estimated motion and can add noise to the recording.
+
+Further, motion correction  may inject erroneous contamination when motion is miscalculated, resulting in a vertical 'smearing' of spikes in the raster plot.
+This is especially true for low-channel count probes or probes with low firing rate neurons
+(see [here](https://github.com/SpikeInterface/spikeinterface/issues/4432) for a discussion on the phenomenon) e.g:
 
 ::: {#fig-kilosort-like fig-align="center"}
 ![](images/si-kilosort_like_motion-info.png){width=100%}
@@ -377,7 +388,9 @@ rate neurons (see [here](https://github.com/SpikeInterface/spikeinterface/issues
 Erroneous motion estimation from the `kilosort_like` preset on a low-channel-count probe. A large error, around 4700 seconds, can be seen in the motion vector which 'smears' the estimated peak locations in the corrected raster plot (top right).
 :::
 
-The takeaway from this section is to always plot your estimation motion (even if you don't eventually apply motion correction), using it to make the decision whether to apply this to your sorted data or not.
+The takeaway from this section is to always plot your estimation motion (even if you don't eventually apply motion correction),
+using it to make the decision whether to apply this to your sorted data or not. You can check drift maps in SpikeInterface,
+through Kilosort outputs or using the interactive [driftplots](https://github.com/neuroinformatics-unit/driftplots) package.
 
 # Whitening
 
@@ -425,7 +438,9 @@ The goal of the whitening step is to remove all cross-channel correlation from t
 
 Rescaling the variances is why this step has such a large effect on the data scaling.
 
-We can estimate the original channel scaling by multiplying the data by the average standard deviation (i.e. noise) of the data. This scales back up the variances along the covariance matrix to approximate that in the original dataset.
+We can estimate the original channel scaling by multiplying the data by the average standard deviation (i.e. noise) of the data.
+When we compute the covariance matrix of the scaled data, we should see this approximation of the original channel
+variances along the diagonal, instead of ones (with zeros still on the off-diagonals, at least in theory).
 
 :::
 

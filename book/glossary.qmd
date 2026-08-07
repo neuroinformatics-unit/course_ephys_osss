@@ -1,5 +1,34 @@
+TODO: 
+- make sure to link to these from relevant places across the book.
+- decide what is glossary vs. concept notes
+
 **recording electrode**
 Note alias - contact, site etc. Channel often used interchangably but I guess not exactly the same.
 
+**intracellular vs. extracellular signals**
 
 
+**raster plot**
+One for concept notes?
+
+**spike** / **action potential**
+
+**shank**
+
+**unit cluster putative neuron**
+
+**waveform**
+
+**template**
+
+**sparsity**
+
+**correlogram**, **autocorrelogram**
+mentioned in pynapple, sorting I think, curation
+
+**job kwargs**
+
+They are unused until sorting, we can explain them there. It might make sense to explain them earlier TBH, but things are already a bit busy. Maybe in the motion correction section? or maybe as a concept note?
+
+
+si.set_global_job_kwargs(n_jobs=0.5, chunk_duration="1s", progress_bar=True)

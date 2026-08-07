@@ -22,6 +22,15 @@ The function found [here] **TODO: ADD LINK** can be used to download and save da
 or parts of it) using SpikeInterface. We will use it to download the dataset above, but the same approach works for any of the thousands of recordings hosted on DANDI.
 
 
+## Spike times and behavior used in the Pynapple section
+
+The full NWB file for this dataset includes not only the raw electrophysiological data,
+but the results of spike sorting (spike times, units) and behavioral data from the experiment.
+
+For the Pynapple decoding section, we only need the sorting outputs and behavioral data. Therefore,
+we use **this script LINK**  to remove the electrophysiolgoical data and accelerometer data for this
+section. The data is available in in the course repository at `book/data/pynapple/dandiset-000939-no-traces-full.nwb` 
+
 # IBL Benchmark dataset
 *Used in Preprocessing (part 1).*
 

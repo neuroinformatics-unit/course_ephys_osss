@@ -46,6 +46,8 @@ book:
     - spike-sorting-coding.qmd
     - pynapple.qmd
     - concept-notes.qmd
+    - glossary.qmd
+    - references.qmd
     - planning.qmd
     - curation.qmd
     - course-data.qmd

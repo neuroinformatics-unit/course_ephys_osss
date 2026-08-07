@@ -1,0 +1,7 @@
+# Introduction to electrophysiology
+
+This presentation can be found [here](https://docs.google.com/presentation/d/1iCzmh6DwQcPtH8VJWvV7E6Fnpbl0RLW6QFPalob0t80/edit?slide=id.g3ee7c50db7e_0_161#slide=id.g3ee7c50db7e_0_161).
+
+(it may be converted into a quarto page)
+
+

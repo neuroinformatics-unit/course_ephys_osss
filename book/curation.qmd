@@ -152,7 +152,7 @@ So... what's a Curation. And why does it have a capital C?
 
 Spike sorters make mistakes -- sometimes lots of mistakes! So we need to look at the spike sorting output. Then we can adjust the sorter's default settings (then take a look at the results) in the hope that their output improves, or we can curate what comes out of them.
 
-TODO: Make consistent with Glossary
+See the [Glossary](glossary.qmd#units-neurons-and-clusters) for the course-wide terminology used below.
 It's helpful to remind ourselves what the definition of "neuron" and "unit" are:
 
   - **Neuron**: a neuron, an actual cell.

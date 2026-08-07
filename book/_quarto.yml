@@ -2,6 +2,7 @@ project:
   type: book
   output-dir: _site
 
+jupyter: course-ephys-venv
 execute:
   freeze: auto
 
@@ -39,7 +40,7 @@ book:
     - introduction-presentation.qmd
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
-    - preproecssing-steps-coding.qmd
+    - preprocessing-steps-coding.qmd
     - spike-sorting-coding.qmd
     - pynapple.qmd
     - concept-notes.qmd
@@ -55,6 +56,8 @@ format:
     theme:
       - cosmo
       - brand
+    css: custom.css
+    fig-dpi: 96
 
 
 

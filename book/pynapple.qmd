@@ -5,8 +5,9 @@ Pynapple is a python package for analysing neural data.
 The package is actively maintained by the Flatiron Institute's [neuroRSE team](https://neurorse.flatironinstitute.org/). 
 
 Pynapple can do a lot more than what is covered in this chapter, take a look at the [Pynapple documentation](https://pynapple.org/user_guide/03_core_methods.html) for more.   
+
 The only thing you'll need to follow along is a working Python environment with `pynapple` installed.
-<span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.
+See the [setup section](setup.qmd#create-the-environment) on how to set up the course environment. 
 
 Open your favourite way of running Python, and follow along!
 
@@ -36,7 +37,7 @@ presently with the Flatiron Institute's neuroRSE team:
 ![](https://githubcard.com/pynapple-org/pynapple.svg)
 
 ## Goal
-Pynapple was designed to lie in between pre- and postprocessing.  
+Pynapple was designed to lie in between data processing and analysis.
 It contains functions facilitating alignment, wrangling, and performing basic neuroscientific analysis.
 
 <div class="timeline-horizontal">
@@ -1108,15 +1109,17 @@ def stream_dandiset(dandiset_id, filepath):
 ```
 
 ## Your turn
+
 Now it is your turn!
 
 We will compute head direction tuning curves in the postsubiculum, and use these to decode head direction from neural activity. We will use the same [dataset](course-data.qmd#head-direction-experiment-from-the-dandi-archive) we have
 been working with in the [preprocessing](preprocessing-steps-coding.qmd), [sorting](spike-sorting-coding.qmd) and [curation](curation.qmd) chapters.
 
-However to ensure the decoding is accurate we will need much more of data than we previously used. Therefore, we will use the full `.nwb` file for the session, that contains already-computed spike times, as well has behavioural data, but has all electrophysiological recording and accelerometer data removed to keep the file size small.
+However to ensure the decoding is accurate we will need much more of data than we previously used. 
+Therefore, we will use the full `.nwb` file for the session that contains already-computed spike times, as well has behavioural data. However, to keep the file size small all raw electrophysiological data and accelerometer data has been removed.
 **TODO: ADD DOWNLOAD LINK**
-This dataset is included in the course data under book/data/pynapple/dandiset-000939-no-traces-full.nwb',
-for full details see [here](course-data.qmd#spike-times-and-behaviour-used-in-the-pynapple-section). 
+This dataset is included in the course data under `book/data/pynapple/dandiset-000939-no-traces-full.nwb`,
+for full details see [here](course-data.qmd#spike-times-and-behavior-used-in-the-pynapple-section). 
 
 Then, try to compute head direction tuning curves, and use those to decode head direction from the population activity.
 

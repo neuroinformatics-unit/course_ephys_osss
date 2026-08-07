@@ -1,7 +1,8 @@
 from pathlib import Path
 import numpy as np
 from spikeinterface.extractors import NwbRecordingExtractor
-
+from pynwb import NWBHDF5IO
+from pynwb.ecephys import ElectricalSeries, LFP
 
 def download_and_slice_nwb_from_dandi(
     s3_url: str = "https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5",
@@ -82,9 +83,6 @@ def strip_recording_from_nwb(
     Path
         The path to the stripped NWB file.
     """
-    from pynwb import NWBHDF5IO
-    from pynwb.ecephys import ElectricalSeries, LFP
-
     nwb_path = Path(nwb_path)
 
     if output_path is None:

@@ -44,6 +44,8 @@ dependencies = [
     "remfile",
     "scipy",
     "spikeinterface[full,widgets]",
+    "pyqtgraph",
+    "PySide6",
 ]
 
 [project.urls]

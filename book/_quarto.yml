@@ -2,7 +2,6 @@ project:
   type: book
   output-dir: _site
 
-jupyter: course-ephys-venv
 execute:
   freeze: auto
 

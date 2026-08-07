@@ -50,7 +50,11 @@ The script below demonstrates how to: **TODO: ADD THIS LINK**
 
 **TODO: check with Steve and finish section**
 
-This recording is 2.5 seconds used as an example file in the introduction section. It is included
-in the course repository [here](https://github.com/neuroinformatics-unit/course_ephys_osss/tree/main/book/data/pipeline-walkthrough), as it is very small. **TODO: link to set up page (and describe how to manually dl it?)
+This dataset is a short 2.5 second period from a **BRAIN REGOIN** recording on a 4-shank NP2 probe (NP2010). It uses electrodes on the central two of the four shanks.
 
-This recording was targeting the XXX and recorded using a 4-shank NP2 probe (NP2010) using electrodes on the central two of the four shanks. The experiment looked at looming stimulus and was interested in recording XXX (currently under review).
+This is from a dataset by Steve Lenzi (Margrie Lab) (LINK) from an chronic-recording experiment in which 
+a mouse learnt to suppress escape behavior when presented with an aversive, looming visual stimulus.
+
+This data is included in the course repository [here](https://github.com/neuroinformatics-unit/course_ephys_osss/tree/main/book/data/pipeline-walkthrough),
+ as it is very small. **TODO: link to set up page (and describe how to manually dl it?)
+

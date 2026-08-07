@@ -369,16 +369,19 @@ Example DREDGE drift-correction on a longer recording with injected drift.
 
 In our case, if we compute the drift across the entire recording we get the below plot:
 
-::: {#fig-dredge fig-align="center"}
+::: {#fig-full-data fig-align="center"}
 ![](images/dandiset-data-drift-full-recording.png){width=100%}
+:::
 
 We see that there is little drift in the recording, and that motion correction has
-in fact introduced an artefact around the XXX mark. In general if the drift plots in your
+in fact introduced an artefact around the 4000 second mark visible in the top-right plot.
+
+This highlights an important point: if the drift plots for your
 recordings indicate little drift, you may want to consider turning off motion correction.
 This is because the interpolation step will be performed based on small, but non-zero
 estimated motion and can add noise to the recording.
 
-Further, motion correction  may inject erroneous contamination when motion is miscalculated, resulting in a vertical 'smearing' of spikes in the raster plot.
+Similarly, erroneous motion correction can result in a vertical 'smearing' of spikes in the raster plot.
 This is especially true for low-channel count probes or probes with low firing rate neurons
 (see [here](https://github.com/SpikeInterface/spikeinterface/issues/4432) for a discussion on the phenomenon) e.g:
 

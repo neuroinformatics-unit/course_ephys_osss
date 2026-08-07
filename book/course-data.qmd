@@ -1,25 +1,22 @@
 # Course data
 
-This page includes information on the provenance of all data used in the course, as well as instructions on how to download it.
+This page includes information on the provenance of all data used in the course and instructions on how to download it from
+open access datasets on [DANDI archive](https://about.dandiarchive.org/)  and from the [International Brain Laboratory (IBL)](https://www.internationalbrainlab.com/).
 
-More generally, it is a useful resource on how you can access the thousands of available extracellular electrophysiology datasets which have been published on open access repositories. These can be very valuable for testing pipelines, comparing your datasets to others data collected from the same region or using the same probe, as well as allowing you to do full experiments and analysis.
-For example, this recent [Paninski/Fusi-lab paper](https://www.nature.com/articles/s41586-026-10668-4) 
-was run purely on the International Brain Lab (IBL)'s open [Brainwide Map](https://www.internationalbrainlab.com/brainwide-map).
-
-The main open access datasets we will cover come from:
-- The DANDI archive
-- The IBL
+Beyond this course, it is a useful to be aware of these excellent resources.  They are very valuable for testing pipelines, 
+comparing your datasets to others data collected from the same region or using the same probe. Further, they allow you to 
+perform your own interesting analysis without collecting data. For example, this recent [Paninski/Fusi-lab paper](https://www.nature.com/articles/s41586-026-10668-4) was based on their analysis of the International Brain Lab (IBL)'s open [Brainwide Map](https://www.internationalbrainlab.com/brainwide-map).
 
 # Head direction experiment from the DANDI archive
 *Used in preprocessing, sorting, postprocessing and Pynapple analysis.*
 
 The [DANDI archive](https://about.dandiarchive.org/) is an open, NIH-backed repository for sharing neurophysiology datasets
 in the standardized [Neurodata without borders (NWB)](https://nwb.org/) file format (which SpikeInterface can load).
+
 You can explore the many datasets on their website, and download them using the [Python API](https://docs.dandiarchive.org/api/dandi-client/) (used in this course) or DANDI's own [command line interface API](https://docs.dandiarchive.org/api/dandi-client/) using the Dandiset ID and the path to the asset you want or DANDI's own API.
 
 
-The dataset we will use through the majority of this course is hosted on DANDI [here](https://dandiarchive.org/dandiset/000939?search=000939). The data was used in [Duszkiewicz et al., 2024](https://www.nature.com/articles/s41593-024-01588-5). The experiments recorded from the postsubiculum, a parahippocampal cortical region of the parahippocampal formation and a key hub of the spatial navigation system, using a 64-channel single-shank Cambridge Neurotech probe. They recorded from mice using open-field exploration (as well as during sleep) in which they measured the head-direction of the mice. They were interested in investigating neural tuning
-for head direction (i.e. head-direction tuned neurons fire when the head of an animal is facing a particular direction or angle).
+The dataset we will use through the majority of this course is hosted on DANDI [here](https://dandiarchive.org/dandiset/000939?search=000939). The data was used in [Duszkiewicz et al., 2024](https://www.nature.com/articles/s41593-024-01588-5). The experiments recorded from the postsubiculum, a parahippocampal cortical region of the parahippocampal formation and a key hub of the spatial navigation system, using a 64-channel single-shank Cambridge Neurotech probe. They recorded from mice using open-field exploration (as well as during sleep) in which they measured the head-direction of the mice. They were interested in investigating neural tuning for head direction (i.e. head-direction tuned neurons fire when the head of an animal is facing a particular direction or angle).
 
 The function found [here] **TODO: ADD LINK** can be used to download and save datasets (either the entire recording
 or parts of it) using SpikeInterface. We will use it to download the dataset above, but the same approach works for any of the thousands of recordings hosted on DANDI.
@@ -45,12 +42,12 @@ The script below demonstrates how to: **TODO: ADD THIS LINK**
 ```{.python include="scripts/stream_raw_ephys.py"}
 ```
 
-
-# Session 1 (introduction) dataset
+# Introductory dataset
+*Used in the pipeline walkthrough chapter*
 
 **TODO: check with Steve and finish section**
 
-This dataset is a short 2.5 second period from a **BRAIN REGOIN** recording on a 4-shank NP2 probe (NP2010). It uses electrodes on the central two of the four shanks.
+This dataset is a short 2.5 second period from a **BRAIN REGION** recording on a 4-shank NP2 probe (NP2010). It uses electrodes on the central two of the four shanks.
 
 This is from a dataset by Steve Lenzi (Margrie Lab) (LINK) from an chronic-recording experiment in which 
 a mouse learnt to suppress escape behavior when presented with an aversive, looming visual stimulus.

@@ -46,6 +46,7 @@ book:
     - references.qmd
     - planning.qmd
     - curation.qmd
+    - course-data.qmd
 
 bibliography: references.bib
 

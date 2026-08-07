@@ -1110,9 +1110,15 @@ def stream_dandiset(dandiset_id, filepath):
 ## Your turn
 Now it is your turn!
 
-Start by streaming a single session from [this dataset](https://dandiarchive.org/dandiset/000939?search=000939&pos=1) on the DANDI archive, it contains recordings from head direction cells in the postsubiculum.
-Use the streaming function we provided in the data section!
-<span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.
+We will compute head direction tuning curves in the postsubiculum, and use these to decode head direction from neural activity. We will use the same [dataset](course-data.qmd#head-direction-experiment-from-the-dandi-archive) we have
+been working with in the [preprocessing](preprocessing-steps-coding.qmd), [sorting](spike-sorting-coding.qmd) and [curation](curation.qmd) chapters.
+
+For this section, we will need a much larger segment of data than we previously used. Therefore, 
+we will use the `.nwb` file that contains already-computed spike times, as well has behavioural data,
+but has all electrophysiological recording and accelerometer data removed to keep the file size small.
+**TODO: ADD DOWNLOAD LINK**
+This dataset is included in the course data under book/data/pynapple/dandiset-000939-no-traces-full.nwb',
+for full details see [here](course-data.qmd#spike-times-and-behaviour-used-in-the-pynapple-section). 
 
 Then, try to compute head direction tuning curves, and use those to decode head direction from the population activity.
 

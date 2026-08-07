@@ -21,6 +21,16 @@ The preprocessing steps we will explore in this chapter are:
 
 - **whiten** : Removes correlated noise across channels and helps isolate spikes on  a subset of channels. Has significant effects on the data scaling and waveform shape.
 
+::: {.callout-warning}
+
+We are applying all of these preprocessing steps to explore their effects — **In general you would not apply all of these steps
+to your recordings**. The preprocessing steps you choose will depend on your data, e.g. your recording device,
+whether your implant is chronic or acute and the sorter you use.  We will discuss this throughout the chapter.
+
+:::
+
+# Set up
+
 We will preprocess a new dataset recorded on a 64-channel Cambridge Neurotech probe. Note that we will not apply the `phase_shift` step that was used in [introduction preprocessing section](pipeline-walkthrough.qmd#preprocessing), as that is only relevant for Neuropixel probes.
 
 
@@ -40,7 +50,7 @@ import matplotlib.pyplot as plt
 ```
 
 
-# Downloading the data
+## Downloading the data
 
 TODO: include some information on the experiment, probably do this on a central 'dataset' page
 
@@ -64,7 +74,7 @@ else:
 
 ```
 
-# Initial steps
+## Creating a plotting function
 
 Next, we will define a function to plot and compare multiple preprocessing steps. We will reuse this function through the rest of the tutorial.
 
@@ -107,6 +117,7 @@ def plot_prepro(recordings, time_range):
 
 ```
 
+# Bandpass filter
 
 First, let's have a look at the effect of bandpass filtering the data, using the [`bandpass_filter()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.preprocessing.bandpass_filter) function. We will plot the first second of the data:
 
@@ -130,9 +141,12 @@ plot_prepro(
 
 ```
 
-The filtering operation removes a lot of contaminating low-frequency noise, realizing a significant improvement to the data. Electrical noise at 50 or 60 Hz (i.e. oscillating 50 or 60 times per second) is common as mains power electricity oscillates at those frequencies in many countries. 
+The filtering operation removes a lot of contaminating low-frequency noise, realizing a significant improvement to the data.
+Electrical noise at 50 or 60 Hz (i.e. oscillating 50 or 60 times per second) is common as mains power electricity oscillates
+at those frequencies in many countries.
 
-Bandpass filtering helps suppress this slow periodic component (although in practice good grounding and shielding are also important for reducing mains noise at the source).
+Bandpass filtering helps suppress this slow periodic component (although in practice good grounding and shielding are also
+important for reducing mains noise at the source).
 
 ```{python}
 #| echo: false

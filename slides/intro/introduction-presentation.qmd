@@ -243,6 +243,12 @@ The course handbook, with set up instructions, is at:
 
 [https://neuroinformatics.dev/course_ephys_osss/](https://neuroinformatics.dev/course_ephys_osss/)
 
+Head to the [set up page](https://neuroinformatics.dev/course_ephys_osss/setup.html) and we'll go through it together.
+
+::: {.notes}
+Open the set up page and take everyone through the installation steps together.
+:::
+
 ## Downloading data for the course {.data-download-slide}
 
 :::: {.data-download-grid}

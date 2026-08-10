@@ -1,12 +1,10 @@
 project:
   type: book
   output-dir: _site
+  resources:
+    - intro-slides.html
 
 jupyter: course-ephys-venv
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 execute:
   freeze: auto
 

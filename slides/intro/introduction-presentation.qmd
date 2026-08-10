@@ -13,12 +13,11 @@ format:
     slide-number: true
     transition: slide
     incremental: false
+    loop: true
     width: 1280
     height: 720
     footer: "OSSS Ephys Course 2026"
 ---
-
-## Today
 
 ::: {.incremental}
 1. Introduction to extracellular electrophysiology
@@ -151,6 +150,13 @@ format:
 
 ![](images/pipeline-stepsi.png){fig-alt="Spike sorting pipeline steps" style="display: block; width: 100%; max-height: 590px; margin: 0 auto; object-fit: contain;"}
 
+## SpikeInterface
+
+::: {style="font-size: 0.72em; line-height: 1.08; margin-top: -0.25rem; margin-bottom: 0.2rem;"}
+A common API for open-source electrophysiological tools
+:::
+
+![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools" style="display: block; width: 100%; max-height: 660px; margin: -0.15rem auto 0; object-fit: contain; object-position: center top;"}
 
 ## Course timeline
 
@@ -189,58 +195,73 @@ format:
 
 :::
 
-## The goal of the course: fun and learning! {.math-goal-slide}
+## &nbsp; {.math-goal-slide}
 
 :::: {.math-goal-grid}
 
-::: {.math-goal-quote}
-It is like being lost in a jungle and trying to use all the knowledge that you can gather to come up with some new tricks, and with some luck, you might find a way out.
-
-**Maryam Mirzakhani**, Fields medal winner
-:::
-
-::: {.math-goal-quote}
+::: {.math-goal-quote style="grid-column: 1 / span 2; grid-row: 1; justify-self: start; max-width: 34rem; margin-left: 3rem; margin-top: -1.5rem;"}
 So each of these breakthroughs, they are the culmination of, and couldn't exist without, the many months of stumbling around in the dark that precede them.
 
 **Andrew Wiles**, solved Fermat's last theorem
 :::
 
-::: {.math-goal-center}
-Being comfortable in confusion
+::: {.math-goal-quote style="grid-column: 2 / span 2; grid-row: 1; justify-self: end; max-width: 36rem; margin-right: 2.5rem;"}
+Focusing on important questions puts us in the awkward position of being ignorant. One of the beautiful things about science is that it allows us to bumble along, getting it wrong time after time, and feel perfectly fine as long as we learn something each time.
+
+[**Martin Schwartz**](https://journals.biologists.com/jcs/article/121/11/1771/30038/The-importance-of-stupidity-in-scientific-research), professor of cell biology
 :::
 
-::: {.math-goal-quote .math-goal-quote-lower}
-My advisor once told me that doing math is 98% being confused and 2% figuring it out.
-
-**PhD student**
-:::
-
-::: {.math-goal-quote .math-goal-quote-lower}
+::: {.math-goal-quote style="grid-column: 1; grid-row: 2;"}
 If I spend an entire day and all I do is understand this one feature of this one object that I didn't understand before, then that's a great day.
 
 **PhD student**
 :::
 
+::: {.math-goal-center style="grid-column: 2; grid-row: 2;"}
+Being comfortable<br>in confusion
+:::
+
+::: {.math-goal-quote style="grid-column: 3; grid-row: 2;"}
+My advisor once told me that doing science is 98% being confused and 2% figuring it out.
+
+**PhD student**
+:::
+
+::: {.math-goal-quote style="grid-column: 2; grid-row: 3; text-align: center; margin: 0.25rem auto 0;"}
+When you allow yourself to be confused you become far more introspective; you gain the clarity you desire by questioning and reconciling a variety of ideas and alternatives that may feel overwhelming.
+
+[**Peter Winick**](https://thoughtleadershipleverage.com/embracing-confusion/)
+:::
+
 ::::
 
-## Coding a pipeline with SpikeInterface {.section-title-slide}
+## Let's start coding! {.section-title-slide}
 
-## SpikeInterface
+## Course set up
 
-::: {style="font-size: 0.72em; line-height: 1.08; margin-top: -0.25rem; margin-bottom: 0.2rem;"}
-A common API for open-source electrophysiological tools
+The course handbook, with set up instructions, is at:
+
+[https://neuroinformatics.dev/course_ephys_osss/](https://neuroinformatics.dev/course_ephys_osss/)
+
+## Downloading data for the course {.data-download-slide}
+
+:::: {.data-download-grid}
+
+::: {.data-download-section}
+[DANDI datasets]{.data-download-title}
+
+- preprocessing / sorting:
+- postprocessing:
+- analysis:
 :::
 
-![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools" style="display: block; width: 100%; max-height: 700px; margin: 0 auto; object-fit: contain;"}
+::: {.data-download-section}
+[UnitMatch]{.data-download-title}
 
-## The coding segment
-
-::: {.r-fit-text}
-(explain how it will work)
-
-Suggestions on how to run the code
+- main dataset:
+- extra dataset:
 :::
 
-## Downloading data for the course {.section-title-slide}
+::::
 
 

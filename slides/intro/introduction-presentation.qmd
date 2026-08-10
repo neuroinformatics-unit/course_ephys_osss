@@ -81,7 +81,9 @@ format:
 ::: {.column width="50%"}
 ### Orientation selectivity (Hubel and Wiesel, 1962)
 
-<iframe class="video-embed video-embed-classic video-embed-center" src="https://www.youtube-nocookie.com/embed/IOHayh06LJ4" title="Hubel and Wiesel orientation selectivity" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+::: {style="max-width: 500px; margin: 0.4rem auto 0;"}
+{{< video https://www.youtube.com/embed/IOHayh06LJ4 title="Hubel and Wiesel orientation selectivity" >}}
+:::
 
 :::
 
@@ -106,7 +108,9 @@ format:
 
 <div class="classic-findings-label classic-findings-label-first">Place cells</div>
 
-<iframe class="video-embed video-embed-place-cell" src="https://www.youtube-nocookie.com/embed/STyd1qJr3yM" title="Hippocampal place cells" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+::: {style="max-width: 420px; margin: 0.25rem 0 0.35rem 1.5rem;"}
+{{< video https://www.youtube.com/embed/STyd1qJr3yM title="Hippocampal place cells" >}}
+:::
 
 <div class="classic-findings-label">Theta phase precession</div>
 
@@ -128,7 +132,9 @@ format:
 
 ## In the clinic
 
-<iframe class="video-embed video-embed-clinic video-embed-center" src="https://www.youtube-nocookie.com/embed/iTZ2N-HJbwA" title="Recording example" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+::: {style="max-width: 720px; margin: 0.4rem auto 0;"}
+{{< video https://www.youtube.com/embed/iTZ2N-HJbwA title="Recording example" >}}
+:::
 
 ## Evolution of recording devices
 

@@ -95,25 +95,25 @@ Understand the possible approaches to multi-session recordings, gain experience 
 
 **Plan**
 
-*14:00 - 14:30* : (lecture, Alessio) Overview of sorting
+*14:00 - 14:45* : (lecture, Alessio) Overview of spike sorting and spike sorting steps
 
 (some of this is touched on in the first session, so we can reduce it there or change the emphasis of this talk)
+
 * Why we need to do it
-* The key outputs (spike times, unit assignment, templates (also can mention waveforms / snippets))
+* The key outputs (spike times, unit assignment, templates (also can mention waveforms / snippets, extensions - except metrics))
 * It is a hard problem - many sorters exist
 * We can use spikeinterface to run and compare various sorters
+* (The SortingComponents project: overview and results)
 
-*14:30 - 15:30* : (coding) Run a couple of different sorters in SpikeInterface and compare the outputs using sorting comparison.
+
+*14:45 - 15:30* : (coding) Run a couple of different sorters in SpikeInterface and compare the outputs using sorting comparison, and instantiate a SortingAnalyzer and compute extensions.
 
 * We can leave it a little up to the user, but KS4 and Lupin seem a good pair to use in the example.
 * We can go into more detail here the options to run preprocessing steps in SpikeInterface vs. the sorter,
 as well as introduce sorting components.
 
-*15:30 - 16:00* : (lecture, Alessio) Deep dive into the black box, the general steps behind a sorter 
 
-* (peak detection, clustering, template matching etc.)
-
-*16:00 - 17:00* : (lecture / coding, Enny) UnitMatch
+*15:40 - 17:00* : (lecture / coding, Enny) UnitMatch
 
 * A 20-minute talk and 40 minute implementation? Happy to extend if this is not enough time
 
@@ -163,12 +163,8 @@ For the spikeinterface-GUI, we can just use the sorting output of a larger datas
 
 **Plan**
 
-Something like?:
-
-- 20-30 minute talk on different types of extracellular ephys analysis. Some real use cases / papers
-- 20-30 minutes on walkthrough time alignment
-- 30 minutes: give a sorting output and some behavioural event times, construct a histogram 'by hand'
-- rest of the session (~2h) on using Pynapple?
+14:00-16:00 Wolf's Pynapple course
+16:00-17:00 Olivier on probe alignment
 
 ## General thoughts on course structure / content
 

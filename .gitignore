@@ -7,8 +7,16 @@
 /docs/
 **/*.quarto_ipynb
 .vscode
+.idea/
 *.pyc
 *.egg
+*.egg-info/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
 
 book/my_tsd.npz
-/book/A2929-200711.nwb 
+/book/A2929-200711.nwb

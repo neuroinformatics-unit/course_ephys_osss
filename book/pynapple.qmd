@@ -9,7 +9,7 @@ Pynapple can do a lot more than what is covered in this chapter, take a look at 
 The only thing you'll need to follow along is a working Python environment with `pynapple` installed.  
 See the [setup section](setup.qmd#create-the-environment) on how to set up the course environment. 
 
-If you want to run by itself, just install Pynapple using:
+If you want to run this by itself, just install Pynapple using:
 ```python
 pip install pynapple
 ```
@@ -440,7 +440,7 @@ ax_spikes.set_yticks([])
 ax_spikes.spines['left'].set_visible(False)
 ax_spikes.spines['right'].set_visible(False)
 ax_spikes.spines['top'].set_visible(False)
-ax_count.plot(counts)
+ax_count.step(counts.times(), counts.values)
 ax_count.set_ylabel("count")
 ax_count.set_xlabel("time (s)")
 ax_count.spines['right'].set_visible(False)

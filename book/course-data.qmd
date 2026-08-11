@@ -27,7 +27,9 @@ or parts of it) using SpikeInterface. We will use it to download the dataset abo
 The NWB file for this dataset includes not only the raw electrophysiological data,
 but the results of spike sorting (spike times, units) and behavioral data from the experiment.
 
-For the Pynapple head-direction decoding task, we only need the sorting outputs and behavioral data. Therefore we use **this script LINK**  to remove the electrophysiolgoical and accelerometer from the full NWB file. The cut-down data is available in in the course repository at `book/data/pynapple/dandiset-000939-no-traces-full.nwb`.
+For the Pynapple head-direction decoding task, we only need the sorting outputs and behavioral data. 
+Therefore we use **this script LINK**  to remove the electrophysiological data and accelerometer from the full NWB file. 
+The cut-down data is available in in the course repository at `book/data/pynapple/dandiset-000939-no-traces-full.nwb`.
 
 # IBL Benchmark dataset
 *Used in Preprocessing (part 1).*

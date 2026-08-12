@@ -54,7 +54,6 @@ book:
     - pynapple.qmd
     - concept-notes.qmd
     - glossary.qmd
-    - planning.qmd
     - curation.qmd
     - course-data.qmd
 

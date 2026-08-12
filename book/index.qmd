@@ -13,20 +13,23 @@ To work through the course, follow the [setup instructions](setup.qmd). You can 
 work through the course is to read through the coding chapters, and copy the relevant code (by hand!) to apply the steps in your own Python environment.
 
 We provide small test datasets to use throughout the course (see [course
-
-## Schedule
-
-|  | Monday | Tuesday | Wednesday | Thursday | Friday |
-|--|--|--|--|--|--|
-|10-1| Intro and pipeline walkthrough | Preprocessing | Visualization and Curation| Git and start collaborations | Collaboration day | 
-|1-2| Lunch | Lunch | Lunch | Lunch | Lunch|
-|2-5 | Symposium | Spike sorting and UnitMatch | Pynapple | Collaboration day | Collaboration day |
-
-There will be coffee/snack breaks at ?? and ??.
+data](course-data.qmd)), but you can equally apply the material to your own data.
 
 You may also be interested in the [glossary](glossary.qmd) and [concept
 notes](concept-notes.qmd), which describe the terminology and key concepts in
 extracellular electrophysiology.
+
+## Schedule
+
+The course will start on the **Monday 24th August, 2026**.
+
+|  | Monday | Tuesday | Wednesday | Thursday | Friday |
+|--|--|--|--|--|--|
+|10am-1pm| Introduction and pipeline overview | Preprocessing | Visualization and Curation| Coding with Git + Collaboration day intro | Collaboration day | 
+|1pm-2pm| Lunch | Lunch | Lunch | Lunch | Lunch|
+|2pm-5pm | Symposium | Spike sorting and UnitMatch | Analysis (Pynapple + Probe track reconstruction) | Collaboration day | Collaboration day |
+
+There will be 15 minute coffee/snack breaks in the middle of each session.
 
 ## Funding and acknowledgements
 

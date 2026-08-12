@@ -59,7 +59,7 @@ For now, we will use a convenience function to download the recording of interes
 
 ```{python}
 
-LOCAL_FOLDER = Path("_tmp/nwb_first_slice")
+LOCAL_FOLDER = Path("_tmp/dandiset-000939-90s")
 
 if LOCAL_FOLDER.exists():
     # if we have already downloaded the data, reload it.

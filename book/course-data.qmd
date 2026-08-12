@@ -1,4 +1,4 @@
-# Course data
+# Course data {.unnumbered}
 
 This page includes information on the provenance of all data used in the course and instructions on how to download it from
 open access datasets on [DANDI archive](https://about.dandiarchive.org/)  and from the [International Brain Laboratory (IBL)](https://www.internationalbrainlab.com/).

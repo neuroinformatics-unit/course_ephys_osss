@@ -1,4 +1,4 @@
-# Spike sorting - presentation
+# Spike sorting (slides)
 
 This presentation can be found [here](https://docs.google.com/presentation/d/1jj7XMH8CuXqjq5vNjO14AGM4GznmV5qtFeaZXr2lRQ8/edit?usp=sharing).
 

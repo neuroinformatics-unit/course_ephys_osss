@@ -75,6 +75,10 @@ else:
 
 ```
 
+
+Alternatively, the data can be downloaded directly from the 
+[course data Zenodo](https://zenodo.org/records/21908611), with folder name `dandiset-000939-90s.zip` (will need unzipping before use).
+
 ## Creating a plotting function
 
 Next, we will define a function to plot and compare multiple preprocessing steps. We will reuse this function through the rest of the tutorial.

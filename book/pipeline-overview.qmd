@@ -3,10 +3,6 @@
 In this chapter we will use 
 [SpikeInterface](https://spikeinterface.readthedocs.io/en/stable/) to implement a standard spike sorting pipeline from start to finish. We will go through the key steps at a high level, while developing the theory and adding more advanced methods in the following chapters.
 
-We will use a [short example dataset](course-data.qmd#introductory-dataset) available in the `data/pipeline-walkthrough` folder
-of the course repository (see the set up instructions for how to [download the course repository](setup.qmd#download-the-repository)). 
-
-
 We will load and preprocess the data, run spike sorting and compute quality metrics for assessing the sorting output. Let's get started!
 
 ## Data Loading and Exploration
@@ -30,14 +26,17 @@ from probeinterface.plotting import plot_probe
 
 ### Data Loading
 
+We will use a [short example dataset](course-data.qmd#introductory-dataset) available in on 
+the the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`.
+
 First, we will load the data with SpikeInterface.
 
-SpikeInterface can load data from many different of acquisition systems, using functions within its [extractors module](https://spikeinterface.readthedocs.io/en/stable/modules/extractors.html). As our data was recorded in [SpikeGLX](https://github.com/billkarsh/SpikeGLX#spikeglx), we will use the 
-[`read_spikeglx`](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) method:
+SpikeInterface can load data from many different of acquisition systems, using functions within its [extractors module](https://spikeinterface.readthedocs.io/en/stable/modules/extractors.html). As our data was recorded in [SpikeGLX](https://github.com/billkarsh/SpikeGLX#spikeglx), we will use the [`read_spikeglx`](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) method:
 
 ```{python}
 # This should be the path to the folder containing
-# the data. On Windows, you may need to prepend
+# the data (.bin and .meta files linked above). 
+# On Windows, you may need to prepend
 # r to the string e.g. r"C:\my\path"
 path_to_data_folder = "data/pipeline-walkthrough"
 
@@ -50,8 +49,7 @@ print(recording)
 ```
 
 
-We need to tell SpikeInterface where the data is on our machine, and what [data stream](concept-notes.qmd#spikeglx-streams)💡 we want to load. If you are unsure of the stream, 
-run the function without the `stream_id` argument and SpikeInterface will prompt you with the available streams.
+We need to tell SpikeInterface where the data is on our machine, and what [data stream](concept-notes.qmd#spikeglx-streams)💡 we want to load. If you are unsure of the stream, run the function without the `stream_id` argument and SpikeInterface will prompt you with the available streams.
 
 Because we want to load the AP data stream for spike sorting, we pass `"imec0.ap"`.
 

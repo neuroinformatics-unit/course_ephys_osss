@@ -1,0 +1,63 @@
+# UnitMatch (coding)
+
+In the presentation, we saw why we want to track single neurons across recording sessions, and how
+[**UnitMatch**](https://www.nature.com/articles/s41592-024-02440-1) and [**DeepUnitMatch**](https://www.biorxiv.org/content/10.64898/2026.01.30.702777v1) identify matching units from their waveforms alone, without needing to
+concatenate and re-sort recordings together.
+
+In this session, we will use UnitMatchPy and DeepUnitMatch to match units between two recording sessions from the same mouse, recorded roughly 24 hours apart.
+
+## Setup
+
+**Install UnitMatchPy** UnitMatchPy should already be installed as part of the [course setup](setup.qmd), but in general it can be installed in any Python environment with:
+
+```python
+pip install "UnitMatchPy[full,notebooks]"
+```
+
+**Download the example data** from [this Dropbox folder](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&dl=0)
+(you can click "continue without signing up", no Dropbox account needed). 
+
+The main dataset we will use below is **AL032**: two sessions from one mouse (also available on [figshare](https://figshare.com/articles/dataset/UnitMatch_Demo_-_data/24305758?file=42664381)). You should download this dataset.
+
+
+You can optionally download the **EB055** dataset (four sessions from one mouse, two of which include raw SpikeGLX data)
+which will be used in the [extended exercises](#extension-multi-day-tracking-and-training-your-own-model). However, it is a large dataset so don't worry if you cannot download as we will not use it in the main exercises.
+
+## Exercise 1: Matching neurons with UnitMatchPy (~15 min)
+
+1. Open [`UMPy_example.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/UMPy_example.ipynb) in your favourite Python interpreter, pointed at the two AL032 sessions.
+2. Follow the demo until you reach a plot that looks like a matrix of black and white dots.
+
+:::{.callout-tip}
+### Things to try
+- Inspect the black-and-white matrix plot. How many neurons do you think were matched?
+- Run the UnitMatch GUI and browse through some of the matches. Do they look convincing to you?
+- Are there any matches *within* the same session? What would that mean (hint: think splits and merges)?
+:::
+
+## Exercise 2: Matching neurons with DeepUnitMatch (~10 min)
+
+Now let's compare against DeepUnitMatch, which replaces the hand-engineered matching step with a
+trained neural network.
+
+1. Open [`DeepUnitMatch.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DeepUnitMatch.ipynb).
+2. For the same two AL032 sessions, use the pretrained DUM model to infer matches.
+
+:::{.callout-tip}
+### Things to try
+- How do the DeepUnitMatch matches compare to what you got from UnitMatchPy in Exercise 1?
+- Can you find a way to run the GUI on the DeepUnitMatch output? Are the results comparable to UnitMatchPy's?
+:::
+
+## If you have more time
+
+The exercises below go beyond the core session. They are here as a self-paced reference, not
+something we expect everyone to reach today.
+
+:::{.callout-tip}
+### Extension: multi-day tracking and training your own model
+- **Multi-day tracking (~10-15 min)**: use [`DeepUnitMatch.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DeepUnitMatch.ipynb) on the EB055 dataset (four sessions) to see how DUM performs when tracking across more than two days.
+- **Training your own model (~10-15 min)**: use [`DUM_training.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DUM_training.ipynb) to train a new DeepUnitMatch model on all available EB055 sessions, then infer matches across days with it. How does it compare to the pretrained model, and why might that be?
+- **Extracting raw waveforms (~15 min)**: use [`extract_raw_data_demo.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/extract_raw_data_demo.ipynb) (or [`extract_raw_data_demo_open_ephys.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/extract_raw_data_demo_open_ephys.ipynb) for OpenEphys data) on the raw SpikeGLX EB055 sessions (or your own data), then run UnitMatchPy or DeepUnitMatch on the extracted waveforms.
+- **Bonus - try it on your own data (~15-30 min)**: if you don't have chronic recordings, run UnitMatch on a single session instead, to check for oversplits.
+:::

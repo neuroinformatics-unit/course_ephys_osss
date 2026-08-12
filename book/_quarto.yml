@@ -70,6 +70,8 @@ book:
     - preprocessing-steps-coding.qmd
     - spike-sorting-presentation.qmd
     - spike-sorting-coding.qmd
+    - unitmatch-presentation.qmd
+    - unitmatch-coding.qmd
     - curation.qmd
     - pynapple.qmd
     - part: "Reference"

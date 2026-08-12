@@ -45,6 +45,7 @@ dependencies = [
     "scipy",
     "spikeinterface[full,widgets]",
     "pynwb",
+    "UnitMatchPy[full,notebooks]",
 ]
 
 [project.urls]

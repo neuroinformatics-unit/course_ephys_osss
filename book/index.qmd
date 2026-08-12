@@ -5,15 +5,9 @@ taught at the [Neuroinformatics Unit Open Software Summer
 School](https://neuroinformatics.dev/open-software-summer-school/index.html) (2026).
 
 It walks through the theory and implementation of a full spike-sorting pipeline
-with [SpikeInterface](https://spikeinterface.readthedocs.io/), covering:
+with [SpikeInterface](https://spikeinterface.readthedocs.io/), from preprocessing and sorting through tho analysis.
 
-- preprocessing
-- sorting
-- postprocessing and curation
-- unit matching
-- analysis with Pynapple.
-
-## Getting started
+## Get started
 
 To work through the course, follow the [setup instructions](setup.qmd). You can complete the entire course in order, or start from any self-contained chapter. The best way to
 work through the course is to read through the coding chapters, and copy the relevant code (by hand!) to apply the steps in your own Python environment.
@@ -25,7 +19,7 @@ data](course-data.qmd)), but you can equally apply the material to your own data
 
 The core pipeline is covered across the following chapters:
 
-- Setting up the repository
+- Python set up
 - Introduction to electrophysiology
 - Pipeline walkthrough
 - Preprocessing – theory

@@ -49,6 +49,10 @@ book:
       chapters:
         - setup.qmd
         - course-data.qmd
+    - part: "Reference"
+      chapters:
+        - glossary.qmd
+        - concept-notes.qmd
     - introduction-presentation.qmd
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
@@ -56,10 +60,6 @@ book:
     - spike-sorting-coding.qmd
     - pynapple.qmd
     - curation.qmd
-    - part: "Appendix"
-      chapters:
-        - glossary.qmd
-        - concept-notes.qmd
 
 format:
   html:

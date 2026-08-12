@@ -5,7 +5,7 @@ taught at the [Neuroinformatics Unit Open Software Summer
 School](https://neuroinformatics.dev/open-software-summer-school/index.html) (2026).
 
 It walks through the theory and implementation of a full spike-sorting pipeline
-with [SpikeInterface](https://spikeinterface.readthedocs.io/), from preprocessing and sorting through tho analysis.
+with [SpikeInterface](https://spikeinterface.readthedocs.io/), from preprocessing and sorting through to analysis.
 
 ## Get started
 

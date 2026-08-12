@@ -3,7 +3,7 @@
 Welcome to the electrophysiology course (TODO: name).
 
 TODO: [think of a cool course name](https://github.com/neuroinformatics-unit/course-ephys-osss/issues/2)
-TODO: maybe we want a 'glossary' or 'extras'
+See the [Glossary](glossary.qmd) for shared terminology used across the course.
 
 This course will cover the full electrophysiology processing pipeline,
 from start to finish. This includes 

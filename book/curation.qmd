@@ -428,11 +428,7 @@ Another option is to train your own classifier. When you train yourself you can 
 
 ## Comparing methods
 
-We've now tried three labelling methods. And we've been storing their results in the analyzer. So we can compare them in the GUI. Here's a unit where all the methods disagree:
-
-TODO
-
-Which method do you agree with?
+We've now tried three labelling methods. And we've been storing their results in the analyzer. So we can compare them in the GUI. 
 
 # Merging
 

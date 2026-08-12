@@ -367,11 +367,6 @@ print(
 
 ## Postprocessing
 
-TODO! Depending on timing and content of the other sections, we 
-may want to reduce this down to a single command where
-we compute all of the extensions, and then
-go through them in more detail in the SpikeInterface GUI
-
 Spike sorting is a complex task undertaken in the presence of significant noise. Therefore, many units will not cleanly represent a single neuron. As well as **good** units (i.. where each spike is from the same putative neuron) units may be **noise** (XXX) or **multi-unit activity (MUA)**. 
 
 To determine whether units are good or not, we must look at the individual spikes that belong to a unit, and compute metrics. Cut then out, waveforms. In this section we will go over some key concepts at a very high level - we will develop this much further in the Postprocessing chapter.

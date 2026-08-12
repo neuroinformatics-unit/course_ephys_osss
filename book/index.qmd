@@ -13,7 +13,16 @@ To work through the course, follow the [setup instructions](setup.qmd). You can 
 work through the course is to read through the coding chapters, and copy the relevant code (by hand!) to apply the steps in your own Python environment.
 
 We provide small test datasets to use throughout the course (see [course
-data](course-data.qmd)), but you can equally apply the material to your own data.
+
+## Schedule
+
+|  | Monday | Tuesday | Wednesday | Thursday | Friday |
+|--|--|--|--|--|--|
+|10-1| Intro and pipeline walkthrough | Preprocessing | Visualization and Curation| Git and start collaborations | Collaboration day | 
+|1-2| Lunch | Lunch | Lunch | Lunch | Lunch|
+|2-5 | Symposium | Spike sorting and UnitMatch | Pynapple | Collaboration day | Collaboration day |
+
+There will be coffee/snack breaks at ?? and ??.
 
 You may also be interested in the [glossary](glossary.qmd) and [concept
 notes](concept-notes.qmd), which describe the terminology and key concepts in

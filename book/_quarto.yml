@@ -63,14 +63,7 @@ book:
   date: "15/04/2026"
   chapters:
     - index.qmd
-    - part: "Get started"
-      chapters:
-        - setup.qmd
-        - course-data.qmd
-    - part: "Reference"
-      chapters:
-        - glossary.qmd
-        - concept-notes.qmd
+    - setup.qmd
     - introduction-presentation.qmd
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
@@ -78,6 +71,11 @@ book:
     - spike-sorting-coding.qmd
     - pynapple.qmd
     - curation.qmd
+    - part: "Reference"
+      chapters:
+        - course-data.qmd
+        - glossary.qmd
+        - concept-notes.qmd
 
 format:
   html:

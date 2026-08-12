@@ -13,7 +13,11 @@ sessions from the same mouse, recorded roughly 24 hours apart.
 
 ## Setup
 
-**Install UnitMatchPy** by following the instructions [here](https://github.com/EnnyvanBeest/UnitMatch/tree/main/UnitMatchPy).
+**Install UnitMatchPy** UnitMatchPy should already be installed as part of the [course setup](setup.qmd), but in general it can be installed in any Python environment with:
+
+```
+pip install "UnitMatchPy[full,notebooks]"
+```
 
 **Download the example data** from [this Dropbox folder](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&dl=0)
 (you can click "continue without signing up", no Dropbox account needed). It contains:

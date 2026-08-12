@@ -1,5 +1,5 @@
 ---
-title: "Visualization and manual curation"
+title: "Visualization and manual curation (coding)"
 execute:
   eval: false
 ---

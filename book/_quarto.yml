@@ -68,6 +68,7 @@ book:
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
     - preprocessing-steps-coding.qmd
+    - spike-sorting-presentation.qmd
     - spike-sorting-coding.qmd
     - pynapple.qmd
     - curation.qmd

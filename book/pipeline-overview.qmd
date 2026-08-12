@@ -1,4 +1,4 @@
-# Pipeline walkthrough
+# Pipeline overview (coding)
 \
 In this chapter we will use 
 [SpikeInterface](https://spikeinterface.readthedocs.io/en/stable/) to implement a standard spike sorting pipeline from start to finish. We will go through the key steps at a high level, while developing the theory and adding more advanced methods in the following chapters.

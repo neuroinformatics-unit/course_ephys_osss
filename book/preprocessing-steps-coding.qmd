@@ -1,4 +1,4 @@
-# Preprocessing - coding
+# Preprocessing (coding)
 
 In this chapter we will explore in more detail the preprocessing steps used in extracellular electrophysiology. 
 

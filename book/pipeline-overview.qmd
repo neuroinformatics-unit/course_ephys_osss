@@ -29,16 +29,36 @@ from probeinterface.plotting import plot_probe
 We will use a [short example dataset](course-data.qmd#introductory-dataset) available in on 
 the the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`.
 
+```{python}
+# download the data from zenodo for building the book. Users will download this manually.
+#| include: false
+from urllib.request import urlretrieve
+
+data_dir = Path("data/pipeline-overview")
+data_dir.mkdir(parents=True, exist_ok=True)
+
+base_url = "https://zenodo.org/api/records/21908611/files"
+filenames = [
+    "sub-001_ses-001_g0_t0.imec0.ap.bin",
+    "sub-001_ses-001_g0_t0.imec0.ap.meta",
+]
+
+for filename in filenames:
+    output_path = data_dir / filename
+    if not output_path.exists():
+        urlretrieve(f"{base_url}/{filename}/content", output_path)
+```
+
 First, we will load the data with SpikeInterface.
 
-SpikeInterface can load data from many different of acquisition systems, using functions within its [extractors module](https://spikeinterface.readthedocs.io/en/stable/modules/extractors.html). As our data was recorded in [SpikeGLX](https://github.com/billkarsh/SpikeGLX#spikeglx), we will use the [`read_spikeglx`](https://github.com/neuroinformatics-unit/course-ephys-osss/tree/main/book/data/pipeline-walkthrough) method:
+SpikeInterface can load data from many different of acquisition systems, using functions within its [extractors module](https://spikeinterface.readthedocs.io/en/stable/modules/extractors.html). As our data was recorded in [SpikeGLX](https://github.com/billkarsh/SpikeGLX#spikeglx), we will use the [`read_spikeglx()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.extractors.read_spikeglx) method:
 
 ```{python}
 # This should be the path to the folder containing
 # the data (.bin and .meta files linked above). 
 # On Windows, you may need to prepend
 # r to the string e.g. r"C:\my\path"
-path_to_data_folder = "data/pipeline-walkthrough"
+path_to_data_folder = "data/pipeline-overview"
 
 recording = si_extractors.read_spikeglx(
     path_to_data_folder,

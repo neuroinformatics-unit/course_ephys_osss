@@ -30,6 +30,7 @@ We will use a [short example dataset](course-data.qmd#introductory-dataset) avai
 the the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`.
 
 ```{python}
+# download the data from zenodo for building the book. Users will download this manually.
 #| include: false
 from urllib.request import urlretrieve
 

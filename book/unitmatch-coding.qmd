@@ -1,34 +1,27 @@
-# UnitMatch - coding
+# UnitMatch (coding)
 
 In the presentation, we saw why we want to track single neurons across recording sessions, and how
-UnitMatch and DeepUnitMatch identify matching units from their waveforms alone, without needing to
+[**UnitMatch**](https://www.nature.com/articles/s41592-024-02440-1) and [**DeepUnitMatch**](https://www.biorxiv.org/content/10.64898/2026.01.30.702777v1) identify matching units from their waveforms alone, without needing to
 concatenate and re-sort recordings together.
 
-In this session, we will use 
-[UnitMatchPy](https://www.nature.com/articles/s41592-024-02440-1)
-and 
-[DeepUnitMatch](https://www.biorxiv.org/content/10.64898/2026.01.30.702777v1)
-to match units between two recording
-sessions from the same mouse, recorded roughly 24 hours apart.
+In this session, we will use UnitMatchPy and DeepUnitMatch to match units between two recording sessions from the same mouse, recorded roughly 24 hours apart.
 
 ## Setup
 
 **Install UnitMatchPy** UnitMatchPy should already be installed as part of the [course setup](setup.qmd), but in general it can be installed in any Python environment with:
 
-```
+```python
 pip install "UnitMatchPy[full,notebooks]"
 ```
 
 **Download the example data** from [this Dropbox folder](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&dl=0)
-(you can click "continue without signing up", no Dropbox account needed). It contains:
+(you can click "continue without signing up", no Dropbox account needed). 
 
-- **AL032**: two sessions from one mouse (also available on [figshare](https://figshare.com/articles/dataset/UnitMatch_Demo_-_data/24305758?file=42664381)). This is the dataset we will use below.
-- **EB055**: four sessions from one mouse, two of which include raw SpikeGLX data.
+The main dataset we will use below is **AL032**: two sessions from one mouse (also available on [figshare](https://figshare.com/articles/dataset/UnitMatch_Demo_-_data/24305758?file=42664381)). You should download this dataset.
 
-::: {.callout-warning}
-Only download the data you actually need for the exercise you're doing, to avoid filling up your
-hard drive.
-:::
+
+You can optionally download the **EB055** dataset (four sessions from one mouse, two of which include raw SpikeGLX data)
+which will be used in the [extended exercises](#extension-multi-day-tracking-and-training-your-own-model). However, it is a large dataset so don't worry if you cannot download as we will not use it in the main exercises.
 
 ## Exercise 1: Matching neurons with UnitMatchPy (~15 min)
 

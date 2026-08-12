@@ -260,18 +260,9 @@ Open the set up page and take everyone through the installation steps together.
 :::: {.data-download-grid}
 
 ::: {.data-download-section}
-[DANDI datasets]{.data-download-title}
+[Course data]{.data-download-title}
 
-- preprocessing / sorting:
-- postprocessing:
-- analysis:
-:::
-
-::: {.data-download-section}
-[UnitMatch]{.data-download-title}
-
-- main dataset:
-- extra dataset:
+The course data can be downloaded from the [course Zenodo record](https://zenodo.org/records/21908611).
 :::
 
 ::::

@@ -4,7 +4,11 @@ In the presentation, we saw why we want to track single neurons across recording
 UnitMatch and DeepUnitMatch identify matching units from their waveforms alone, without needing to
 concatenate and re-sort recordings together.
 
-In this session, we will use UnitMatchPy and DeepUnitMatch to match units between two recording
+In this session, we will use 
+[UnitMatchPy](https://www.nature.com/articles/s41592-024-02440-1)
+and 
+[DeepUnitMatch](https://www.biorxiv.org/content/10.64898/2026.01.30.702777v1)
+to match units between two recording
 sessions from the same mouse, recorded roughly 24 hours apart.
 
 ## Setup

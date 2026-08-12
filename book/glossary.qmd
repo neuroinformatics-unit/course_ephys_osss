@@ -1,14 +1,10 @@
 # Glossary {.unnumbered}
 
-TODO: 
-- make sure to link to these from relevant places across the book.
-- decide what is glossary vs. concept notes
 
 **recording electrode**
 Note alias - contact, site etc. Channel often used interchangably but I guess not exactly the same.
 
 **intracellular vs. extracellular signals**
-
 
 **raster plot**
 One for concept notes?

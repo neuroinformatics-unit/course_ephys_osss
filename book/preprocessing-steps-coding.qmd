@@ -52,9 +52,10 @@ import matplotlib.pyplot as plt
 
 ## Downloading the data
 
-TODO: include some information on the experiment, probably do this on a central 'dataset' page
+First we need to download the dataset we will use in this chapter, and through later sections of the course.
+This dataset is from a 64-channel Cambridge Neurotech recording in the postsubiculum. See the [course data page](course-data.qmd#head-direction-experiment-from-the-dandi-archive) for more information on the dataset, details on how it is downloaded, and how you can similarly download any one of the thousands of open-access datasets available on the DANDI archive.
 
-First we need to download the dataset we will. This dataset is (TODO: brief introduction). For more information on the dataset and how to download any one of the thousands of open-access datasets available on the DANDI archive, please see TODO.
+For now, we will use a convenience function to download the recording of interest:
 
 ```{python}
 
@@ -268,17 +269,10 @@ recording_hsf = si_prepro.highpass_spatial_filter(
     rec_clean, 
     highpass_butter_wn=0.03
 )  
-# TODO: highpass_butter_wn complete guess because it looks good but I think physiologically wrong
 
 plot_prepro({"recording_cmr": recording_cmr, "recording_hsf": recording_hsf}, TIME_RANGE)
 
 ```
-
-**TODO:** 
-This may work better on probes with more channels (e.g. Neuropixels).
-check with Olivier, maybe remove this section. Will need to adjust the parameters for the 64-channel probe
-vs. NP1 probe it was designed for. We need to calculate physical probe length and compute cycles/um and
-match these across probes. I did this and the Wn was too low for this probe so it might not be possible.
 
 :::{.callout-tip}
 ### Things to try

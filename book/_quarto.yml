@@ -35,6 +35,13 @@ book:
         city: Seattle
         country: USA
         url: https://alleninstitute.org/
+  - name: Chris Halcrow
+    url: https://github.com/chrishalcrow
+    email: c.halcrow@ucl.ac.uk
+    orcid: 0000-0002-0246-8075
+    corresponding: false
+    affiliations:
+      - id: SWC
   date: "15/04/2026"
   chapters:
     - index.qmd
@@ -47,7 +54,6 @@ book:
     - pynapple.qmd
     - concept-notes.qmd
     - glossary.qmd
-    - references.qmd
     - planning.qmd
     - curation.qmd
     - course-data.qmd

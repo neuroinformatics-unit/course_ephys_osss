@@ -1053,7 +1053,7 @@ been working with in the [preprocessing](preprocessing-steps-coding.qmd), [sorti
 
 However, to ensure the decoding is accurate we will need much more data than we previously used. 
 Therefore, we will use the full `.nwb` file for the session that contains pre-computed spike times, as well as behavioural data. 
-**TODO: ADD DOWNLOAD LINK**
+
 This dataset is included in the course data under `book/data/pynapple/dandiset-000939-no-traces-full.nwb`,
 see [here](course-data.qmd#spike-times-and-behavior-used-in-the-pynapple-section) for more details. 
 

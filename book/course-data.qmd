@@ -18,8 +18,7 @@ You can explore the many datasets on their website, and download them using the 
 
 The dataset we will use through the majority of this course is hosted on DANDI [here](https://dandiarchive.org/dandiset/000939?search=000939). The data was used in [Duszkiewicz et al., 2024](https://www.nature.com/articles/s41593-024-01588-5). The experiments recorded from the postsubiculum, a parahippocampal cortical region of the parahippocampal formation and a key hub of the spatial navigation system, using a 64-channel single-shank Cambridge Neurotech probe. They recorded from mice using open-field exploration (as well as during sleep) in which they measured the head-direction of the mice. They were interested in investigating neural tuning for head direction (i.e. head-direction tuned neurons fire when the head of an animal is facing a particular direction or angle).
 
-The function found [here] **TODO: ADD LINK** can be used to download and save datasets (either the entire recording
-or parts of it) using SpikeInterface. We will use it to download the dataset above, but the same approach works for any of the thousands of recordings hosted on DANDI.
+The function found [here](https://github.com/neuroinformatics-unit/course_ephys_osss/blob/92cb9976ce88c2d1025cea64b01b8d1886ba32bf/src/course_ephys_osss/data/utils.py#L7) can be used to download and save datasets (either the entire recording or parts of it) using SpikeInterface. We will use it to download the dataset above, but the same approach works for any of the thousands of recordings hosted on DANDI.
 
 
 ## Spike times and behavior used in the Pynapple section
@@ -28,7 +27,7 @@ The NWB file for this dataset includes not only the raw electrophysiological dat
 but the results of spike sorting (spike times, units) and behavioral data from the experiment.
 
 For the Pynapple head-direction decoding task, we only need the sorting outputs and behavioral data. 
-Therefore we use **this script LINK**  to remove the electrophysiological data and accelerometer from the full NWB file. 
+Therefore we use [this function](https://github.com/neuroinformatics-unit/course_ephys_osss/blob/92cb9976ce88c2d1025cea64b01b8d1886ba32bf/src/course_ephys_osss/data/utils.py#L56)  to remove the electrophysiological data and accelerometer from the full NWB file. 
 The cut-down data is available in in the course repository at `book/data/pynapple/dandiset-000939-no-traces-full.nwb`.
 
 # IBL Benchmark dataset
@@ -39,7 +38,7 @@ Neuropixels recordings in varied brain regions available publicly via the
 [Open Neurophysiology Environment (ONE)](https://int-brain-lab.github.io/ONE/) API.
 Data can be streamed directly — no bulk download required.
 
-The script below demonstrates how to: **TODO: ADD THIS LINK**
+The script below demonstrates how to: 
 
 1. Connect to the public IBL server and select a probe insertion by its `pid`
 2. Stream a short snippet of raw AP-band voltage
@@ -47,20 +46,6 @@ The script below demonstrates how to: **TODO: ADD THIS LINK**
 4. Run the full IBL destriping pipeline (ADC shift correction + spatial k-filter)
 5. Open all three stages side-by-side in the `viewephys` interactive viewer
 
-**TODO: link to the code, will refactor first**
-```{.python include="scripts/stream_raw_ephys.py"}
+```python
+{{< include scripts/stream_raw_ephys.py >}}
 ```
-
-# Introductory dataset
-*Used in the pipeline walkthrough chapter*
-
-**TODO: check with Steve and finish section**
-
-This dataset is a short 2.5 second period from a **BRAIN REGION** recording on a 4-shank NP2 probe (NP2010). It uses electrodes on the central two of the four shanks.
-
-This is from a dataset by Steve Lenzi (Margrie Lab) (LINK) from an chronic-recording experiment in which 
-a mouse learnt to suppress escape behavior when presented with an aversive, looming visual stimulus.
-
-This data is included in the course repository [here](https://github.com/neuroinformatics-unit/course_ephys_osss/tree/main/book/data/pipeline-walkthrough),
- as it is very small. **TODO: link to set up page (and describe how to manually dl it?)
-

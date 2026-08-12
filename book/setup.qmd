@@ -1,0 +1,79 @@
+# Python set up
+
+Before starting the course, we need to install the course materials
+and all dependency packages (such as SpikeInerface) onto your machine.
+
+To do this we will create an isolated environment in which to install packages,
+either using [uv](https://docs.astral.sh/uv/) (recommended)
+or [conda](https://docs.conda.io/). 
+
+## Download the repository
+
+First, clone the course repository with `git`:
+
+```bash
+git clone https://github.com/neuroinformatics-unit/course-ephys-osss.git
+cd course-ephys-osss
+```
+
+If you don't have `git` installed, you can instead download the repository as a
+ZIP file from the [GitHub page](https://github.com/neuroinformatics-unit/course-ephys-osss)
+(click the green **Code** button, then **Download ZIP**) and unzip it.
+
+## Create the environment
+
+::: {.panel-tabset}
+
+## uv
+
+[uv](https://docs.astral.sh/uv/) is a fast Python package and environment manager.
+If you don't have it yet, follow the [installation instructions](https://docs.astral.sh/uv/getting-started/installation/).
+
+From inside the `course-ephys-osss` folder, create a virtual environment and install
+the project (along with all its dependencies):
+
+```bash
+uv venv
+uv pip install -e .
+```
+
+`uv venv` creates a `.venv` folder in the repository. To activate it:
+
+```bash
+# macOS / Linux
+source .venv/bin/activate
+
+# Windows (PowerShell)
+.venv\Scripts\Activate.ps1
+```
+
+## conda
+
+[conda](https://docs.conda.io/) is a widely used Python environment and package manager.
+If you don't have it yet, we recommend installing
+[Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+
+From inside the `course-ephys-osss` folder, create and activate a new environment:
+
+```bash
+conda create -n course-ephys python=3.12 -y
+conda activate course-ephys
+```
+
+Then install the project (along with all its dependencies) using `pip`:
+
+```bash
+pip install -e .
+```
+
+:::
+
+## Check the installation
+
+With the environment active, check that the package imports correctly:
+
+```bash
+python -c "import course_ephys_osss; print('Setup complete!')"
+```
+
+If this runs without error, you're ready to start the course.

@@ -45,17 +45,21 @@ book:
   date: "15/04/2026"
   chapters:
     - index.qmd
-    - setup.qmd
+    - part: "Get started"
+      chapters:
+        - setup.qmd
+        - course-data.qmd
     - introduction-presentation.qmd
     - pipeline-walkthrough.qmd
     - preprocessing-steps-presentation.qmd
     - preprocessing-steps-coding.qmd
     - spike-sorting-coding.qmd
     - pynapple.qmd
-    - concept-notes.qmd
-    - glossary.qmd
     - curation.qmd
-    - course-data.qmd
+    - part: "Appendix"
+      chapters:
+        - glossary.qmd
+        - concept-notes.qmd
 
 format:
   html:

@@ -1,4 +1,4 @@
-# Glossary
+# Glossary {.unnumbered}
 
 TODO: 
 - make sure to link to these from relevant places across the book.

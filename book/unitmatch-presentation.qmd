@@ -1,4 +1,4 @@
-# Tracking neurons across days with (Deep)UnitMatch
+# Tracking neurons across days with (Deep)UnitMatch (slides)
 
 This presentation can be found [here](https://drive.google.com/file/d/12ei4s5pY_5RlfZjwQ3hELCVJit-X9ta4/view?usp=sharing).
 

@@ -12,7 +12,7 @@ with [SpikeInterface](https://spikeinterface.readthedocs.io/), from preprocessin
 To work through the course, follow the [setup instructions](setup.qmd). You can complete the entire course in order, or start from any self-contained chapter. The best way to
 work through the course is to read through the coding chapters, and copy the relevant code (by hand!) to apply the steps in your own Python environment.
 
-We provide small test datasets to use throughout the course (see [Course
+We provide small test datasets to use throughout the course (see [course
 data](course-data.qmd)), but you can equally apply the material to your own data.
 
 You may also be interested in the [glossary](glossary.qmd) and [concept

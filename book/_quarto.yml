@@ -9,7 +9,7 @@ execute:
   freeze: auto
 
 book:
-  title: "OSSS Ephys Course 2026"
+  title: "OSSS Extracellular Electrophysiology Course 2026"
   author:
   - name: Joseph Ziminski
     url: https://github.com/JoeZiminski
@@ -65,7 +65,7 @@ book:
     - index.qmd
     - setup.qmd
     - introduction-presentation.qmd
-    - pipeline-walkthrough.qmd
+    - pipeline-overview.qmd
     - preprocessing-steps-presentation.qmd
     - preprocessing-steps-coding.qmd
     - spike-sorting-presentation.qmd

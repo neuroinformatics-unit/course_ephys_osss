@@ -1,4 +1,9 @@
 # Spike sorting (coding)
 
 
-For the coding section we will use the: `notebooks/spike-sorting-coding.ipynb`
+For the coding section we will use the: `notebooks/spike-sorting-coding.ipynb`. 
+
+This is a Jupyter notebook file, and can be run in most development environments 
+(e.g. [VSCode](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)). 
+Alternatively, [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) can be used
+to run notebooks in the browser or desktop interactively.

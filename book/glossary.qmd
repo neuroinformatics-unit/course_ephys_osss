@@ -1,3 +1,5 @@
+# Glossary
+
 TODO: 
 - make sure to link to these from relevant places across the book.
 - decide what is glossary vs. concept notes

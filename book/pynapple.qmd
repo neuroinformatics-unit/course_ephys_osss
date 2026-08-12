@@ -1,4 +1,4 @@
-# Neural analysis with Pynapple {.unnumbered}
+# Neural analysis with Pynapple
 
 This chapter is an introduction to [Pynapple](pynapple.org).  
 Pynapple is a python package for analysing neural data.  

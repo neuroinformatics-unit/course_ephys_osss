@@ -2,8 +2,11 @@
 
 This presentation can be found [here](https://drive.google.com/file/d/12ei4s5pY_5RlfZjwQ3hELCVJit-X9ta4/view?usp=sharing).
 
-It covers why we want to track single neurons across recording days, how UnitMatch identifies
-matches using engineered waveform parameters, how this is validated functionally (inter-spike
-intervals, natural image responses), and how DeepUnitMatch replaces the hand-engineered matching
-step with a trained neural network. See the [coding chapter](unitmatch-coding.qmd) for the
-accompanying hands-on exercises.
+It covers:
+
+- why we want to track single neurons across recording days
+- how UnitMatch identifies matches using engineered waveform parameters
+- how this is validated functionally (inter-spike intervals, natural image responses)
+- how DeepUnitMatch replaces the hand-engineered matching step with a trained neural network. 
+
+See the [coding chapter](unitmatch-coding.qmd) for the accompanying hands-on exercises.

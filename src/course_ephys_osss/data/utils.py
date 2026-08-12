@@ -5,21 +5,21 @@ from pynwb import NWBHDF5IO
 from pynwb.ecephys import ElectricalSeries, LFP
 
 def download_and_slice_nwb_from_dandi(
-    s3_url: str = "https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5",
-    duration_s: int | None = 90,
-    local_folder: str | Path = "data/nwb_first_slice"
+    s3_url: str,
+    duration_s: int | None,
+    local_folder: str | Path 
 ):
     """
     Downloads and optionally slice NWB file from DANDI.
 
     Parameters
     ----------
-    s3_url : str, default: "https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5"
+    s3_url : str
         Path to s3 from DANDI archive.
-    duration_s : int | None, default: 90
+    duration_s : int | None
         Duration of the slice in seconds. If None, the full recording is downloaded.
-    local_folder : str | Path, default: "data/nwb_first_slice"
-        Local folder to save the sliced NWB file, by default "data/nwb_first_slice"
+    local_folder : str | Path, default: 
+        Local folder to save the sliced NWB file.
     """
     series_paths = NwbRecordingExtractor.fetch_available_electrical_series_paths(
         file_path=s3_url,

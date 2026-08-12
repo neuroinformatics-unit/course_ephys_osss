@@ -66,8 +66,6 @@ So... what's SpikeInterface-GUI?
 
 We'll use SpikeInterface-GUI to visualize our spike sorting results. Read more [on the SpikeInterface-GUI github page](https://github.com/SpikeInterface/spikeinterface-gui/). When building our environment, SpikeInterface-GUI was already included, so we should be able to run it from the terminal by activating our environment (if it's not already active) then running:
 
-TODO add analyzer path name
-
 ```{python}
 sigui path/to/analyzer
 ```
@@ -251,12 +249,6 @@ Finally, something more ambiguous:
 
 Here, there is some spatial decay. But temporally, it doesn't start from zero and it doesn't decay to zero smoothly. The unit's peak is about -20uV, so it's much smaller than the good unit we saw earlier. These small units are more likely to get some noise mixed into them (because they are harder to distinguish from noise). So maybe it's a real unit with some noise mixed in. Or maybe it's just a good unit which is further away from the probe. You need to look at more plots to decide on this one...
 
-### Curation: spike distributions
-
-TODO: write something about spike distributions
-
-TODO: Make exercises all formatted in the same way.
-
 ## Exercise: manually curate the analyzer for 10 minutes
 
 Jot down any units you were unsure what to do with and we'll take a look at them soon.
@@ -269,7 +261,7 @@ Manual curation isn't fun. It also has genuine scientific issues: human decision
 
 So, we can try to automate the process. We'll try three different methods, all based on **Metrics**.
 
-In our context a metric is a number which measures a property of the spike sorted unit. Let's see some common examples (the text here is adapted from the [UnitRefine paper](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2) by Jain et. al.)
+In our context a metric is a number which measures a property of the spike sorted unit. Let's see some common examples (the text here is adapted from the [UnitRefine paper](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2) by Jain et al.)
 
   - **Firing rate**: The number of spikes in the cluster divided by the length of the recording (in seconds).
   - **Signal to noise ratio** (SNR): the amplitude of the template on the extremal channel, divided by the standard deviation of the noise on this channel.
@@ -411,7 +403,7 @@ bombcell_labels = si.bombcell_label_units(
 
 In UnitRefine ([preprint](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2) + [gitub repo](https://github.com/anoushkajain/UnitRefine.git)), you start with a small (say, 1000 units) manually labelled dataset. UnitRefine then use machine learning to train a classifier based on this labelled data and the metrics of each unit. So these classifiers mimic the people who originally did the labelling. 
 
-The hardest problem isn't training the classifiers - it's getting good labelled data. Studies show that humans agree approximately 80% of the time (TODO: add reference), so this gives a ceiling on how well a classifier can mimic a group of manual curators.
+The hardest problem isn't training the classifiers - it's getting good labelled data. Studies show that humans agree approximately 80% of the time [Jain et al., 2025](https://www.biorxiv.org/content/10.1101/2025.03.30.645770v2), so this gives a ceiling on how well a classifier can mimic a group of manual curators.
 
 There are some pre-trained classifiers available on [HuggingFaceHub from Anoushka Jain](https://huggingface.co/AnoushkaJain3). The underlying data was curated by five different people. Let's try it out:
 

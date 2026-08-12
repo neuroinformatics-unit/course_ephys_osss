@@ -24,6 +24,19 @@ book:
         city: London
         country: United Kingdom
         url: https://www.sainsburywellcome.org/web/
+  - name: Chris Halcrow
+    url: https://github.com/chrishalcrow
+    email: c.halcrow@ucl.ac.uk
+    orcid: 0000-0002-0246-8075
+    corresponding: false
+    affiliations:
+      - id: SWC
+        name: Sainsbury Wellcome Centre, UCL
+        department: Sainsbury Wellcome Centre
+        group: Neuroinformatics Unit
+        city: London
+        country: United Kingdom
+        url: https://www.sainsburywellcome.org/web/
   - name: Alessio Buccino
     url: https://github.com/alejoe91
     email: alessio.buccino@alleninstitute.org
@@ -35,13 +48,18 @@ book:
         city: Seattle
         country: USA
         url: https://alleninstitute.org/
-  - name: Chris Halcrow
-    url: https://github.com/chrishalcrow
-    email: c.halcrow@ucl.ac.uk
-    orcid: 0000-0002-0246-8075
+  - name: Wolf de Wulf
+    url: https://github.com/wulfdewolf
+    email: wolf.de.wulf@ed.ac.uk
+    orcid: 0000-0002-0219-3120
     corresponding: false
     affiliations:
-      - id: SWC
+      - id: UoE
+        name: University of Edinburgh
+        department: UKRI CDT in Biomedical AI
+        city: Edinburgh
+        country: United Kingdom
+        url: https://www.ed.ac.uk/
   date: "15/04/2026"
   chapters:
     - index.qmd

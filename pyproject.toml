@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=77", "setuptools-scm>=8", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "course_ephys_osss"
+description = "Materials for the OSSS Extracellular Ephys 2026 Course."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "CC-BY-4.0"
+license-files = ["LICENSE"]
+dynamic = ["version"]
+authors = [
+    { name = "Joseph Ziminski", email = "j.ziminski@ucl.ac.uk" },
+]
+keywords = ["electrophysiology", "neuroscience", "course", "OSSS"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Education",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "dandi",
+    "hdbscan",
+    "ipykernel",
+    "ipympl>=0.10.0",
+    "ipywidgets>=8.1.5",
+    "jupyter",
+    "kilosort",
+    "matplotlib>=3.9.4",
+    "nbformat",
+    "numpy",
+    "pandas",
+    "probeinterface",
+    "pynapple",
+    "remfile",
+    "scipy",
+    "spikeinterface[full,widgets]",
+    "pynwb",
+]
+
+[project.urls]
+Homepage = "https://neuroinformatics.dev/course-ephys-osss/"
+Repository = "https://github.com/neuroinformatics-unit/course-ephys-osss"
+Issues = "https://github.com/neuroinformatics-unit/course-ephys-osss/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["course_ephys_osss*"]
+[tool.setuptools_scm]

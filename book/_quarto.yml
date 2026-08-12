@@ -1,12 +1,15 @@
 project:
   type: book
   output-dir: _site
+  resources:
+    - intro-slides.html
 
+jupyter: course-ephys-venv
 execute:
   freeze: auto
 
 book:
-  title: "OSSS Ephys Course 2026"
+  title: "OSSS Extracellular Electrophysiology Course 2026"
   author:
   - name: Joseph Ziminski
     url: https://github.com/JoeZiminski
@@ -21,27 +24,69 @@ book:
         city: London
         country: United Kingdom
         url: https://www.sainsburywellcome.org/web/
-  - name: Please add your name here
+  - name: Chris Halcrow
+    url: https://github.com/chrishalcrow
+    email: c.halcrow@ucl.ac.uk
+    orcid: 0000-0002-0246-8075
+    corresponding: false
+    affiliations:
+      - id: SWC
+        name: Sainsbury Wellcome Centre, UCL
+        department: Sainsbury Wellcome Centre
+        group: Neuroinformatics Unit
+        city: London
+        country: United Kingdom
+        url: https://www.sainsburywellcome.org/web/
+  - name: Alessio Buccino
+    url: https://github.com/alejoe91
+    email: alessio.buccino@alleninstitute.org
+    orcid: 0000-0003-3661-527X
+    corresponding: false
+    affiliations:
+      - id: AIND
+        name: Allen Institute for Neural Dynamics
+        city: Seattle
+        country: USA
+        url: https://alleninstitute.org/
+  - name: Wolf de Wulf
+    url: https://github.com/wulfdewolf
+    email: wolf.de.wulf@ed.ac.uk
+    orcid: 0000-0002-0219-3120
+    corresponding: false
+    affiliations:
+      - id: UoE
+        name: University of Edinburgh
+        department: UKRI CDT in Biomedical AI
+        city: Edinburgh
+        country: United Kingdom
+        url: https://www.ed.ac.uk/
   date: "15/04/2026"
   chapters:
     - index.qmd
+    - setup.qmd
     - introduction-presentation.qmd
-    - pipeline-walkthrough.qmd
+    - pipeline-overview.qmd
     - preprocessing-steps-presentation.qmd
-    - preproecssing-steps-coding.qmd
+    - preprocessing-steps-coding.qmd
+    - spike-sorting-presentation.qmd
+    - spike-sorting-coding.qmd
     - unitmatch-presentation.qmd
     - unitmatch-coding.qmd
-    - concept-notes.qmd
-    - references.qmd
-    - planning.qmd
-
-bibliography: references.bib
+    - curation.qmd
+    - pynapple.qmd
+    - part: "Reference"
+      chapters:
+        - course-data.qmd
+        - glossary.qmd
+        - concept-notes.qmd
 
 format:
   html:
     theme:
       - cosmo
       - brand
+    css: custom.css
+    fig-dpi: 96
 
 
 

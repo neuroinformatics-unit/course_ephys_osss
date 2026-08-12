@@ -1,4 +1,4 @@
-# Setting up the repository
+# Python set up
 
 Before starting the course, we need to install the course materials
 and all dependency packages (such as SpikeInerface) onto your machine.

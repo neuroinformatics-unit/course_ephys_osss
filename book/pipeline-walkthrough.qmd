@@ -3,7 +3,7 @@
 In this chapter we will use 
 [SpikeInterface](https://spikeinterface.readthedocs.io/en/stable/) to implement a standard spike sorting pipeline from start to finish. We will go through the key steps at a high level, while developing the theory and adding more advanced methods in the following chapters.
 
-We will use a [short example dataset]((course-data.qmd#introductory-dataset)) available in the `data/pipeline-walkthrough` folder
+We will use a [short example dataset](course-data.qmd#introductory-dataset) available in the `data/pipeline-walkthrough` folder
 of the course repository (see the set up instructions for how to [download the course repository](setup.qmd#download-the-repository)). 
 
 

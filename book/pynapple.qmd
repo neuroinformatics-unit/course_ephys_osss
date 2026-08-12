@@ -5,10 +5,21 @@ Pynapple is a python package for analysing neural data.
 The package is actively maintained by the Flatiron Institute's [neuroRSE team](https://neurorse.flatironinstitute.org/). 
 
 Pynapple can do a lot more than what is covered in this chapter, take a look at the [Pynapple documentation](https://pynapple.org/user_guide/03_core_methods.html) for more.   
-The only thing you'll need to follow along is a working Python environment with `pynapple` installed.
-<span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.
 
-Open your favourite way of running Python, and follow along!
+The only thing you'll need to follow along is a working Python environment with `pynapple` installed.  
+See the [setup section](setup.qmd#create-the-environment) on how to set up the course environment. 
+
+If you want to run this by itself, just install Pynapple using:
+```python
+pip install pynapple
+```
+Then open your favourite way of running Python, import the right packages, and follow along!
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+import pynapple as nap
+```
 
 ## Origins
 
@@ -36,7 +47,7 @@ presently with the Flatiron Institute's neuroRSE team:
 ![](https://githubcard.com/pynapple-org/pynapple.svg)
 
 ## Goal
-Pynapple was designed to lie in between pre- and postprocessing.  
+Pynapple was designed to lie in between data processing and analysis.
 It contains functions facilitating alignment, wrangling, and performing basic neuroscientific analysis.
 
 <div class="timeline-horizontal">
@@ -106,8 +117,6 @@ It contains functions facilitating alignment, wrangling, and performing basic ne
 ### Time series (`Ts`)
 We store a time series, for example a spike train, in a `Ts` object.
 ```{python}
-
-import pynapple as nap
 ts = nap.Ts(t=[1,2,3,4,5])
 ts
 ```
@@ -115,7 +124,6 @@ ts
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 for timepoint in ts.times():
     ax.axvline(timepoint)
@@ -131,8 +139,6 @@ plt.show()
 We store a time series with corresponding data values, for example the speed of a mouse when it is running around, in a `Tsd` object.
 
 ```{python}
-import pynapple as nap
-import numpy as np
 tsd = nap.Tsd(t=[1,2,3,4,5], d=[1,1,1,2,1])
 tsd
 ```
@@ -140,7 +146,6 @@ tsd
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 ax.plot(tsd)
 ax.spines['top'].set_visible(False)
@@ -154,7 +159,6 @@ plt.show()
 If we have multiple time series, they can be collected in a `TsGroup`.  
 This could be a collection of spike times for multiple spiking units, for example.
 ```{python}
-import pynapple as nap
 tsgroup = nap.TsGroup({
     1: nap.Ts([1,2,3,4,5]), 
     2: nap.Ts([1.5, 2.2, 2.9, 4.2])
@@ -165,8 +169,6 @@ tsgroup
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
-import numpy as np
 cmap = plt.get_cmap("tab10")
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 for i in tsgroup:
@@ -185,7 +187,6 @@ plt.show()
 If we have a time series with multiple data associated with the same time points, they can be stored in a `TsdFrame`.  
 This could be a collection of activity traces from multiple cells, e.g. recorded using [calcium-imaging](https://www.sciencedirect.com/science/article/pii/S0896627312001729).
 ```{python}
-import pynapple as nap
 tsdframe = nap.TsdFrame(
     t=[1,2,3,4,5], 
     d=[[1,2],
@@ -200,8 +201,6 @@ tsdframe
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
-import numpy as np
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 for i, col in enumerate(tsdframe.columns):
     ax.plot(tsdframe[:, i], label=col)
@@ -218,7 +217,6 @@ Often we want to store events that occur across a period rather than at single t
 for example a behavioural stimulus that lasts multiple seconds, or a period of sleep.
 To represent this, we store time intervals as start and end pairs in an `IntervalSet`.
 ```{python}
-import pynapple as nap
 epochs = nap.IntervalSet(
     start=[1, 3, 7],
     end=[2, 5, 9]
@@ -229,7 +227,6 @@ epochs
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 for start, stop in epochs.values:
     ax.axvspan(start, stop)
@@ -248,14 +245,12 @@ for processing and analysis. Therefore, many Pynapple objects interact with each
 Every time series object has a time support, an `IntervalSet` that gives the epochs
 over which the time series is defined.
 ```{python}
-import pynapple as nap
 ts = nap.Ts(t=[1,2,3,4,5])
 ts.time_support
 ```
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 for timepoint in ts.times():
     ax.axvline(timepoint)
@@ -273,7 +268,6 @@ plt.show()
 Any time series object can be restricted to certain `IntervalSet`, thereby updating its time support.
 This could be used, for example, to keep only the spike times that fall within the presentation of a behavioural stimulus.
 ```{python}
-import pynapple as nap
 ts = nap.Ts(t=[1,2,3,4,5])
 restriction = nap.IntervalSet(start=[1.3, 3.9], end=[3.5, 4.2])
 restricted = ts.restrict(restriction)
@@ -282,7 +276,6 @@ restricted
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 for timepoint in restricted.times():
     ax.axvline(timepoint)
@@ -302,8 +295,6 @@ Given one time series, you can `value_from` to take the value corresponding
 to the closest time point in another time series with data.
 This can be handy, for example, if you want to sample the position of an animal, at particular spike times.
 ```{python}
-import pynapple as nap
-import numpy as np
 ts = nap.Ts(t=[1,2,3,4,5])
 tsd = nap.Tsd(t=np.arange(0, 10, 0.1), d=np.random.randn(100))
 values = ts.value_from(tsd)
@@ -312,7 +303,6 @@ values
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 ax.plot(tsd, label="tsd")
 ax.plot(values, label="values", linestyle="none", marker=".")
@@ -334,8 +324,6 @@ Pynapple objects are easy to transform, reshape, slice, and more.
 ### Numpy
 Most Numpy functions can be applied to Pynapple objects without hassle.
 ```{python}
-import pynapple as nap
-import numpy as np
 tsdframe = nap.TsdFrame(
     t=[1,2,3,4,5], 
     d=[[1,2],
@@ -349,8 +337,6 @@ np.mean(tsdframe, axis=1)
 ```
 ```{python}
 
-import pynapple as nap
-import numpy as np
 tsdframe = nap.TsdFrame(
     t=[1,2,3,4,5], 
     d=[[1,2],
@@ -366,8 +352,6 @@ np.diff(tsdframe, axis=1)
 ### Slicing
 Pynapple objects can be sliced like Numpy arrays.
 ```{python}
-import pynapple as nap
-import numpy as np
 tsdframe = nap.TsdFrame(
     t=[1,2,3,4,5], 
     d=[[1,2],
@@ -381,8 +365,6 @@ tsdframe[:, 1]
 ```
 ```{python}
 
-import pynapple as nap
-import numpy as np
 tsdframe = nap.TsdFrame(
     t=[1,2,3,4,5], 
     d=[[1,2],
@@ -402,8 +384,6 @@ The following are a subset of them, for an exhaustive list, see the [Pynapple do
 ### Binning
 The time points of any time series object can be counted.
 ```{python}
-import pynapple as nap
-import numpy as np
 time_step_s = 0.001
 times = np.arange(0, 4, time_step_s)
 
@@ -421,7 +401,6 @@ counts
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 fig, (ax_rate, ax_spikes, ax_count) = plt.subplots(
     3, 1, constrained_layout=True, figsize=(7.5,3), sharex=True
 )
@@ -435,7 +414,7 @@ ax_spikes.set_yticks([])
 ax_spikes.spines['left'].set_visible(False)
 ax_spikes.spines['right'].set_visible(False)
 ax_spikes.spines['top'].set_visible(False)
-ax_count.plot(counts)
+ax_count.step(counts.times(), counts.values)
 ax_count.set_ylabel("count")
 ax_count.set_xlabel("time (s)")
 ax_count.spines['right'].set_visible(False)
@@ -447,8 +426,6 @@ plt.show()
 If you have continous data already, you would not count events in bins, but rather average values across bins.
 For example, if you wanted to downsample a signal without losing too much information.
 ```{python}
-import pynapple as nap
-import numpy as np
 time_step_s = 0.01
 times = np.arange(0, 10, time_step_s)
 
@@ -469,7 +446,6 @@ averaged
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 plt.plot(tsd, label="original")
 plt.plot(averaged, label="averaged")
@@ -484,8 +460,6 @@ plt.show()
 ### Thresholding
 Time series with data can be thresholded, yielding new time series objects with updated time supports.
 ```{python}
-import pynapple as nap
-import numpy as np
 time_step_s = 0.01
 times = np.arange(0, 10, time_step_s)
 
@@ -507,7 +481,6 @@ above.time_support
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 ax.plot(tsd, label="original")
 ax.plot(above, label="above", marker=".", linestyle="none")
@@ -523,8 +496,6 @@ Time series with data can be smoothed.
 Smoothing makes a signal less noisy by averaging out small, fast changes while keeping the main pattern.
 The operation consists of convolving the signal with a Gaussian kernel.
 ```{python}
-import pynapple as nap
-import numpy as np
 time_step_s = 0.01
 times = np.arange(0, 10, time_step_s)
 
@@ -545,7 +516,6 @@ smoothed
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 ax.plot(tsd, label="original")
 ax.plot(smoothed, label="smoothed")
@@ -565,8 +535,6 @@ Given one or a group of time series, you can compute autocorrelograms.
 <span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.
 
 ```{python}
-import pynapple as nap
-import numpy as np
 time_step_s = 0.01
 times = np.arange(0, 4, time_step_s)
 
@@ -589,7 +557,6 @@ autocorrelogram
 #| code-fold: true
 #| code-summary: "Show plotting code"
 
-import matplotlib.pyplot as plt
 ax=autocorrelogram.plot()
 plt.ylabel("rate (Hz)")
 plt.xlabel("time (s)")
@@ -609,7 +576,6 @@ crosscorrelogram
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 ax=crosscorrelogram.plot()
 plt.ylabel("rate (Hz)")
 plt.xlabel("time (s)")
@@ -624,8 +590,6 @@ Pynapple wraps a lot of scipy functions for signal processing.
 
 Let's simulate a noisy multi-frequency signal (the combination of multiple sine waves oscillating at different frequencies):
 ```{python}
-import pynapple as nap
-import numpy as np
 sampling_rate_hz = 1000
 times = np.linspace(0, 2, sampling_rate_hz * 2)
 
@@ -647,7 +611,6 @@ tsd
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, (ax2, ax10, ax50, ax) = plt.subplots(
     4,
     1,
@@ -691,7 +654,6 @@ filtered
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, (ax_original, ax_filtered) = plt.subplots(
     2,
     1,
@@ -726,7 +688,6 @@ psd
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(5,3))
 ax.plot(psd)
 ax.set_ylabel("power")
@@ -742,8 +703,6 @@ For example, spiking activity around a stimulus presentation.
 
 Let's start by simulating a spiking unit that has clear stimulus-locked activity:
 ```{python}
-import pynapple as nap
-import numpy as np
 stimuli = nap.Ts(t=np.arange(0, 1000, 1), time_units="s")
 baseline = np.random.uniform(0, 1000, 500)
 burst = np.concatenate([
@@ -758,7 +717,6 @@ ts
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 segment = nap.IntervalSet(100, 103.9)
 fig, ax = plt.subplots(1, 1, constrained_layout=True)
 ax.vlines(ts.restrict(segment).times(), 0.04, 0.10, label="spikes")
@@ -789,7 +747,6 @@ peth
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(figsize=(6, 4))
 ax.plot(peth.to_tsd(), "|", markersize=5)
 ax.set_ylabel("event")
@@ -816,11 +773,6 @@ In what follows, we'll simulate computing tuning curves from a circular variable
 
 Let's start by simulating some spiking units that are clearly modulated by a circular feature:
 ```{python}
-import pandas as pd
-import pynapple as nap
-import numpy as np
-from scipy.ndimage import gaussian_filter1d
-
 n_neurons = 6
 
 # Divide the circular feature space (0 to 2π) into bins
@@ -852,13 +804,8 @@ timestep = np.arange(total_timesteps) * time_step_sec
 # Modulo 2π keeps the feature within the circular range [0, 2π)
 feature = nap.Tsd(
     t=timestep,
-    d=(
-        gaussian_filter1d(
-            np.cumsum(np.random.randn(total_timesteps) * 0.5),
-            20
-        ) % (2*np.pi)
-    )
-)
+    d=np.cumsum(np.random.randn(total_timesteps) * 0.5),
+).smooth(0.2) % (2*np.pi)
 
 # Find which tuning curve bin corresponds to each feature value
 index = np.digitize(feature, bins) - 1
@@ -879,7 +826,6 @@ We now have a random walk in the feature space:
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(6, 4))
 ax.plot(feature.restrict(epochs), linestyle="none", marker="o")
 ax.set_yticks([0, 2*np.pi], ["0", "2π"])
@@ -894,7 +840,6 @@ As well as the activity of 6 neurons, modulated by the feature:
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots(constrained_layout=True, figsize=(6, 4))
 ax.plot(tsgroup.restrict(epochs).to_tsd(), linestyle="none", marker="|")
 ax.tick_params(axis="y", length=0)
@@ -966,7 +911,6 @@ and a `TsdFrame` containing the estimated probabilities of each feature value at
 ```{python}
 #| code-fold: true
 #| code-summary: "Show plotting code"
-import matplotlib.pyplot as plt
 fig, (ax1, ax2) = plt.subplots(figsize=(6, 5), nrows=2, ncols=1, sharex=True)
 ax1.plot(
     feature,
@@ -1035,8 +979,7 @@ Pynapple provides many ways to load your data.
 The main input format Pynapple can read is [Neurodata Without Borders (NWB)](https://nwb.org/).  
 Pynapple will parse all data in the file that can be represented as a Pynapple object and present a dictionary-like interface for selecting them.
 ```{python}
-#| code-fold: true
-#| code-summary: "Show plotting code"
+#| echo: false
 import os
 import requests
 nwb_path = 'A2929-200711.nwb'
@@ -1049,9 +992,7 @@ if nwb_path not in os.listdir("."):
         f.write(data)
 ```
 ```{python}
-import pynapple as nap
-nwb_path = 'A2929-200711.nwb'
-data = nap.load_file(nwb_path)
+data = nap.load_file('A2929-200711.nwb')
 data
 ```
 
@@ -1059,7 +1000,6 @@ data
 Raw data can be loaded with `pynapple` through the [NEO](https://neo.readthedocs.io/en/latest/) library (also used by SpikeInterface). 
 Many formats are supported, [see here](https://neo.readthedocs.io/en/stable/rawiolist.html).
 ```python
-import pynapple as nap
 data = nap.EphysReader("path/to/raw")
 ```
 
@@ -1067,8 +1007,6 @@ data = nap.EphysReader("path/to/raw")
 Pynapple objects can be saved (and loaded) as Numpy `.npz` files.
 
 ```{python}
-import pynapple as nap
-import numpy as np
 tsd = nap.Tsd(t=np.arange(10), d=np.arange(10))
 tsd.save("my_tsd.npz")
 loaded = nap.load_file("my_tsd.npz")
@@ -1077,9 +1015,8 @@ loaded
 
 ### Streaming from DANDI
 Data in the NWB format can be directly streamed from the [DANDI archive](https://dandiarchive.org) into Pynapple.  
-Here is useful function to keep handy that does this for you:
+Here is useful function to keep on hand that does this for you:
 ```{python}
-import pynapple as nap
 from pynwb import NWBHDF5IO
 from dandi.dandiapi import DandiAPIClient
 import fsspec
@@ -1108,13 +1045,17 @@ def stream_dandiset(dandiset_id, filepath):
 ```
 
 ## Your turn
+
 Now it is your turn!
 
-Start by streaming a single session from [this dataset](https://dandiarchive.org/dandiset/000939?search=000939&pos=1) on the DANDI archive, it contains recordings from head direction cells in the postsubiculum.
-Use the streaming function we provided in the data section!
-<span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.
+We will compute head direction tuning curves in the postsubiculum, and use these to decode head direction from neural activity. We will use the same [dataset](course-data.qmd#head-direction-experiment-from-the-dandi-archive) we have
+been working with in the [preprocessing](preprocessing-steps-coding.qmd), [sorting](spike-sorting-coding.qmd) and [curation](curation.qmd) chapters.
 
-Then, try to compute head direction tuning curves, and use those to decode head direction from the population activity.
+However, to ensure the decoding is accurate we will need much more data than we previously used. 
+Therefore, we will use the full `.nwb` file for the session that contains pre-computed spike times, as well as behavioural data. 
+**TODO: ADD DOWNLOAD LINK**
+This dataset is included in the course data under `book/data/pynapple/dandiset-000939-no-traces-full.nwb`,
+see [here](course-data.qmd#spike-times-and-behavior-used-in-the-pynapple-section) for more details. 
 
 If you are confident, you can write your own code using the snippets provided in this chapter.  
 If you want a bit more help, follow along in [this notebook](https://colab.research.google.com/drive/1o3IJtprvaTzwHxThGTdInE6GYADBULyA?usp=sharing).

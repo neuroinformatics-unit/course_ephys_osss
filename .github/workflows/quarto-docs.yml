@@ -1,9 +1,16 @@
 name: Quarto Docs
 
+# Build the book on all merges to main, all pull requests, or by manual
+# workflow dispatch, which acts as a CI check that the book still renders.
+# The publish step only runs when a tag is pushed, deploying the already
+# rendered site to the gh-pages branch.
 on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,10 +18,11 @@ permissions:
 
 concurrency:
   group: quarto-docs-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   publish:
+    name: Build and publish book
     runs-on: ubuntu-latest
 
     steps:
@@ -39,10 +47,15 @@ jobs:
           quarto render slides/intro/introduction-presentation.qmd --embed-resources
           cp slides/intro/_site/introduction-presentation.html book/intro-slides.html
 
+      - name: Render book
+        run: quarto render book
+
       - name: Publish to gh-pages
+        if: github.ref_type == 'tag'
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
           path: book
+          render: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

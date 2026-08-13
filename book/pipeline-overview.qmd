@@ -16,12 +16,14 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 
+import spikeinterface.full as si
 import spikeinterface.extractors as si_extractors
 import spikeinterface.preprocessing as si_prepro
 import spikeinterface.sorters as si_sorters
 import spikeinterface.widgets as si_widgets
 from spikeinterface import create_sorting_analyzer
 from probeinterface.plotting import plot_probe
+from spikeinterface_gui import run_mainwindow
 ```
 
 ### Data Loading
@@ -385,9 +387,13 @@ print(
 
 ## Postprocessing
 
-Spike sorting is a complex task undertaken in the presence of significant noise. Therefore, many units will not cleanly represent a single neuron. As well as **good** units (i.. where each spike is from the same putative neuron) units may be **noise** (XXX) or **multi-unit activity (MUA)**. 
+Spike sorting is a complex task undertaken in the presence of significant noise. Therefore, many units will not cleanly represent a single neuron. As well as *"good"* units (where each spike is from the same neuron) units may be *"noise"* (i.e. it's spikes are not real action potentials) or consist of multi-unit activity, *"mua"* (the unit includes spikes from multiple neurons).
 
-To determine whether units are good or not, we must look at the individual spikes that belong to a unit, and compute metrics. Cut then out, waveforms. In this section we will go over some key concepts at a very high level - we will develop this much further in the Postprocessing chapter.
+To determine whether units are good or not, we must look at the individual spikes that belong to a unit and compute features associated with them. 
+The various features we compute can help us tell if the unit is good, noise or multi-unit activity. 
+
+There are many features that can be computed and we will go into these in detail in the following chapters.
+For now we will explore the way in which these features can be computed in SpikeInterface, with the `SortingAnalyzer`.
 
 
 ### Creating a `SortingAnalyzer`
@@ -401,123 +407,58 @@ analyzer = create_sorting_analyzer(
 )
 ```
 
-Using this sorting analyzer interface, we will compute all of the
-postprocessing results needed to assess the quality of our sorting.
+Using this sorting analyzer interface, we will compute all of the features needed to assess the quality of our sorting.
+
+
+
+
+### Computing extensions
+
+Next, we will compute many features that are useful to assess the sorting quality, including randomly selecting and storing spike waveforms, their amplitudes, locations, creating templates, autocorrelograms and more. 
+
+We will explore these in detail in later chapters, however for now we will simply
+compute them and visualize the key ones in [SpikeInterface-GUI](https://spikeinterface-gui.readthedocs.io/en/latest/index.html).
+
+First, let's compute the relevant features we need on the `SortingAnalyzer`:
+
+```{python}
+extensions_dict = {
+    'random_spikes': {'max_spikes_per_unit': 1000},
+    'templates': {},
+    'waveforms': {},
+    'noise_levels': {},
+    'correlograms': {},
+    'spike_amplitudes': {},
+    'spike_locations': {},
+    'unit_locations': {},
+  #  'template_simlarity': {},
+}
+
+analyzer.compute(extensions_dict)
+```
+
+Now our `analyzer` object holds the computed features, which we can visualize in the SpikeInterface-Gui.
 
 :::{.callout-warning}
 
-Some sorters will output their own waveforms, templates, amplitudes ETC (for example, Kilosort has a `templates.npy` file containing the templates it generated during sorting).
+Some sorters will output their own features (e.g. waveforms, templates, amplitudes etc.), for example, Kilosort has a `templates.npy` file containing the templates it generated during sorting.
 
-These are not loaded by SpikeInterface. Instead, the sorting analyzer will always recompute these features directly from the passed `recording`.
+These are not loaded by SpikeInterface. Instead, the sorting analyzer will always compute these features directly from the passed `recording`.
 
 :::
 
-### Selecting spikes
+### Visualizing the `SortingAnalyzer`
 
-In our sorting, we can have many many detected spikes. This may be in the order of millions of spikes for an hour long recording. When performing experiments with very long recordings (e.g. days or weeks) billions of spikes may be detected!
-
-In general, we will compute summary statistics over metrics computed from individual spikes. Therefore, including millions of spikes is computationally intensive while providing marginal gains. Instead, we can sub-select spikes to include in postprocessing computations (typically, 3-500 spikes per unit is used a default).
+To start the GUI, run:
 
 ```{python}
-analyzer.compute(
-    "random_spikes",
-    method="uniform",
-    max_spikes_per_unit=500,
+#| eval: false
+
+run_mainwindow(
+    analyzer
 )
 ```
 
-To access the data associated with a computed extension, we can use the `get_extension` function as below. We can see the indices (and compute the 
-spike times) for the selected spikes:
-
-```{python}
-spike_indices = analyzer.get_extension("random_spikes").data["random_spikes_indices"]
-spike_times = spike_indices / recording.get_sampling_frequency()
-
-print(spike_times)
-```
-
-### Waveforms
-
-The action potential waveforms are important for assessing unit quality. For example, we expect that the waveforms of spikes which belong to a single unit are all similar.
-
-To compute waveforms in SpikeInterface, we can use the `waveforms` extension. This will 'chop out' the spike waveform from the data, with a time window specified by the `ms_before` and `ms_after` (the spike peak) arguments. For example in the schematic below, we could cut out the blue spike in a window defined by the red blox:
-
-![Example raw trace segment with an artifact highlighted in red.](images/intro-waveforms.png)
-
-```{python}
-analyzer.compute("waveforms", ms_before=1.0, ms_after=2.0)
-```
-
-The waveforms array is three dimensional `(num waveforms, num samples, num channels)
-
-```{python}
-waveforms = analyzer.get_extension("waveforms").data["waveforms"]
-
-print(waveforms.shape)
-
-# This is the waveform of the 19th spike (chosen as it looks nice)
-plt.imshow(
-    waveforms[18, :, :].T, 
-    cmap="RdBu_r",
-    vmin=-200,
-    vmax=200,
-    aspect="auto"
-    )
-plt.show()
-```
-
-### Templates
-
-The template is a representative waveform from a putative neuron. Often, it is computed as the average waveform from all of the spikes that were assigned to a unit.
-
-We can compute the extension and access the templates with:
-
-```{python}
-analyzer.compute("templates")
-
-templates = analyzer.get_extension("templates").data["average"]
-
-print(
-    templates.shape
-)
-```
-
-SpikeInterface also includes many useful post-processing plots in the widgets module. For example  we can plot a unit template as below:
-
-```{python}
-
-# Plot the template waveform of the first unit 
-si_widgets.plot_unit_templates(analyzer, unit_ids=[0])
-plt.show()
-
-```
-
-### Amplitudes
-
-Finally, spike amplitudes are a useful measure for assessing unit quality. We expect that the amplitude of a spike is relatively stable throughout a recording. Changes in spike amplitudes may indicate problems with hte neuron health, drift, or other issues. 
-
-To compute the spike amplitudes, we can run:
-
-```{python}
-
-analyzer.compute("spike_amplitudes")
-
-amplitudes = analyzer.get_extension("spike_amplitudes").data["amplitudes"]
-
-print(amplitudes)
-```
-
-This gives a list of amplitudes, one for every spike. We will explore how visualizing spike amplitude across time is a useful measure for quality assessment later.
-
-## Manual Curation in spikeinterface-gui
-
-From this, we can compute quality metrics used to filter the units e.g. bombcell. We cover this more in the postprocessing chapter.
-
-For now, see SpikeInterface GUI video?
-
-https://www.youtube.com/watch?v=OGlQtxzip-Q
-
-
-
+and see https://www.youtube.com/watch?v=OGlQtxzip-Q for walking through the GUI.
 
 

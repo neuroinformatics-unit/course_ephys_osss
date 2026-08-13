@@ -1,4 +1,4 @@
-# Introduction to electrophysiology
+# Introduction to electrophysiology (slides)
 
 <iframe class="intro-slides" src="intro-slides.html" width="100%" height="600" style="border: 1px solid #ddd; border-radius: 6px;" allowfullscreen></iframe>
 

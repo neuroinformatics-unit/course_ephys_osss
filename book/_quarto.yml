@@ -4,7 +4,6 @@ project:
   resources:
     - intro-slides.html
 
-jupyter: course-ephys-venv
 execute:
   freeze: auto
 

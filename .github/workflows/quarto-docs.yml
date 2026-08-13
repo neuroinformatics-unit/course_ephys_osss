@@ -1,9 +1,16 @@
 name: Quarto Docs
 
+# Build the book on all merges to main, all pull requests, or by manual
+# workflow dispatch. The build job can be used as a CI check that the book
+# still renders successfully. The publish job only runs when a tag is pushed
+# and actually deploys the rendered site to the gh-pages branch.
 on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,10 +18,42 @@ permissions:
 
 concurrency:
   group: quarto-docs-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
+  build:
+    name: Build book
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip ; python -m pip install .
+
+      - name: Render intro slides for embedding
+        run: |
+          quarto render slides/intro/introduction-presentation.qmd --embed-resources
+          cp slides/intro/_site/introduction-presentation.html book/intro-slides.html
+
+      - name: Render book
+        run: quarto render book
+
   publish:
+    name: Publish book
+    needs: build
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
 
     steps:

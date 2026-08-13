@@ -53,6 +53,7 @@ dependencies = [
     "PySide6",
     "pynwb",
     "UnitMatchPy[full,notebooks]",
+    "spikeinterface_gui",
 ]
 
 [project.urls]

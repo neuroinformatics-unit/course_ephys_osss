@@ -1,6 +1,6 @@
 # [OSSS](https://neuroinformatics.dev/open-software-summer-school/index.html) Extracellular Electrophysiology Course
 
-This is the repository for the 2026 Extracellular Electrophysiology 2026 course [website](https://neuroinformatics.dev/course_ephys_osss/) at the Neuroinformatics Unit's Open Software Summer School.
+This is the repository for the 2026 Extracellular Electrophysiology 2026 course [website](https://neuroinformatics.dev/course_ephys_osss/), taught at the [Neuroinformatics Unit's Open Software Summer School](https://neuroinformatics.dev/open-software-summer-school/index.html).
 
 To work through the course, see the [set up instructions](https://neuroinformatics.dev/course_ephys_osss/setup.html) to get started.
 

@@ -69,7 +69,7 @@ print(recording)
 ```
 
 
-We need to tell SpikeInterface where the data is on our machine, and what [data stream](concept-notes.qmd#spikeglx-streams)💡 we want to load. If you are unsure of the stream, run the function without the `stream_id` argument and SpikeInterface will prompt you with the available streams.
+We need to tell SpikeInterface where the data is on our machine, and what data stream we want to load. If you are unsure of the stream, run the function without the `stream_id` argument and SpikeInterface will prompt you with the available streams.
 
 Because we want to load the AP data stream for spike sorting, we pass `"imec0.ap"`.
 
@@ -82,7 +82,7 @@ SpikeInterface uses 'lazy loading', which means at this stage no data is actuall
 SpikeInterface extractor functions return the recording as a [Python object](https://www.geeksforgeeks.org/python/python-classes-and-objects/). This object has many useful methods for exploring the recording as well as accessing the underlying data, such as [`get_traces()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseRecording.get_traces).
 
 Many objects in SpikeInterface are recording-objects that inherit from a `BaseRecording` class. This means that they all the inherit relevant attributes and methods useful to help us explore the recording, which we can see on the [`BaseRecording` documentation](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseRecording).
-See [inheritance](concept-notes.qmd#inheritence)💡 for more details.
+See inheritance for more details.
 
 You can also use Python's `dir()` function to see all attributes and methods associated with any Python object.
 
@@ -149,7 +149,7 @@ plt.show()
 This plot is a heatmap view of the data: time in seconds is on the x-axis, and each row of the y-axis is the data from a separate recording channel (ordered by depth). The color of the pixel indicate the voltage on that recording channel at that timepoint.
 
 `return_in_uV` to ensure the data is returned in microvolts, as by default 
-most electrophysiological recordings are [stored as unitless `int16` values](concept-notes.qmd#data-storage-in-int16-and-scaling-to-uv)💡.
+most electrophysiological recordings are stored as unitless `int16` values.
 
 `order_channel_by_depth` is used as, depending on the probe, the default ordering of channels is not always by depth, meaning the order may be scrambled on the plot.
 

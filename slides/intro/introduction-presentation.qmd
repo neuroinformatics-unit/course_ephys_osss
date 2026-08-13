@@ -181,19 +181,19 @@ A common API for open-source electrophysiological tools
       <td style="padding: 0.15rem 0.35rem;">Monday, 10:00-13:00</td>
     </tr>
     <tr>
-      <td style="padding: 0.15rem 0.35rem;"><strong>Session 2: Raw data quality and preprocessing</strong></td>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 2: Data quality and preprocessing</strong></td>
       <td style="padding: 0.15rem 0.35rem;">Tuesday, 10:00-13:00</td>
     </tr>
     <tr>
-      <td style="padding: 0.15rem 0.35rem;"><strong>Session 3: Sorting</strong></td>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 3: Sorting and UnitMatch</strong></td>
       <td style="padding: 0.15rem 0.35rem;">Tuesday, 14:00-17:00</td>
     </tr>
     <tr>
-      <td style="padding: 0.15rem 0.35rem;"><strong>Session 4: Sorting quality, postprocessing, and curation</strong></td>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 4: Postprocessing and curation</strong></td>
       <td style="padding: 0.15rem 0.35rem;">Wednesday, 10:00-13:00</td>
     </tr>
     <tr>
-      <td style="padding: 0.15rem 0.35rem;"><strong>Session 5: Analysing outputs (Pynapple and probe alignment)</strong></td>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 5: Analyzing outputs (Pynapple and Probe-anatomy alignment)</strong></td>
       <td style="padding: 0.15rem 0.35rem;">Wednesday, 14:00-17:00</td>
     </tr>
   </tbody>
@@ -236,7 +236,7 @@ My advisor once told me that doing science is 98% being confused and 2% figuring
 ::: {.math-goal-quote style="grid-column: 2; grid-row: 3; text-align: center; margin: 0.25rem auto 0;"}
 When you allow yourself to be confused you become far more introspective; you gain the clarity you desire by questioning and reconciling a variety of ideas and alternatives that may feel overwhelming.
 
-[**Peter Winick**](https://thoughtleadershipleverage.com/embracing-confusion/)
+[**Peter Winick**](https://thoughtleadershipleverage.com/embracing-confusion/), CEO of *Thought Leadership*
 :::
 
 ::::
@@ -247,33 +247,21 @@ When you allow yourself to be confused you become far more introspective; you ga
 
 The course handbook, with set up instructions, is at:
 
-[https://neuroinformatics.dev/course_ephys_osss/](https://neuroinformatics.dev/course_ephys_osss/)
+[neuroinformatics.dev/course_ephys_osss](https://neuroinformatics.dev/course_ephys_osss/)
 
-Head to the [set up page](https://neuroinformatics.dev/course_ephys_osss/setup.html) and we'll go through it together.
+Head to the 'Python set up' page and we will go through it together.
 
-::: {.notes}
-Open the set up page and take everyone through the installation steps together.
-:::
+
+## Notes on the coding section
+
+- Typing code is a powerful way to build understanding and muscle memory. Try not to copy and paste from the book, or use AI.
+- If you have your own data, feel free to apply the methods we introduce to it during the course, and ask us questions about it!
 
 ## Downloading data for the course {.data-download-slide}
 
-:::: {.data-download-grid}
+Download everything you need for the course from:
 
-::: {.data-download-section}
-[DANDI datasets]{.data-download-title}
-
-- preprocessing / sorting:
-- postprocessing:
-- analysis:
-:::
-
-::: {.data-download-section}
-[UnitMatch]{.data-download-title}
-
-- main dataset:
-- extra dataset:
-:::
-
-::::
-
+- The [course Zenodo repository](https://zenodo.org/records/21908611) — all core datasets.
+- The **AL032** dataset from [Dropbox](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&e=1&dl=0) — UnitMatch chapter.
+- *(optional)* The larger **EB055** dataset from the same Dropbox — UnitMatch extended exercises.
 

@@ -414,9 +414,7 @@ Using this sorting analyzer interface, we will compute all of the features neede
 
 ### Computing extensions
 
-**TOOD: LINK TO GLOASSRY / CONCEPT NOTES FROM HERE**
-Next, we will compute many features that are useful to assess the sorting quality, including randomly selecting and storing spike waveforms, their amplitudes, locations,
-creating templates, autocorrelograms and more. 
+Next, we will compute many features that are useful to assess the sorting quality, including randomly selecting and storing spike waveforms, their amplitudes, locations, creating templates, autocorrelograms and more. 
 
 We will explore these in detail in later chapters, however for now we will simply
 compute them and visualize the key ones in [SpikeInterface-GUI](https://spikeinterface-gui.readthedocs.io/en/latest/index.html).
@@ -461,6 +459,6 @@ run_mainwindow(
 )
 ```
 
-and see https://www.youtube.com/watch?v=OGlQtxzip-Q (?) **TODO**
+and see https://www.youtube.com/watch?v=OGlQtxzip-Q for walking through the GUI.
 
 

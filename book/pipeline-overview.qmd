@@ -32,8 +32,8 @@ We will use a [short example dataset](course-data.qmd#introductory-dataset) avai
 the the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`.
 
 ```{python}
-# download the data from zenodo for building the book. Users will download this manually.
 #| include: false
+#| # download the data from zenodo for building the book. Users will download this manually.
 from urllib.request import urlretrieve
 
 data_dir = Path("data/pipeline-overview")
@@ -190,7 +190,7 @@ cmr_recording = si_prepro.common_reference(
 
 print(phase_shift_recording)
 print(filtered_recording)
-print(filtered_recording)
+print(cmr_recording)
 ```
 
 We can see that each preprocessing function returns a new recording object, that tracks the metadata of each preprocessing step. In SpikeInterface, the preprocessing functions return almost instantly due to the [lazy loading](#lazy-loading)
@@ -431,7 +431,6 @@ extensions_dict = {
     'spike_amplitudes': {},
     'spike_locations': {},
     'unit_locations': {},
-  #  'template_simlarity': {},
 }
 
 analyzer.compute(extensions_dict)

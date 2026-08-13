@@ -3,9 +3,11 @@
 /book/site_libs/
 /book/_site/
 /book/_tmp
+/book/data
 /slides/intro/_site
 /book/_freeze/
 /docs/
+/book/*.html
 **/*.quarto_ipynb
 .vscode
 .idea/

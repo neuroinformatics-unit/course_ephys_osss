@@ -26,7 +26,6 @@ book:
         url: https://www.sainsburywellcome.org/web/
   - name: Chris Halcrow
     url: https://github.com/chrishalcrow
-<<<<<<< Updated upstream
     email: c.halcrow@ucl.ac.uk
     orcid: 0000-0002-0246-8075
     corresponding: false
@@ -38,10 +37,6 @@ book:
         city: London
         country: United Kingdom
         url: https://www.sainsburywellcome.org/web/
-=======
-    email: chrishalcrow@gmail.com
-    corresponding: false
->>>>>>> Stashed changes
   - name: Alessio Buccino
     url: https://github.com/alejoe91
     email: alessio.buccino@alleninstitute.org
@@ -53,7 +48,26 @@ book:
         city: Seattle
         country: USA
         url: https://alleninstitute.org/
-<<<<<<< Updated upstream
+  - name: Enny H. van Beest
+    url: https://github.com/EnnyvanBeest
+    email: e.beest@ucl.ac.uk
+    orcid: 0000-0002-0219-3120
+    corresponding: false
+    affiliations:
+      - id: UCL
+        name: University College London
+        department: Institute of Ophthalmology
+        city: London
+        country: United Kingdom
+        url: https://www.ucl.ac.uk/
+  - name: Olivier Winter
+    url: https://github.com/oliche
+    email: olivier.winter@internationalbrainlab.org
+    corresponding: false
+    affiliations:
+      - id: IBL
+        name: International Brain Laboratory
+        url: https://www.internationalbrainlab.com/
   - name: Wolf de Wulf
     url: https://github.com/wulfdewolf
     email: wolf.de.wulf@ed.ac.uk
@@ -66,20 +80,6 @@ book:
         city: Edinburgh
         country: United Kingdom
         url: https://www.ed.ac.uk/
-=======
-  - name: Enny H. van Beest
-    url: https://github.com/EnnyvanBeest
-    email: e.beest@ucl.ac.uk
-    corresponding: false
-  - name: Olivier Winter
-    url: https://github.com/oliche
-    email: olivier.winter@internationalbrainlab.org
-    corresponding: false
-  - name: Wolf De Wulf
-    url: https://github.com/wulfdewolf
-    email: wolf.de.wulf@ed.ac.uk
-    corresponding: false
->>>>>>> Stashed changes
   date: "15/04/2026"
   chapters:
     - index.qmd

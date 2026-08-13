@@ -60,15 +60,6 @@ book:
         city: London
         country: United Kingdom
         url: https://www.ucl.ac.uk/
-  - name: Olivier Winter
-    url: https://github.com/oliche
-    email: olivier.winter@internationalbrainlab.org
-    orcid: 0000-0001-9278-2721
-    corresponding: false
-    affiliations:
-      - id: IBL
-        name: International Brain Laboratory
-        url: https://www.internationalbrainlab.com/
   - name: Wolf De Wulf
     url: https://github.com/wulfdewolf
     email: wolf.de.wulf@ed.ac.uk
@@ -81,6 +72,15 @@ book:
         city: Edinburgh
         country: United Kingdom
         url: https://www.ed.ac.uk/
+  - name: Olivier Winter
+    url: https://github.com/oliche
+    email: olivier.winter@internationalbrainlab.org
+    orcid: 0000-0001-9278-2721
+    corresponding: false
+    affiliations:
+      - id: IBL
+        name: International Brain Laboratory
+        url: https://www.internationalbrainlab.com/
   date: "15/04/2026"
   chapters:
     - index.qmd

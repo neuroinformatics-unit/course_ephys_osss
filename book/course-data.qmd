@@ -1,19 +1,33 @@
 # Course data {.unnumbered}
 
 This page includes information on the provenance of all data used in the course and instructions on how to download it from
-open access datasets on [DANDI archive](https://about.dandiarchive.org/)  and from the [International Brain Laboratory (IBL)](https://www.internationalbrainlab.com/).
+open access datasets on [DANDI archive](https://about.dandiarchive.org/) and from the [International Brain Laboratory (IBL)](https://www.internationalbrainlab.com/).
 
-Beyond this course, it is a useful to be aware of these excellent resources.  They are very valuable for testing pipelines, 
-comparing your datasets to others data collected from the same region or using the same probe. Further, they allow you to 
+Beyond this course, it is useful to be aware of these excellent resources. They are very valuable for testing pipelines, 
+comparing your datasets to other data collected from the same region or using the same probe. Further, they allow you to 
 perform your own interesting analysis without collecting data. For example, this recent [Paninski/Fusi-lab paper](https://www.nature.com/articles/s41586-026-10668-4) was based on their analysis of the International Brain Lab (IBL)'s open [Brainwide Map](https://www.internationalbrainlab.com/brainwide-map).
 
-# Head direction experiment from the DANDI archive
+## Download all course data at once
+
+For convenience, all datasets used in the course are hosted on Zenodo and Dropbox for easy download.
+These are typically cut-down versions of recordings (e.g. 90 seconds of an hour-long recording) 
+that can be run in a short amount of time. If you prefer, the sections below explain how to download the data directly from the open repositories instead — useful if you only want a specific dataset, or want the full recordings for your own exploration.
+
+To download everything required for the course at once:
+
+- All files from the [course Zenodo data repository](https://zenodo.org/records/21908611)
+- The **AL032** dataset from [this Dropbox](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&e=1&dl=0), used in the UnitMatch chapter.
+- (optional) The larger **EB055** dataset from the same Dropbox, used in the UnitMatch chapter extended exercises.
+
+## Course data information
+
+### Head direction experiment from the DANDI archive
 *Used in preprocessing, sorting, postprocessing and Pynapple analysis.*
 
 The [DANDI archive](https://about.dandiarchive.org/) is an open, NIH-backed repository for sharing neurophysiology datasets
 in the standardized [Neurodata without borders (NWB)](https://nwb.org/) file format (which SpikeInterface can load).
 
-You can explore the many datasets on their website, and download them using the [Python API](https://docs.dandiarchive.org/api/dandi-client/) (used in this course) or DANDI's own [command line interface API](https://docs.dandiarchive.org/api/dandi-client/) using the Dandiset ID and the path to the asset you want or DANDI's own API.
+You can explore the many datasets on their website, and download them using either the [Python API](https://docs.dandiarchive.org/api/dandi-client/) (used in this course) or DANDI's [command line interface](https://docs.dandiarchive.org/api/dandi-client/), specifying the Dandiset ID and the path to the asset you want.
 
 
 The dataset we will use through the majority of this course is hosted on DANDI [here](https://dandiarchive.org/dandiset/000939?search=000939). The data was used in [Duszkiewicz et al., 2024](https://www.nature.com/articles/s41593-024-01588-5). The experiments recorded from the postsubiculum, a parahippocampal cortical region of the parahippocampal formation and a key hub of the spatial navigation system, using a 64-channel single-shank Cambridge Neurotech probe. They recorded from mice using open-field exploration (as well as during sleep) in which they measured the head-direction of the mice. They were interested in investigating neural tuning for head direction (i.e. head-direction tuned neurons fire when the head of an animal is facing a particular direction or angle).
@@ -21,16 +35,16 @@ The dataset we will use through the majority of this course is hosted on DANDI [
 The function found [here](https://github.com/neuroinformatics-unit/course_ephys_osss/blob/92cb9976ce88c2d1025cea64b01b8d1886ba32bf/src/course_ephys_osss/data/utils.py#L7) can be used to download and save datasets (either the entire recording or parts of it) using SpikeInterface. We will use it to download the dataset above, but the same approach works for any of the thousands of recordings hosted on DANDI.
 
 
-## Spike times and behavior used in the Pynapple section
+#### Spike times and behavior used in the Pynapple section
 
 The NWB file for this dataset includes not only the raw electrophysiological data,
 but the results of spike sorting (spike times, units) and behavioral data from the experiment.
 
 For the Pynapple head-direction decoding task, we only need the sorting outputs and behavioral data. 
 Therefore we use [this function](https://github.com/neuroinformatics-unit/course_ephys_osss/blob/92cb9976ce88c2d1025cea64b01b8d1886ba32bf/src/course_ephys_osss/data/utils.py#L56)  to remove the electrophysiological data and accelerometer from the full NWB file. 
-The cut-down data is available in in the course repository at `book/data/pynapple/dandiset-000939-no-traces-full.nwb`.
+The cut-down data is available in the course repository at `book/data/pynapple/dandiset-000939-no-traces-full.nwb`.
 
-# IBL Benchmark dataset
+### IBL Benchmark dataset
 *Used in Preprocessing (part 1).*
 
 The [IBL Benchmark dataset](https://doi.org/10.6084/m9.figshare.26348630) is a curated set of 11

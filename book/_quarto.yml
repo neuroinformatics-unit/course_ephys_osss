@@ -51,7 +51,7 @@ book:
   - name: Enny H. van Beest
     url: https://github.com/EnnyvanBeest
     email: e.beest@ucl.ac.uk
-    orcid: 0000-0002-0219-3120
+    orcid: 0000-0002-2454-0445
     corresponding: false
     affiliations:
       - id: UCL
@@ -63,12 +63,13 @@ book:
   - name: Olivier Winter
     url: https://github.com/oliche
     email: olivier.winter@internationalbrainlab.org
+    orcid: 0000-0001-9278-2721
     corresponding: false
     affiliations:
       - id: IBL
         name: International Brain Laboratory
         url: https://www.internationalbrainlab.com/
-  - name: Wolf de Wulf
+  - name: Wolf De Wulf
     url: https://github.com/wulfdewolf
     email: wolf.de.wulf@ed.ac.uk
     orcid: 0000-0002-0219-3120

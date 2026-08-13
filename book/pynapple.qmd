@@ -112,7 +112,7 @@ It contains functions facilitating alignment, wrangling, and performing basic ne
 }
 </style>
 
-## 1. Pynapple fundamentals
+## Pynapple fundamentals
 
 ### Time series (`Ts`)
 We store a time series, for example a spike train, in a `Ts` object.
@@ -237,7 +237,7 @@ ax.spines['top'].set_visible(False)
 plt.show()
 ```
 
-## 2. Interactions
+## Interactions
 A key goal of Pynapple is to facilitate integrating neural activity and behavioural data 
 for processing and analysis. Therefore, many Pynapple objects interact with each other.
 
@@ -318,7 +318,7 @@ fig.legend(frameon=False, bbox_to_anchor=(1.0, 1.1))
 plt.show()
 ```
 
-## 3. Wrangling
+## Wrangling
 Pynapple objects are easy to transform, reshape, slice, and more.
 
 ### Numpy
@@ -377,7 +377,7 @@ tsdframe = nap.TsdFrame(
 tsdframe[2:4]
 ```
 
-## 4. Core functions
+## Core functions
 Pynapple has a core set of functions designed to help with neuroscientific analysis.
 The following are a subset of them, for an exhaustive list, see the [Pynapple documentation](https://pynapple.org/user_guide/03_core_methods.html).
 
@@ -527,7 +527,7 @@ fig.legend(frameon=False, bbox_to_anchor=(1.0, 1.1))
 plt.show()
 ```
 
-## 5. Advanced Functions
+## Advanced Functions
 Beyond fundamental processing functions, Pynapple has loads of advanced functionality for neuroscientific analysis.
 
 ### Autocorrelograms
@@ -945,7 +945,7 @@ plt.show()
 For more, take a look at the Pynapple [user guide on decoding](https://pynapple.org/user_guide/07_decoding.html), 
 as well as the [real examples](https://pynapple.org/examples/tutorial_HD_dataset.html).
 
-## 6. Integration with other packages
+## Integration with other packages
 
 ### Pynaviz
 ![](https://media.githubusercontent.com/media/pynapple-org/pynaviz/main/docs/examples/example_lfp_short.gif)
@@ -972,7 +972,7 @@ To install it:
 ```python
 pip install nemos
 ```
-## 7. Data
+## Data
 Pynapple provides many ways to load your data.
 
 ### NWB

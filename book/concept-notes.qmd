@@ -38,3 +38,13 @@ Most acquisition systems will store data in `int16` format (i.e. integers in the
 
 By default, SpikeInterface will display the raw `int16` data. To use the stored offsets and gains to reconstrct XX, we can use the `return_in_uV` argument on many functions. Also see XX, XX and XX for working with these.
 
+**correlogram**, **autocorrelogram**
+mentioned in pynapple, sorting I think, curation
+
+**peristimulus histogram**: 
+
+**job kwargs**
+
+They are unused until sorting, we can explain them there. It might make sense to explain them earlier TBH, but things are already a bit busy. Maybe in the motion correction section? or maybe as a concept note?
+
+si.set_global_job_kwargs(n_jobs=0.5, chunk_duration="1s", progress_bar=True)

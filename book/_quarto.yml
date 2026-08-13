@@ -99,6 +99,7 @@ book:
       chapters:
         - course-data.qmd
         - glossary.qmd
+        - concept-notes.qmd
 
 format:
   html:

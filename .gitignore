@@ -6,6 +6,10 @@
 /book/data
 /slides/intro/_site
 /book/_freeze/
+/book/data/raw-dandiset-000939
+/book/data/preprocessed-dandiset-000939
+/notebooks/data
+/notebooks/results
 /docs/
 /book/*.html
 **/*.quarto_ipynb

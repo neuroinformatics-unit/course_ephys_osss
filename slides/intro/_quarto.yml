@@ -1,0 +1,11 @@
+project:
+  type: default
+  output-dir: _site
+
+format:
+  revealjs:
+    theme: default
+    slide-number: true
+    transition: slide
+    width: 1280
+    height: 720

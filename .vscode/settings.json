@@ -4,5 +4,8 @@
     ],
     "cSpell.enabledFileTypes": {
         "quarto": true
-    }
+    },
+    "cSpell.words": [
+        "electrophysiological"
+    ]
 }

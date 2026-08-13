@@ -12,6 +12,11 @@ license-files = ["LICENSE"]
 dynamic = ["version"]
 authors = [
     { name = "Joseph Ziminski", email = "j.ziminski@ucl.ac.uk" },
+    { name = "Chris Halcrow", email = "c.halcrow@ucl.ac.uk" },
+    { name = "Alessio Buccino", email = "alessio.buccino@alleninstitute.org" },
+    { name = "Enny H. van Beest", email = "e.beest@ucl.ac.uk" },
+    { name = "Olivier Winter", email = "olivier.winter@internationalbrainlab.org" },
+    { name = "Wolf De Wulf", email = "wolf.de.wulf@ed.ac.uk" },
 ]
 keywords = ["electrophysiology", "neuroscience", "course", "OSSS"]
 classifiers = [

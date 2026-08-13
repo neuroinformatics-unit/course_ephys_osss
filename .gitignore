@@ -3,17 +3,27 @@
 /book/site_libs/
 /book/_site/
 /book/_tmp
+/book/data
+/slides/intro/_site
 /book/_freeze/
 /book/data/raw-dandiset-000939
 /book/data/preprocessed-dandiset-000939
 /notebooks/data
 /notebooks/results
 /docs/
-
+/book/*.html
 **/*.quarto_ipynb
 .vscode
+.idea/
 *.pyc
 *.egg
+*.egg-info/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
 
 book/my_tsd.npz
-/book/A2929-200711.nwb 
+/book/A2929-200711.nwb

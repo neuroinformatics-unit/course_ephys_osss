@@ -1,0 +1,267 @@
+---
+title: "Extracellular Electrophysiology"
+subtitle: "Session 1"
+author: "OSSS Ephys Course 2026"
+pagetitle: "Extracellular Electrophysiology"
+format:
+  revealjs:
+    theme: default
+    css: custom.css
+    include-in-header:
+      text: |
+        <meta name="referrer" content="strict-origin-when-cross-origin">
+    slide-number: true
+    transition: slide
+    incremental: false
+    loop: true
+    width: 1280
+    height: 720
+    footer: "OSSS Ephys Course 2026"
+---
+
+::: {.incremental}
+1. Introduction to extracellular electrophysiology
+2. Coding a pipeline with SpikeInterface
+3. Downloading data for the course
+:::
+
+## Introduction to extracellular electrophysiology {.section-title-slide}
+
+## Overview {.ephys-process-slide}
+
+::: {.ephys-process-figures}
+<div class="ephys-process-left-figure">
+  <img src="images/apollo-implant-f4-edited.png" class="ephys-process-image fragment fade-out" data-fragment-index="2" alt="Implant recording, target area, and example extracellular traces across days">
+  <img src="images/apollo-implant-f4-edited-w-spikes.png" class="ephys-process-image fragment" data-fragment-index="2" alt="Implant recording, target area, and extracellular traces with spikes highlighted across days">
+</div>
+
+<div class="ephys-tuning-figure">
+  <img src="images/tuning-curve-image-edited.png" class="ephys-tuning-image fragment" data-fragment-index="4" alt="Orientation tuning curve and preferred orientation schematic">
+</div>
+:::
+
+::: {.ephys-process-grid}
+<div class="ephys-step"><strong>1.</strong> Implant recording electrode</div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="1"><strong>2.</strong> Record during behaviour of interest</span></div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="2"><strong>3.</strong> Identify action potentials in the recorded trace</span></div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="3"><strong>4.</strong> Assign action potentials to neurons with spike sorting</span></div>
+<div class="ephys-step"><span class="fragment" data-fragment-index="4"><strong>5.</strong> Understand how neural activity encodes behaviour</span></div>
+:::
+
+## Pros and cons {.ephys-compare-slide}
+
+:::: {.ephys-compare-grid}
+
+::: {.ephys-compare-col}
+![](images/ephys-positives-examples.png){.ephys-compare-image fig-alt="Targeted deep electrophysiology recording and traces"}
+
+<h3 class="ephys-compare-title">Electrophysiology</h3>
+
+- ✅ High temporal resolution
+- ✅ Targetted to deep and multiple regions
+- ❌ Cannot easily identify individual neurons
+:::
+
+::: {.ephys-compare-col}
+![](images/2p-examples.png){.ephys-compare-image fig-alt="Two-photon imaging field of view with labelled neurons"}
+
+<h3 class="ephys-compare-title">Imaging</h3>
+
+- ✅ Easy identification of individual neurons (genetically targetable)
+- ❌ Low temporal resolution
+- ❌ Limited depth and field of view
+:::
+
+::::
+
+## Classic findings
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Orientation selectivity (Hubel and Wiesel, 1962)
+
+::: {style="max-width: 620px; margin: 0.4rem auto 0;"}
+{{< video https://www.youtube.com/embed/IOHayh06LJ4 title="Hubel and Wiesel orientation selectivity" >}}
+:::
+
+:::
+
+::: {.column width="50%"}
+<div class="fragment">
+
+### Motor population encoding (Georgopoulos, 1986)
+
+![](images/georgeopoulos-1986.png){.classic-findings-image fig-alt="Georgopoulos 1986 motor population encoding figure"}
+
+</div>
+:::
+
+::::
+
+## &nbsp; {.classic-findings-continuation}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Hippocampal space encoding
+
+<div class="classic-findings-label classic-findings-label-first">Place cells</div>
+
+::: {style="max-width: 540px; margin: 0.25rem 0 0.35rem 1.5rem;"}
+{{< video https://www.youtube.com/embed/STyd1qJr3yM title="Hippocampal place cells" >}}
+:::
+
+<div class="classic-findings-label">Theta phase precession</div>
+
+![](images/pheta-phase-precession.png){.classic-findings-image-medium .classic-findings-image-compact fig-alt="Theta phase precession example"}
+:::
+
+::: {.column width="50%"}
+<div class="fragment">
+
+### Brain-wide map (The International Brain Laboratory et al., 2023)
+
+![](images/brain-wide-map-ibl.png){.classic-findings-image fig-alt="International Brain Laboratory brain-wide map"}
+
+
+</div>
+:::
+
+::::
+
+## In the clinic
+
+::: {style="max-width: 980px; margin: 0.4rem auto 0;"}
+{{< video https://www.youtube.com/embed/iTZ2N-HJbwA title="Recording example" >}}
+:::
+
+## Evolution of recording devices
+
+![](images/evolution-of-recording-devices.png){.slide-image-centered fig-alt="Timeline of recording devices"}
+
+## The recording set up
+
+![](images/the-recording-setup.png){fig-alt="Electrode to amplifier to analog to digital conversion to computer recording setup"}
+
+## Extracellular electrophysiological data {data-transition="none"}
+
+![](images/extrcellular-line-image.png){fig-alt="Extracellular electrophysiology line traces across channels"}
+
+## Extracellular electrophysiological data {data-transition="none"}
+
+![](images/extrcellular-map-image.png){fig-alt="Extracellular electrophysiology spatial map view"}
+
+## The sorting pipeline
+
+![](images/pipeline-stepsi.png){fig-alt="Spike sorting pipeline steps" style="display: block; width: 100%; max-height: 590px; margin: 0 auto; object-fit: contain;"}
+
+## SpikeInterface
+
+::: {style="font-size: 0.72em; line-height: 1.08; margin-top: -0.25rem; margin-bottom: 0.2rem;"}
+A common API for open-source electrophysiological tools
+:::
+
+![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools" style="display: block; width: 100%; max-height: 660px; margin: -0.15rem auto 0; object-fit: contain; object-position: center top;"}
+
+## Course timeline
+
+::: {style="font-size: 0.62em; line-height: 1.25;"}
+
+<table style="width: 100%; border-collapse: separate; border-spacing: 1.2rem 0.45rem;">
+  <thead>
+    <tr>
+      <th style="padding: 0.15rem 0.35rem;">Session</th>
+      <th style="padding: 0.15rem 0.35rem;">When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 1: Introduction</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Monday, 10:00-13:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 2: Data quality and preprocessing</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Tuesday, 10:00-13:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 3: Sorting and UnitMatch</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Tuesday, 14:00-17:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 4: Postprocessing and curation</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Wednesday, 10:00-13:00</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.15rem 0.35rem;"><strong>Session 5: Analyzing outputs (Pynapple and Probe-anatomy alignment)</strong></td>
+      <td style="padding: 0.15rem 0.35rem;">Wednesday, 14:00-17:00</td>
+    </tr>
+  </tbody>
+</table>
+
+:::
+
+## &nbsp; {.math-goal-slide}
+
+:::: {.math-goal-grid}
+
+::: {.math-goal-quote style="grid-column: 1 / span 2; grid-row: 1; justify-self: start; max-width: 34rem; margin-left: 3rem; margin-top: -1.5rem;"}
+So each of these breakthroughs, they are the culmination of, and couldn't exist without, the many months of stumbling around in the dark that precede them.
+
+**Andrew Wiles**, solved Fermat's last theorem
+:::
+
+::: {.math-goal-quote style="grid-column: 2 / span 2; grid-row: 1; justify-self: end; max-width: 36rem; margin-right: 2.5rem;"}
+Focusing on important questions puts us in the awkward position of being ignorant. One of the beautiful things about science is that it allows us to bumble along, getting it wrong time after time, and feel perfectly fine as long as we learn something each time.
+
+[**Martin Schwartz**](https://journals.biologists.com/jcs/article/121/11/1771/30038/The-importance-of-stupidity-in-scientific-research), professor of cell biology
+:::
+
+::: {.math-goal-quote style="grid-column: 1; grid-row: 2;"}
+If I spend an entire day and all I do is understand this one feature of this one object that I didn't understand before, then that's a great day.
+
+**PhD student**
+:::
+
+::: {.math-goal-center style="grid-column: 2; grid-row: 2;"}
+Being comfortable<br>in confusion
+:::
+
+::: {.math-goal-quote style="grid-column: 3; grid-row: 2;"}
+My advisor once told me that doing science is 98% being confused and 2% figuring it out.
+
+**PhD student**
+:::
+
+::: {.math-goal-quote style="grid-column: 2; grid-row: 3; text-align: center; margin: 0.25rem auto 0;"}
+When you allow yourself to be confused you become far more introspective; you gain the clarity you desire by questioning and reconciling a variety of ideas and alternatives that may feel overwhelming.
+
+[**Peter Winick**](https://thoughtleadershipleverage.com/embracing-confusion/), CEO of *Thought Leadership*
+:::
+
+::::
+
+## Let's start coding! {.section-title-slide}
+
+## Course set up
+
+The course handbook, with set up instructions, is at:
+
+[neuroinformatics.dev/course_ephys_osss](https://neuroinformatics.dev/course_ephys_osss/)
+
+Head to the 'Python set up' page and we will go through it together.
+
+
+## Notes on the coding section
+
+- Typing code is a powerful way to build understanding and muscle memory. Try not to copy and paste from the book, or use AI.
+- If you have your own data, feel free to apply the methods we introduce to it during the course, and ask us questions about it!
+
+## Downloading data for the course {.data-download-slide}
+
+Download everything you need for the course from:
+
+- The [course Zenodo repository](https://zenodo.org/records/21908611) — all core datasets.
+- The **AL032** dataset from [Dropbox](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&e=1&dl=0) — UnitMatch chapter.
+- *(optional)* The larger **EB055** dataset from the same Dropbox — UnitMatch extended exercises.
+

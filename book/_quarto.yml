@@ -1,18 +1,33 @@
 project:
   type: book
   output-dir: _site
+  resources:
+    - intro-slides.html
 
 execute:
   freeze: auto
 
 book:
-  title: "OSSS Ephys Course 2026"
+  title: "OSSS Extracellular Electrophysiology Course 2026"
   author:
   - name: Joseph Ziminski
     url: https://github.com/JoeZiminski
     email: j.ziminski@ucl.ac.uk
     orcid: 0000-0003-4286-6868
     corresponding: true
+    affiliations:
+      - id: SWC
+        name: Sainsbury Wellcome Centre, UCL
+        department: Sainsbury Wellcome Centre
+        group: Neuroinformatics Unit
+        city: London
+        country: United Kingdom
+        url: https://www.sainsburywellcome.org/web/
+  - name: Chris Halcrow
+    url: https://github.com/chrishalcrow
+    email: c.halcrow@ucl.ac.uk
+    orcid: 0000-0002-0246-8075
+    corresponding: false
     affiliations:
       - id: SWC
         name: Sainsbury Wellcome Centre, UCL
@@ -32,23 +47,57 @@ book:
         city: Seattle
         country: USA
         url: https://alleninstitute.org/
+  - name: Enny H. van Beest
+    url: https://github.com/EnnyvanBeest
+    email: e.beest@ucl.ac.uk
+    orcid: 0000-0002-2454-0445
+    corresponding: false
+    affiliations:
+      - id: UCL
+        name: University College London
+        department: Institute of Ophthalmology
+        city: London
+        country: United Kingdom
+        url: https://www.ucl.ac.uk/
+  - name: Wolf De Wulf
+    url: https://github.com/wulfdewolf
+    email: wolf.de.wulf@ed.ac.uk
+    orcid: 0000-0002-0219-3120
+    corresponding: false
+    affiliations:
+      - id: UoE
+        name: University of Edinburgh
+        department: UKRI CDT in Biomedical AI
+        city: Edinburgh
+        country: United Kingdom
+        url: https://www.ed.ac.uk/
+  - name: Olivier Winter
+    url: https://github.com/oliche
+    email: olivier.winter@internationalbrainlab.org
+    orcid: 0000-0001-9278-2721
+    corresponding: false
+    affiliations:
+      - id: IBL
+        name: International Brain Laboratory
+        url: https://www.internationalbrainlab.com/
   date: "15/04/2026"
   chapters:
     - index.qmd
     - setup.qmd
     - introduction-presentation.qmd
-    - pipeline-walkthrough.qmd
+    - pipeline-overview.qmd
     - preprocessing-steps-presentation.qmd
     - preprocessing-steps-coding.qmd
+    - spike-sorting-presentation.qmd
     - spike-sorting-coding.qmd
-    - pynapple.qmd
-    - concept-notes.qmd
-    - references.qmd
-    - planning.qmd
+    - unitmatch-presentation.qmd
+    - unitmatch-coding.qmd
     - curation.qmd
-    - course-data.qmd
-
-bibliography: references.bib
+    - pynapple.qmd
+    - part: "Reference"
+      chapters:
+        - course-data.qmd
+        - glossary.qmd
 
 format:
   html:

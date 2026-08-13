@@ -1,25 +1,48 @@
-# Preface 
+# Preface {.unnumbered}
 
-Welcome to the electrophysiology course (TODO: name).
+This is the course handbook for the **Extracellular Electrophysiology** course
+taught at the [Neuroinformatics Unit Open Software Summer
+School](https://neuroinformatics.dev/open-software-summer-school/index.html) (2026).
 
-TODO: [think of a cool course name](https://github.com/neuroinformatics-unit/course-ephys-osss/issues/2)
-TODO: maybe we want a 'glossary' or 'extras'
+It walks through the theory and implementation of a full spike-sorting pipeline
+with [SpikeInterface](https://spikeinterface.readthedocs.io/), from preprocessing and sorting through to analysis.
 
-This course will cover the full electrophysiology processing pipeline,
-from start to finish. This includes 
+## Get started
 
-- data preprocessing
-- spike sorting,
-- postproicessng and quality assessment
-- integration with behavioural data.
+To work through the course, follow the [setup instructions](setup.qmd). You can complete the entire course in order, or start from any self-contained chapter. The best way to
+work through the course is to read through the coding chapters, and copy the relevant code (by hand!) to apply the steps in your own Python environment.
 
-Give overview and link to pages
-Explain the Concept Notes (internal links where concepts are expanded, indicated with the 💡 emoji) 
-link to github: https://github.com/neuroinformatics-unit/course-ephys-osss
+We provide small test datasets to use throughout the course (see [course
+data](course-data.qmd)), but you can equally apply the material to your own data.
 
-## Funding and Ackowledgements
+You may also be interested in the [glossary](glossary.qmd) and [concept
+notes](concept-notes.qmd), which describe the terminology and key concepts in
+extracellular electrophysiology.
 
+## Schedule
 
-- Wellcome Trust, Gatsby
-- Funders for those who contributed materials?
-- Niko 
+The course will start on the **Monday 24th August, 2026**.
+
+|  | Monday | Tuesday | Wednesday | Thursday | Friday |
+|--|--|--|--|--|--|
+|10am-1pm| Introduction and pipeline overview | Preprocessing | Visualization and Curation| Coding with Git + Collaboration day intro | Collaboration day | 
+|1pm-2pm| Lunch | Lunch | Lunch | Lunch | Lunch|
+|2pm-5pm | Symposium | Spike sorting and UnitMatch | Analysis (Pynapple + Probe track reconstruction) | Collaboration day | Collaboration day |
+
+There will be 15 minute coffee/snack breaks in the middle of each session.
+
+## Funding and acknowledgements
+
+The Open Software Summer School is funded by the [Sainsbury Wellcome
+Centre](https://www.sainsburywellcome.org/), the [Society for Research Software
+Engineering](https://society-rse.org/) and [AIBIO-UK](https://aibio.ac.uk/).
+
+We thank the [Sainsbury Wellcome Centre](https://www.sainsburywellcome.org/) and
+the [Gatsby Computational Neuroscience
+Unit](https://www.ucl.ac.uk/gatsby/gatsby-computational-neuroscience-unit) for
+providing facilities for the workshops. We are also grateful to **Niko
+Sirmpilatze** for his advice, with this course infrastructure based on based on 
+the [Animals in Motion](https://animals-in-motion.neuroinformatics.dev/) course.
+
+![Logos of course funders and hosts](images/all_sponsor_logos.png)
+

@@ -1,7 +1,8 @@
 # Introduction to electrophysiology
 
-This presentation can be found [here](https://docs.google.com/presentation/d/1iCzmh6DwQcPtH8VJWvV7E6Fnpbl0RLW6QFPalob0t80/edit?slide=id.g3ee7c50db7e_0_161#slide=id.g3ee7c50db7e_0_161).
+<iframe class="intro-slides" src="intro-slides.html" width="100%" height="600" style="border: 1px solid #ddd; border-radius: 6px;" allowfullscreen></iframe>
 
-(it may be converted into a quarto page)
+Open the [slides in a new tab](intro-slides.html), or view the [Google Slides version](https://docs.google.com/presentation/d/1iCzmh6DwQcPtH8VJWvV7E6Fnpbl0RLW6QFPalob0t80/edit?slide=id.g3ee7c50db7e_0_161#slide=id.g3ee7c50db7e_0_161).
+
 
 

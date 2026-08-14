@@ -9,7 +9,10 @@ or [conda](https://docs.conda.io/).
 
 ## Download the repository
 
-First, clone the course repository with `git`:
+First, open a Terminal client (Linux and Mac have an in-built Terminal app, while Windows has 
+Powershell. Microsoft recently released [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/)
+which is similar to the Linux/Mac apps). Navigate to a folder you would like to save this course. Now
+clone the course repository with `git`:
 
 ```bash
 git clone https://github.com/neuroinformatics-unit/course-ephys-osss.git
@@ -37,6 +40,9 @@ uv venv
 uv pip install -e .
 ```
 
+Note: this is downloading and installing *all* packages needed for the week so might take
+5-10 minutes, depending on your internet connection.
+
 `uv venv` creates a `.venv` folder in the repository. To activate it:
 
 ```bash
@@ -46,6 +52,10 @@ source .venv/bin/activate
 # Windows (PowerShell)
 .venv\Scripts\Activate.ps1
 ```
+
+Note: your Python environment lives inside the `course-ephys-osss` folder. If you want 
+to active this environment again, you need to navigate to this folder in your Terminal, 
+then re-run the above command.
 
 ## conda
 

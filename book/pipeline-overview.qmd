@@ -24,7 +24,7 @@ from spikeinterface_gui import run_mainwindow
 ### Data Loading
 
 We will use a [short example dataset](course-data.qmd#introductory-dataset) available in on 
-the the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`
+the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`
 and put them in a folder. In the code below, we assume the files are in the folder
 `data/pipeline-overview`.
 
@@ -243,7 +243,7 @@ The shanks are too far apart for the same action potential to be recorded across
 
 :::
 
-We can solve this by splitting the recording by shank using the the recording's `groups` property. 
+We can solve this by splitting the recording by shank using the recording's `groups` property. 
 
 When SpikeInterface loads the data, it will automatically assign different shanks to different groups. We can split by these groups, which will return a dictionary of two recordings (one for each channel group):
 

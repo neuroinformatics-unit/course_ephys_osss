@@ -59,7 +59,7 @@ It contains functions facilitating alignment, wrangling, and performing basic ne
 
 <div class="timeline-entry">
   <b>Processing</b><br>
-  segmenting (`calman`)<br>
+  segmenting (`caiman`)<br>
   spike-sorting (`spikeinterface`)
 </div>
 <div class="timeline-entry logo">

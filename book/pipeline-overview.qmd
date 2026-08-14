@@ -17,11 +17,6 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 import spikeinterface.full as si
-import spikeinterface.extractors as si_extractors
-import spikeinterface.preprocessing as si_prepro
-import spikeinterface.sorters as si_sorters
-import spikeinterface.widgets as si_widgets
-from spikeinterface import create_sorting_analyzer
 from probeinterface.plotting import plot_probe
 from spikeinterface_gui import run_mainwindow
 ```
@@ -29,7 +24,9 @@ from spikeinterface_gui import run_mainwindow
 ### Data Loading
 
 We will use a [short example dataset](course-data.qmd#introductory-dataset) available in on 
-the the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`.
+the the [course data Zenodo](https://zenodo.org/records/21908611). Download the files: `sub-001_ses-001_g0_t0.imec0.ap.bin` and `sub-001_ses-001_g0_t0.imec0.ap.meta`
+and put them in a folder. In the code below, we assume the files are in the folder
+`data/pipeline-overview`.
 
 ```{python}
 #| include: false
@@ -62,7 +59,7 @@ SpikeInterface can load data from many different of acquisition systems, using f
 # r to the string e.g. r"C:\my\path"
 path_to_data_folder = "data/pipeline-overview"
 
-recording = si_extractors.read_spikeglx(
+recording = si.read_spikeglx(
     path_to_data_folder,
     stream_id="imec0.ap"
 )
@@ -134,12 +131,12 @@ As expected, we have a 4-shank Neuropixels probe in which all the recording chan
 
 Electrophysiological recordings are susceptible to contamination from multiple noise sources: electrical interference, mechanical noise caused by probe movement, and artifacts arising from hardware defects such as broken or noisy recording electrodes.
 
-As such, it is important to visualize the data, especially after preprocessing, to check the data quality. First, lets's plot one second of data from our raw recording:
+As such, it is important to visualize the data, especially after preprocessing, to check the data quality. First, lets's plot 0.1 seconds of data from our raw recording:
 
 ```{python}
 start_time = recording.get_times()[0]
 
-si_widgets.plot_traces(
+si.plot_traces(
     recording,
     time_range=(start_time, start_time + 0.1),
     return_in_uV=True,
@@ -178,13 +175,13 @@ which causes small shifts in time across nearby channels.
 To preprocess the data, we will pass our recording object into functions that return a new, preprocessed recording object. e.g. ```filtered_recording = bandpass_filter(recording)```. We can do this for every step in the preprocessing chain:
 
 ```{python}
-phase_shift_recording = si_prepro.phase_shift(recording)
+phase_shift_recording = si.phase_shift(recording)
 
-filtered_recording = si_prepro.bandpass_filter(
+filtered_recording = si.bandpass_filter(
     phase_shift_recording, freq_min=300, freq_max=6000
 )
 
-cmr_recording = si_prepro.common_reference(
+cmr_recording = si.common_reference(
     filtered_recording, operator="median"
 )
 
@@ -193,7 +190,7 @@ print(filtered_recording)
 print(cmr_recording)
 ```
 
-We can see that each preprocessing function returns a new recording object, that tracks the metadata of each preprocessing step. In SpikeInterface, the preprocessing functions return almost instantly due to the [lazy loading](#lazy-loading)
+We can see that each preprocessing function returns a new recording object which tracks the metadata of each preprocessing step. In SpikeInterface, the preprocessing functions return almost instantly due to the [lazy loading](#lazy-loading)
 mentioned earlier. When we apply the preprocessing function, we only really just change the metadata associated with the recording, the data is not actually changed at this stage.
 
 Only when we get the data (e.g. with the `plot_traces()`, or `get_traces()` functions, or when saving the data) is the requested chunk of data. This makes these operations very fast!
@@ -202,7 +199,7 @@ Now we are ready to plot the data:
 
 ```{python}
 
-si_widgets.plot_traces(
+si.plot_traces(
     cmr_recording,
     time_range=(start_time, start_time + 0.1),
     return_in_uV=True,
@@ -212,7 +209,7 @@ plt.show()
 
 ```
 
-As you can see, it is much cleaner and we can clearly see action potentials waveforms. 
+As you can see, the signal is much cleaner and we can see action potential waveforms. 
 
 However, there seems to be an strange artefact, the small gaps across the action potential waveforms. We will investigate these in the next section.
 
@@ -221,7 +218,7 @@ However, there seems to be an strange artefact, the small gaps across the action
 You might notice the data in the above image looks strange. All spikes have predictable gaps along them, we can see this clearly if we zoom into a single waveform:
 
 ```{python}
-si_widgets.plot_traces(
+si.plot_traces(
     cmr_recording,
     time_range=(23.923, 23.928),
     return_in_uV=True,
@@ -240,9 +237,9 @@ Look carefully at the plot above. Why do you think there are predictable gaps in
 ::: {.callout-note collapse="true"}
 ### Click to reveal the answer
 
-Our recording channels are located on two shanks, however we have plot all recording channels together. The channels on different shanks have the same y-position, so they are plot next to eachother, but different x-positions. 
+Our recording channels are located on two shanks. However we have plotted all recording channels together. The channels on different shanks have the same y-position, so they are plot next to each other, even through they have very different x-positions. 
 
-The shanks are too far apart for the same action potential to be recorded across both shanks. This means that the AP recorded on one shanks channels is interleaved with channels from the other shank on which no action potential is recorded.
+The shanks are too far apart for the same action potential to be recorded across both shanks. This means that the action potential recorded on one shanks channels is interleaved with channels from the other shank on which no action potential is recorded.
 
 :::
 
@@ -253,10 +250,7 @@ When SpikeInterface loads the data, it will automatically assign different shank
 ```{python}
 
 split_recording = cmr_recording.split_by("group")
-
-print(
-    split_recording
-)
+print(split_recording)
 ```
 
 ::: {.callout-warning}
@@ -273,7 +267,7 @@ fig, ax = plt.subplots(1, 2)
 
 for shank_idx, shank_recording in split_recording.items():
 
-    si_widgets.plot_traces(
+    si.plot_traces(
         shank_recording,
         time_range=(start_time, start_time + 0.1),
         return_in_uV=True,
@@ -287,7 +281,7 @@ plt.show()
 
 ```{python}
 
-si_widgets.plot_traces(
+si.plot_traces(
     split_recording[0],
     time_range=(23.923, 23.926),
     return_in_uV=True,
@@ -320,13 +314,13 @@ Now we have our preprocessed data, and have visually confirmed the data quality 
 
 ## Sorting
 
-Now we are ready to move onto spike sorting. The goal of spike sorting is to take our preprocessing recording with clear action potentials, and detect these action potentials and sort them as coming from different neurons, based on their waveform and position on the probe.
+Now we are ready to move onto spike sorting. The goal of spike sorting is to take our preprocessing recording with clear action potentials, detect these action potentials, and sort them as coming from different neurons based on their waveform and position on the probe.
 
 We can pass the recording to SpikeInterface's [`run_sorter()`](https://spikeinterface.readthedocs.io/en/stable/api.html#spikeinterface.sorters.run_sorter) function, which allows us to easily switch between different sorters. There are [many possible spike sorters](https://spikeinterface.readthedocs.io/en/stable/modules/sorters.html#supported-spike-sorters) to choose from, today we will use Kilosort 4.
 
 Kilosort 4 by default will perform similar preprocessing steps to which we have already applied (it does highpass filtering and common average referencing).
 
-As such, we will skip these steps, as we have already run these steps in SpikeInterface (we cannot turn filtering off, so just set it to a very low cutoff).
+As such, we will skip these steps, as we have already run them in SpikeInterface (we cannot turn filtering off, so just set it to a very low cutoff).
 
 It is generally easiest to sort each shank separately, and in this tutorial we will now sort the first shank of the recording:
 
@@ -336,7 +330,7 @@ sorter_output_folder = sorter_folder / "sorter_output"
 
 first_shank_recording = split_recording[0]
 
-sorting = si_sorters.run_sorter(
+sorting = si.run_sorter(
     "kilosort4",
     first_shank_recording,
     folder=sorter_folder,
@@ -347,7 +341,7 @@ sorting = si_sorters.run_sorter(
 
 ```
 
-The sorting output is written to disk. The output contains all of the output files of the sorter, and its organization is sorter-dependent. As we as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
+The sorting output is written to disk. The output contains all of the output files of the sorter, and its organization is sorter-dependent. As well as spike times and unit assignments, it contains other outputs from the sorter e.g. representative waveforms for each unit ('templates').
 
 In SpikeInterface, we can access the spike times and unit assignments in a sorter-independent manner, using the [`sorting`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.core.BaseSorting) object:
 
@@ -401,7 +395,7 @@ For now we will explore the way in which these features can be computed in Spike
 The `SortingAnalyzer` is the key object for postprocessing in SpikeInterface. We can create the `SortingAnalyzer` by passing the sorting output and preprocessed recording:
 
 ```{python}
-analyzer = create_sorting_analyzer(
+analyzer = si.create_sorting_analyzer(
     sorting=sorting,
     recording=first_shank_recording
 )
@@ -423,7 +417,7 @@ First, let's compute the relevant features we need on the `SortingAnalyzer`:
 
 ```{python}
 extensions_dict = {
-    'random_spikes': {'max_spikes_per_unit': 1000},
+    'random_spikes': {},
     'templates': {},
     'waveforms': {},
     'noise_levels': {},
@@ -431,6 +425,7 @@ extensions_dict = {
     'spike_amplitudes': {},
     'spike_locations': {},
     'unit_locations': {},
+    'template_similarity': {},
 }
 
 analyzer.compute(extensions_dict)
@@ -459,5 +454,3 @@ run_mainwindow(
 ```
 
 and see https://www.youtube.com/watch?v=OGlQtxzip-Q for walking through the GUI.
-
-

@@ -495,8 +495,10 @@ plt.show()
 
 ```
 
-Here, we can see that spikes are 'squashed' onto a smaller number of channels (which can aid spike sorting). The second spike is now only found on 4 channels instead of 3. The 1st and 3rd spikes, which was probably a single waveform distributed over 4 channels, however now appear to be split into only two separate spikes.
+Here, we can see that spikes are 'squashed' onto a smaller number of channels (which can aid spike sorting). The second spike is now only found on 4 channels instead of 3. 
 
+However, the 1st and 3rd spikes, which was likely a single waveform distributed over 4 channels, has now been split into two separate spikes.
+This could lead to a single unit being split into two during sorting.
 
 ## Saving the data
 

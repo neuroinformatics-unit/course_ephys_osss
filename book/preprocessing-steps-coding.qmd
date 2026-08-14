@@ -362,7 +362,7 @@ In the top two plots, we see a spike raster plot before (left) and after (right)
 
 The bottom left plot shows the estimated physical motion in μm over time.
 
-Because this is only a 90-second recording, we see very little drift. On longer recordings, the drift and its correction will be more apparent, for example on these example recording with injected drift (from [this useful explainer](https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording)):
+Because this is only a 90-second recording, we see very little drift (note: the y-spacing between the electrodes is around 10 microns, while the drift is less than 1 micron.). On longer recordings, the drift and its correction will be more apparent, for example on these example recording with injected drift (from [this useful explainer](https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording)):
 
 ::: {#fig-dredge fig-align="center"}
 ![](images/handle_drift_17_5.png){width=100%}

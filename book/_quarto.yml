@@ -27,7 +27,7 @@ book:
     url: https://github.com/chrishalcrow
     email: c.halcrow@ucl.ac.uk
     orcid: 0000-0002-0246-8075
-    corresponding: false
+    corresponding: true
     affiliations:
       - id: SWC
         name: Sainsbury Wellcome Centre, UCL

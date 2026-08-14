@@ -41,8 +41,8 @@ We thank the [Sainsbury Wellcome Centre](https://www.sainsburywellcome.org/) and
 the [Gatsby Computational Neuroscience
 Unit](https://www.ucl.ac.uk/gatsby/gatsby-computational-neuroscience-unit) for
 providing facilities for the workshops. We are also grateful to **Niko
-Sirmpilatze** for his advice, with this course infrastructure based on based on 
-the [Animals in Motion](https://animals-in-motion.neuroinformatics.dev/) course.
+Sirmpilatze** for his advice, with the infrastructure for this course based on 
+[Animals in Motion](https://animals-in-motion.neuroinformatics.dev/).
 
 ![Logos of course funders and hosts](images/all_sponsor_logos.png)
 

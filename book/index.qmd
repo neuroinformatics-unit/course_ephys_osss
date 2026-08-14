@@ -15,9 +15,8 @@ work through the course is to read through the coding chapters, and copy the rel
 We provide small test datasets to use throughout the course (see [course
 data](course-data.qmd)), but you can equally apply the material to your own data.
 
-You may also be interested in the [glossary](glossary.qmd) and [concept
-notes](concept-notes.qmd), which describe the terminology and key concepts in
-extracellular electrophysiology.
+You may also be interested in the [glossary](glossary.qmd), 
+which defines the key terms used throughout the course.
 
 ## Schedule
 

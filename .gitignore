@@ -11,6 +11,7 @@
 /notebooks/data
 /notebooks/results
 /docs/
+/book/pipeline-overview_files/
 /book/*.html
 .vscode
 **/*.quarto_ipynb

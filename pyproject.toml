@@ -35,8 +35,7 @@ classifiers = [
 dependencies = [
     "dandi",
     "hdbscan",
-    "ibldsp",
-    "ibllib",
+    "ibl-neuropixel",
     "ipykernel",
     "ipympl",
     "ipywidgets",

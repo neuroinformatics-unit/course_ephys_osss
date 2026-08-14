@@ -68,6 +68,11 @@ pip install -e .
 
 :::
 
+To use the course environment from an IDE such as VS Code or PyCharm, set the
+Python interpreter path in the IDE settings to the environment's Python
+executable. For the uv environment, this is `.venv\Scripts\python.exe` on
+Windows or `.venv/bin/python` on macOS/Linux.
+
 ## Check the installation
 
 With the environment active, check that the package imports correctly:

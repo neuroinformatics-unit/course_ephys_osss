@@ -35,6 +35,8 @@ classifiers = [
 dependencies = [
     "dandi",
     "hdbscan",
+    "ibldsp",
+    "ibllib",
     "ipykernel",
     "ipympl",
     "ipywidgets",
@@ -43,6 +45,7 @@ dependencies = [
     "matplotlib",
     "nbformat",
     "numpy",
+    "ONE-api",
     "pandas",
     "probeinterface",
     "pynapple",
@@ -54,6 +57,7 @@ dependencies = [
     "pynwb",
     "UnitMatchPy[full,notebooks]",
     "spikeinterface_gui",
+    "viewephys",
 ]
 
 [project.urls]

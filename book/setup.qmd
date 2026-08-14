@@ -55,7 +55,7 @@ source .venv/bin/activate
 
 Note: your Python environment lives inside the `course-ephys-osss` folder. If you want 
 to active this environment again, you need to navigate to this folder in your Terminal, 
-then do e.g. `source .venv/bin/activate`.
+then re-run the above command.
 
 ## conda
 

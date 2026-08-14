@@ -12,6 +12,7 @@
 /notebooks/results
 /docs/
 /book/*.html
+.vscode
 **/*.quarto_ipynb
 .vscode
 .idea/

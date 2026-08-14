@@ -8,7 +8,7 @@ _Mantra of the day_: SpikeInterface-GUI is used to create a **Curation** file.
 
 We'll come back to this...
 
-The goal of today is to take a look at our spike sorting results using SpikeInterface-GUI. Alternative GUIs include [Phy]() and [SortingView](). Once we look at the sortings, we'll realise that all spike sorters make mistakes. To try and remedy some of these mistakes, we'll curate the output. Before getting started, let's do a very quick review of what we've done so far so that we're all on the same page.
+The goal of today is to take a look at our spike sorting results using SpikeInterface-GUI. Alternative GUIs include [Phy](https://github.com/cortex-lab/phy) and [SortingView](https://github.com/magland/sortingview). Once we look at the sortings, we'll realise that all spike sorters make mistakes. To try and remedy some of these mistakes, we'll curate the output. Before getting started, let's do a very quick review of what we've done so far so that we're all on the same page.
 
 ## Review of previous material
 

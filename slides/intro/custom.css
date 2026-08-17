@@ -4,6 +4,26 @@
   margin-bottom: 0.35rem;
 }
 
+.reveal .instructor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
+  text-align: center;
+  align-items: start;
+}
+
+.reveal .instructor-grid p {
+  margin: 0;
+}
+
+.reveal img.instructor-photo {
+  display: inline-block;
+  width: 220px;
+  height: 220px;
+  margin: 0;
+  object-fit: cover;
+}
+
 .reveal .slide.section-title-slide {
   display: flex !important;
   align-items: center;
@@ -55,6 +75,42 @@
 
 .reveal .video-embed-center {
   margin: 0.4rem auto 0;
+}
+
+.reveal .slide.classic-video-slide h2,
+.reveal .slide.clinic-video-slide h2 {
+  margin-bottom: 0.3rem;
+}
+
+.reveal .slide.classic-video-slide h3 {
+  font-size: 0.6em;
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+
+.reveal .slide.classic-video-slide .columns {
+  gap: 1rem;
+}
+
+.reveal .classic-video-frame,
+.reveal .clinic-video-frame {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.reveal .classic-video-frame iframe,
+.reveal .clinic-video-frame iframe {
+  display: block;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
+
+.reveal .clinic-video-frame {
+  width: 96%;
+  max-width: 1120px;
 }
 
 .reveal .ephys-process-grid {

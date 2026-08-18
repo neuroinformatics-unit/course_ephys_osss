@@ -442,7 +442,7 @@ run_mainwindow(
 )
 ```
 
-The basic system we've used uses two binary classifiers: one classifies units into "noise" and "neural", the second into "sua" ("good") and "mua".
+The basic system we've used uses two binary classifiers: one classifies units into "noise" or "neural", the second into "mua" or "sua". "sua" means "single unit activity" - we've mostly been using "good" instead of "sua" but they mean the same thing.
 
 Another option is to train your own classifier. When you train yourself you can use any labels, and any number of labels, that you'd like. I'll do a demo of this in the workshop. You can try it yourself by following the instructions on the [UnitRefine GitHub repo](https://github.com/anoushkajain/UnitRefine.git):, and there is also a [video tutorial](https://youtu.be/UKYDipSY7B4).
 

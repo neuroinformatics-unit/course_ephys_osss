@@ -15,7 +15,7 @@ that can be run in a short amount of time. If you prefer, the sections below exp
 
 To download everything required for the course at once:
 
-- All files from the [course Zenodo data repository](https://zenodo.org/records/21908611)
+- All files from the [course Zenodo data repository](https://zenodo.org/records/21908762)
 - The **AL032** dataset from [this Dropbox](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&e=1&dl=0), used in the UnitMatch chapter.
 - (optional) The larger **EB055** dataset from the same Dropbox, used in the UnitMatch chapter extended exercises.
 

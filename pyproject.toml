@@ -52,11 +52,11 @@ dependencies = [
     "scipy",
     "spikeinterface[full,widgets]",
     "pyqtgraph",
-    "PySide6",
     "pynwb",
     "UnitMatchPy[full,notebooks]",
-    "spikeinterface_gui",
+    "spikeinterface-gui",
     "viewephys",
+    "pyqt5",
 ]
 
 [project.urls]
@@ -71,3 +71,6 @@ package-dir = { "" = "src" }
 where = ["src"]
 include = ["course_ephys_osss*"]
 [tool.setuptools_scm]
+
+[tool.uv.sources]
+spikeinterface-gui = { git = "https://github.com/spikeinterface/spikeinterface-gui" }

@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To do this we will create an isolated environment in which to install packages, either using <a href="https://docs.astral.sh/uv/">uv</a> (recommended) or <a href="https://docs.conda.io/">conda</a>.</p>
 <section id="download-the-repository" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="download-the-repository"><span class="header-section-number">1.1</span> Download the repository</h2>
-<p>First, clone the course repository with <code>git</code>:</p>
+<p>First, open a Terminal client (Linux and Mac have an in-built Terminal app, while Windows has Powershell. Microsoft recently released <a href="https://learn.microsoft.com/en-us/windows/terminal/">Windows Terminal</a> which is similar to the Linux/Mac apps). Navigate to a folder you would like to save this course. Now clone the course repository with <code>git</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/neuroinformatics-unit/course-ephys-osss.git</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> course-ephys-osss</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you don’t have <code>git</code> installed, you can instead download the repository as a ZIP file from the <a href="https://github.com/neuroinformatics-unit/course-ephys-osss">GitHub page</a> (click the green <strong>Code</strong> button, then <strong>Download ZIP</strong>) and unzip it.</p>
@@ -301,12 +301,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>From inside the <code>course-ephys-osss</code> folder, create a virtual environment and install the project (along with all its dependencies):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> venv</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> pip install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note: this is downloading and installing <em>all</em> packages needed for the week so might take 5-10 minutes, depending on your internet connection.</p>
 <p><code>uv venv</code> creates a <code>.venv</code> folder in the repository. To activate it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS / Linux</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows (PowerShell)</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv\Scripts\Activate.ps1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note: your Python environment lives inside the <code>course-ephys-osss</code> folder. If you want to active this environment again, you need to navigate to this folder in your Terminal, then re-run the above command.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p><a href="https://docs.conda.io/">conda</a> is a widely used Python environment and package manager. If you don’t have it yet, we recommend installing <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>.</p>

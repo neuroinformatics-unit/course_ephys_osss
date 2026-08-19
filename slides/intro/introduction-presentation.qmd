@@ -102,8 +102,48 @@ Joe Ziminski
 
 - We will go through core sections together, with time for exercises and free coding
 - Writing code by hand improves understanding
-    - ⚠️ try not to copy and paste or use LLMs
+    - (avoid using LLMs)
 - This is particularly true for debugging - if stuck, ask your neighbor or a TA!
+
+## &nbsp; {.math-goal-slide}
+
+:::: {.math-goal-grid}
+
+::: {.math-goal-quote style="grid-column: 1 / span 2; grid-row: 1; justify-self: start; max-width: 34rem; margin-left: 3rem; margin-top: -1.5rem;"}
+So each of these breakthroughs, they are the culmination of, and couldn't exist without, the many months of stumbling around in the dark that precede them.
+
+**Andrew Wiles**, solved Fermat's Last Theorem
+:::
+
+::: {.math-goal-quote style="grid-column: 2 / span 2; grid-row: 1; justify-self: end; max-width: 36rem; margin-right: 2.5rem;"}
+Focusing on important questions puts us in the awkward position of being ignorant. One of the beautiful things about science is that it allows us to bumble along, getting it wrong time after time, and feel perfectly fine as long as we learn something each time.
+
+[**Martin Schwartz**](https://journals.biologists.com/jcs/article/121/11/1771/30038/The-importance-of-stupidity-in-scientific-research), professor of cell biology
+:::
+
+::: {.math-goal-quote style="grid-column: 1; grid-row: 2;"}
+If I spend an entire day and all I do is understand this one feature of this one object that I didn't understand before, then that's a great day.
+
+**PhD student**
+:::
+
+::: {.math-goal-center style="grid-column: 2; grid-row: 2;"}
+Being comfortable<br>in confusion
+:::
+
+::: {.math-goal-quote style="grid-column: 3; grid-row: 2;"}
+My advisor once told me that doing science is 98% being confused and 2% figuring it out.
+
+**PhD student**
+:::
+
+::: {.math-goal-quote style="grid-column: 2; grid-row: 3; text-align: center; margin: 0.25rem auto 0;"}
+When you allow yourself to be confused you become far more introspective; you gain the clarity you desire by questioning and reconciling a variety of ideas and alternatives that may feel overwhelming.
+
+[**Peter Winick**](https://thoughtleadershipleverage.com/embracing-confusion/), CEO of *Thought Leadership*
+:::
+
+::::
 
 ## Your own data
 
@@ -202,13 +242,57 @@ Joe Ziminski
 
 ![](images/extrcellular-map-image.png){fig-alt="Extracellular electrophysiology spatial map view"}
 
+## The action potential {data-transition="none"}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Intracellular
+
+![](images/glossary-action-potential.png){fig-alt="Intracellular action potential waveform phases" style="display: block; width: 92%; max-height: 500px; margin: 0 auto; object-fit: contain;"}
+:::
+
+::: {.column width="50%"}
+### Extracellular
+
+![](images/glossary-extracellular.jpg){fig-alt="Extracellular action potential voltage field around a neuron from Gold et al. 2006" style="display: block; width: 92%; max-height: 500px; margin: 0 auto; object-fit: contain;"}
+:::
+
+::::
+
 ## The recording setup
 
 ![](images/the-recording-setup.png){fig-alt="Electrode to amplifier to analog to digital conversion to computer recording setup"}
 
-## The sorting pipeline
+## Preprocessing
 
-![](images/pipeline-stepsi.png){fig-alt="Spike sorting pipeline steps" style="display: block; width: 100%; max-height: 590px; margin: 0 auto; object-fit: contain;"}
+![](images/preprocessing.png){fig-alt="Preprocessing step" style="display: block; width: 100%; max-height: 590px; margin: 0 auto; object-fit: contain;"}
+
+## &nbsp; {.no-title-space}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+<h3 style="font-size: 1.6em; text-align: center; margin-top: -1.4em;">Sorting</h3>
+
+![](images/sorting.png){fig-alt="Spike sorting step" style="display: block; width: 100%; max-height: 560px; margin: 0 auto; object-fit: contain;"}
+:::
+
+::: {.column width="50%"}
+<h3 style="font-size: 1.6em; text-align: center; margin-top: -1.4em;">UnitMatching</h3>
+
+![](images/unitmatching.png){fig-alt="UnitMatching step" style="display: block; width: 100%; max-height: 560px; margin: 0 auto; object-fit: contain;"}
+:::
+
+::::
+
+## Postprocessing
+
+![](images/postprocessing.png){fig-alt="Postprocessing step" style="display: block; width: 60%; max-height: 420px; margin: 0 auto; object-fit: contain;"}
+
+## Analysis
+
+![](images/analysis.png){fig-alt="Analysis step" style="display: block; width: 100%; max-height: 590px; margin: 0 auto; object-fit: contain;"}
 
 ## SpikeInterface
 
@@ -216,49 +300,9 @@ Joe Ziminski
 A common API for open-source electrophysiological tools
 :::
 
-![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools" style="display: block; width: 100%; max-height: 660px; margin: -0.15rem auto 0; object-fit: contain; object-position: center top;"}
+![](images/spikeinterface-common-api.png){fig-alt="SpikeInterface common API for open-source electrophysiological tools" style="display: block; width: 100%; max-height: 590px; margin: 0 auto; object-fit: contain; object-position: center top;"}
 
-## Let's start coding! {.section-title-slide}
-
-## &nbsp; {.math-goal-slide}
-
-:::: {.math-goal-grid}
-
-::: {.math-goal-quote style="grid-column: 1 / span 2; grid-row: 1; justify-self: start; max-width: 34rem; margin-left: 3rem; margin-top: -1.5rem;"}
-So each of these breakthroughs, they are the culmination of, and couldn't exist without, the many months of stumbling around in the dark that precede them.
-
-**Andrew Wiles**, solved Fermat's Last Theorem
-:::
-
-::: {.math-goal-quote style="grid-column: 2 / span 2; grid-row: 1; justify-self: end; max-width: 36rem; margin-right: 2.5rem;"}
-Focusing on important questions puts us in the awkward position of being ignorant. One of the beautiful things about science is that it allows us to bumble along, getting it wrong time after time, and feel perfectly fine as long as we learn something each time.
-
-[**Martin Schwartz**](https://journals.biologists.com/jcs/article/121/11/1771/30038/The-importance-of-stupidity-in-scientific-research), professor of cell biology
-:::
-
-::: {.math-goal-quote style="grid-column: 1; grid-row: 2;"}
-If I spend an entire day and all I do is understand this one feature of this one object that I didn't understand before, then that's a great day.
-
-**PhD student**
-:::
-
-::: {.math-goal-center style="grid-column: 2; grid-row: 2;"}
-Being comfortable<br>in confusion
-:::
-
-::: {.math-goal-quote style="grid-column: 3; grid-row: 2;"}
-My advisor once told me that doing science is 98% being confused and 2% figuring it out.
-
-**PhD student**
-:::
-
-::: {.math-goal-quote style="grid-column: 2; grid-row: 3; text-align: center; margin: 0.25rem auto 0;"}
-When you allow yourself to be confused you become far more introspective; you gain the clarity you desire by questioning and reconciling a variety of ideas and alternatives that may feel overwhelming.
-
-[**Peter Winick**](https://thoughtleadershipleverage.com/embracing-confusion/), CEO of *Thought Leadership*
-:::
-
-::::
+## Building a pipeline in Python {.section-title-slide}
 
 ## Course setup
 

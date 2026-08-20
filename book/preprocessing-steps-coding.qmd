@@ -138,9 +138,11 @@ def plot_prepro(recordings, time_range, return_in_uV=True, clim=None):
 
 The electronics that record the extracellular voltage have dynamic ranges in which they operate. If the voltage exceeds this threshold, the equipment is said to 'saturate' and the recorded values are uninformative.
 
-The working ranges are associated with the specific recording requiptment, most commonly the amplifier and analog-digital converters. For Neuropixels, these electronics are contained in the probe and the probe manual shows hte dynaimc range (1200 uV for NP1, XXX uV for NP2).
+The working ranges are associated with the specific recording equipment, most commonly the amplifier and analog-digital converters. For Neuropixels, these electronics are contained in the probe and the probe manual specifies the input voltage range (IBL recommend a threshold of 1200 μV for NP1; NP2 probes have a wider range and are harder to saturate).
 
-The data we are working with was recorded on a Camridge Neurotech probe, using a Intan RHD2000-series amplifier/headstage with range -5mV to 5mV. Therefore, we can use SpikeInterface to detect any periods of the recording that exceed 5mV (5000 uV).
+The data we are working with was recorded on a Camridge Neurotech probe, using a Intan RHD2000-series amplifier/headstage with range -5mV to 5mV. Therefore, we can use SpikeInterface to detect any periods of the recording that exceed 5mV (5000 μV).
+
+We need to detect saturation events before any preprocessing has occurred, as the preprocessing steps might remove them. However, we must remove these events by zeroing them out after filtering, as sharp transitions to zero can cause filter artifacts. Therefore, we will detect the saturation periods now but actually zero out the data [later](#zeroing-the-saturation-artifacts).
 
 ```{python}
 
@@ -152,7 +154,7 @@ print(saturation_periods)
 
 ```
 
-@@@@@
+We can see that the detected saturation event indeed exceeds the 5mV range. The data recorded here is thus uninformative and we will zero it out later.
 
 ```{python}
 

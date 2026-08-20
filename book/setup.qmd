@@ -1,4 +1,4 @@
-# Setting up the repository
+# Python set up
 
 Before starting the course, we need to install the course materials
 and all dependency packages (such as SpikeInerface) onto your machine.
@@ -9,7 +9,10 @@ or [conda](https://docs.conda.io/).
 
 ## Download the repository
 
-First, clone the course repository with `git`:
+First, open a Terminal client (Linux and Mac have an in-built Terminal app, while Windows has 
+Powershell. Microsoft recently released [Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/)
+which is similar to the Linux/Mac apps). Navigate to a folder you would like to save this course. Now
+clone the course repository with `git`:
 
 ```bash
 git clone https://github.com/neuroinformatics-unit/course-ephys-osss.git
@@ -37,6 +40,9 @@ uv venv
 uv pip install -e .
 ```
 
+Note: this is downloading and installing *all* packages needed for the week so might take
+5-10 minutes, depending on your internet connection.
+
 `uv venv` creates a `.venv` folder in the repository. To activate it:
 
 ```bash
@@ -46,6 +52,10 @@ source .venv/bin/activate
 # Windows (PowerShell)
 .venv\Scripts\Activate.ps1
 ```
+
+Note: your Python environment lives inside the `course-ephys-osss` folder. If you want 
+to active this environment again, you need to navigate to this folder in your Terminal, 
+then re-run the above command.
 
 ## conda
 
@@ -67,6 +77,11 @@ pip install -e .
 ```
 
 :::
+
+To use the course environment from an IDE such as [VS Code](https://pydevtools.com/handbook/how-to/how-to-configure-vs-code-for-a-uv-project/#select-the-python-interpreter) or [PyCharm](https://www.jetbrains.com/help/pycharm/uv.html#existing-uv-environment), set the
+Python interpreter path in the IDE settings to the environment's Python
+executable (see links for more information). For the uv environment, this is `.venv\Scripts\python.exe` on
+Windows or `.venv/bin/python` on macOS/Linux.
 
 ## Check the installation
 

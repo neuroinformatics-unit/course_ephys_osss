@@ -1,4 +1,4 @@
-# Preprocessing - coding
+# Preprocessing (coding)
 
 In this chapter we will explore in more detail the preprocessing steps used in extracellular electrophysiology. 
 
@@ -29,9 +29,9 @@ whether your implant is chronic or acute and the sorter you use.  We will discus
 
 :::
 
-# Set up
+## Set up
 
-We will preprocess a new dataset recorded on a 64-channel Cambridge Neurotech probe. Note that we will not apply the `phase_shift` step that was used in [introduction preprocessing section](pipeline-walkthrough.qmd#preprocessing), as that is only relevant for Neuropixel probes.
+We will preprocess a new dataset recorded on a 64-channel Cambridge Neurotech probe. Note that we will not apply the `phase_shift` step that was used in [introduction preprocessing section](pipeline-overview.qmd#preprocessing), as that is only relevant for Neuropixel probes.
 
 
 Before starting, we will import all required packages for the section:
@@ -41,46 +41,55 @@ Before starting, we will import all required packages for the section:
 #| warning: false
 
 from pathlib import Path
-import spikeinterface as si
+
 import numpy as np
-from course_ephys_osss.data.utils import download_and_slice_nwb_from_dandi
-import spikeinterface.preprocessing as si_prepro
-import spikeinterface.widgets as si_widgets
 import matplotlib.pyplot as plt
+import spikeinterface.full as si
+
+from course_ephys_osss.data.utils import download_and_slice_nwb_from_dandi
 ```
 
 
-## Downloading the data
+### Downloading the data
 
-TODO: include some information on the experiment, probably do this on a central 'dataset' page
 
-First we need to download the dataset we will. This dataset is (TODO: brief introduction). For more information on the dataset and how to download any one of the thousands of open-access datasets available on the DANDI archive, please see TODO.
+This is the first chapter in which we will use a core dataset used in this course,
+a postsubiculum recording on a 64-channel Cambridge Neurotech probe used in an
+experimental in neural tuning of head direction cells (see [here](course-data.qmd#head-direction-experiment-from-the-dandi-archive) for details).
+
+We will download the first 90 seconds of a recording from this dataset from
+the open access DANDI archive repository (an [excellent resource](course-data.qmd))
 
 ```{python}
 
-LOCAL_FOLDER = Path("_tmp/nwb_first_slice")
+## (optionally) change this to where you would like to download the data to.
+RAW_DATA_FOLDER = Path("data/raw-dandiset-000939")
 
-if LOCAL_FOLDER.exists():
-    # if we have already downloaded the data, reload it.
-    recording = si.load(LOCAL_FOLDER)
+if RAW_DATA_FOLDER.exists():
+    ## if we have already downloaded the data, reload it.
+    recording = si.load(RAW_DATA_FOLDER)
 else:
-    # Otherwise, download the first 90 seconds from DANDI
+    ## Otherwise, download the first 90 seconds from DANDI
     download_and_slice_nwb_from_dandi(
         s3_url="https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5",
         duration_s=90,
-        local_folder=LOCAL_FOLDER
+        local_folder=RAW_DATA_FOLDER
     )
-    recording = si.load(LOCAL_FOLDER)
+    recording = si.load(RAW_DATA_FOLDER)
 
 ```
 
-## Creating a plotting function
+
+Alternatively, the data can be downloaded directly from the 
+[course data Zenodo](https://zenodo.org/records/21908611), with folder name `dandiset-000939-90s.zip` (will need unzipping before use).
+
+### Creating a plotting function
 
 Next, we will define a function to plot and compare multiple preprocessing steps. We will reuse this function through the rest of the tutorial.
 
 ```{python}
 
-def plot_prepro(recordings, time_range):
+def plot_prepro(recordings, time_range, return_in_uV=True):
     """
     Plot multiple recordings in subplots.
 
@@ -99,38 +108,37 @@ def plot_prepro(recordings, time_range):
         layout="constrained",
     )
 
-    # Grab the first (and only) row of axes
+    ## Grab the first (and only) row of axes
     axes = axes[0, :]
 
     for idx, (name, recording) in enumerate(recordings.items()):
         
         ax = axes[idx]
 
-        si_widgets.plot_traces(
+        si.plot_traces(
             recording,
             time_range=time_range,
-            mode="map",  # plot as a heatmap
+            mode="map",  ## plot as a heatmap
             ax=ax,
             with_colorbar=True,
+            return_in_uV=True,
         )
         ax.set_title(name)
         ax.tick_params(axis="x", rotation=45)
 
 ```
 
-# Bandpass filter
+## Bandpass filter
 
 First, let's have a look at the effect of bandpass filtering the data, using the [`bandpass_filter()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.preprocessing.bandpass_filter) function. We will plot the first second of the data:
 
 
 ```{python}
 
-import spikeinterface.preprocessing as si_prepro
-
-recording_bp = si_prepro.bandpass_filter(
+recording_bp = si.bandpass_filter(
     recording, 
-    # commonly used values to filter noise 
-    # while not affecting spikes
+    ## commonly used values to filter noise 
+    ## while not affecting spikes
     freq_min=300, 
     freq_max=6000
 ) 
@@ -177,10 +185,12 @@ plot_prepro(
 ```
 
 
-# Bad Channel Detection
+## Bad Channel Detection
 
 Individual recording electrodes on a probe sometimes break and become 'dead' (no signal), 'noisy' (excessive electrical noise)
 or may be 'out of brain' (i.e. a contiguous set of channels at the end of the probe with no signal, indicating they are not in brain tissue). 
+In our case, there is a small number of channels at the top of the previous plot whose traces look different than all the rest of
+the signal. These are likely out of the brain.
 
 The [IBL have developed an algorithm]((https://figshare.com/articles/online_resource/Spike_sorting_pipeline_for_the_International_Brain_Laboratory/19705522?file=49783080)) for automatically detecting bad channels, which has been ported to SpikeInterface.
 
@@ -188,7 +198,7 @@ First, let's use the [`detect_bad_channels()`](https://spikeinterface.readthedoc
 
 ```{python}
 
-bad_channel_ids_1, channel_labels_1 = si_prepro.detect_bad_channels(recording_bp)
+bad_channel_ids_1, channel_labels_1 = si.detect_bad_channels(recording_bp)
 print("first attempt labels:\n", channel_labels_1)
 
 rec_clean_1 = recording_bp.remove_channels(bad_channel_ids_1)
@@ -207,8 +217,8 @@ As such, the default settings are not appropriate for our data, and we need to a
 dead channel detection from `-0.5` to `-0.25` (this was done through manual trial and error):
 
 ```{python}
-# Let's try again with different settings
-bad_channel_ids, channel_labels = si_prepro.detect_bad_channels(
+## Let's try again with different settings
+bad_channel_ids, channel_labels = si.detect_bad_channels(
     recording_bp, dead_channel_threshold=-0.25
 )
 print("second attempt labels:\n", channel_labels)
@@ -223,7 +233,7 @@ plot_prepro(
 
 ```
 
-Now the dead channels, clearly identifiable by visual inspection, are properly detected by the algorithm.
+Now the dead channels, identifiable by visual inspection, are properly detected by the algorithm.
 
 ::: {.callout-warning}
 This example demonstrates why it is critically important to **always visualize your data**
@@ -231,7 +241,7 @@ to ensure the default arguments of the algorithms we are using are suitable for 
 :::
 
 
-# Common average referencing
+## Common average referencing
 
 Electrophysiological recordings are often contaminated by noise artefacts that appear on all channels at once for a short period of time.
 Striping artefacts are typically caused by electrical noise that is shared across many recording channels, for example fluctuations in the reference electrode or electromagnetic interference.
@@ -243,7 +253,7 @@ We can use SpikeInterface's [`common_reference()`](https://spikeinterface.readth
 
 ```{python}
 
-recording_cmr = si_prepro.common_reference(
+recording_cmr = si.common_reference(
     rec_clean, 
     operator="median"
 )
@@ -260,28 +270,21 @@ We can see that contaminating noise spikes that run vertically across the heatma
 
 The implicit assumption of CAR or CMR is that the variability in the noise stripe is fairly small across channels (and so can be approximated well by removing only the central tendency measure). However, in practice this assumption is often broken, with stripes appearing only on a subset of channels (e.g. the top half). As such, the `common_reference` function contains a number of arguments allowing the operation to be performed on subsets of channels, and these can be explored in the 'things to try' section below.
 
-Similarly, the IBL has introduced the 'highpass spatial filter' which captures slow variations in the noise stripes across channels:
+As an alternative solution to the striping problem, the IBL introduced a 'highpass spatial filter' which captures slow variations in the noise stripes across channels:
 
 ```{python}
 
-recording_hsf = si_prepro.highpass_spatial_filter(
+recording_hsf = si.highpass_spatial_filter(
     rec_clean, 
     highpass_butter_wn=0.03
 )  
-# TODO: highpass_butter_wn complete guess because it looks good but I think physiologically wrong
 
 plot_prepro({"recording_cmr": recording_cmr, "recording_hsf": recording_hsf}, TIME_RANGE)
 
 ```
 
-**TODO:** 
-This may work better on probes with more channels (e.g. Neuropixels).
-check with Olivier, maybe remove this section. Will need to adjust the parameters for the 64-channel probe
-vs. NP1 probe it was designed for. We need to calculate physical probe length and compute cycles/um and
-match these across probes. I did this and the Wn was too low for this probe so it might not be possible.
-
 :::{.callout-tip}
-### Things to try
+#### Things to try
 
 There's no need to get through all of these — pick whatever looks interesting.
 
@@ -295,7 +298,7 @@ returns a list of ids.
 
 :::
 
-# Motion correction
+## Motion correction
 
 The recording probe can move during an experiment. The major axis of movement is typically the direction along the probe's insertion path, as this offers less physical resistance than moving into the surrounding brain. Movement along this axis has the effect of shifting the recorded waveforms up or down the probe.
 
@@ -313,19 +316,19 @@ The key drift correction algorithms out there include
 [DREDge](https://www.nature.com/articles/s41592-025-02614-5) 
 and 
 [MEDiCINe](https://www.eneuro.org/content/12/3/ENEURO.0529-24.2025). 
-SpikeInterface exposes these through the [`correct_motion()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.preprocessing.correct_motion) function that using convenient presets which define how spike detection, motion estimation and interpolation is run.
+SpikeInterface exposes these through the [`correct_motion()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.preprocessing.correct_motion) function that uses convenient presets which define how spike detection, motion estimation and interpolation is run.
 
-Today we will use 'dredge_fast' and set `output_motion_info=True` so we can inspect the results of motion correction. 
+Today we will use `dredge_fast` and set `output_motion_info=True` so we can inspect the results of motion correction. 
 
 Typically, non-rigid estimation algorithms break up the probe into sections and perform rigid alignment within each. Because this Cambridge Neurotech probe has only 64 channels, non-rigid estimation does not perform as well, and so we will turn it off (a full list of these arguments can be found [here](https://github.com/SpikeInterface/spikeinterface/blob/dbe2e7539ab63ebc0c3ddc856bfbc93f10e067aa/src/spikeinterface/preprocessing/motion.py#L18)):
 
 ```{python}
 
-rec_corrected, motion_info = si_prepro.correct_motion(
+rec_corrected, motion_info = si.correct_motion(
     recording_cmr,
     preset="dredge_fast",
     output_motion_info=True,
-    # turn off non-rigid estimation
+    ## turn off non-rigid estimation
     estimate_motion_kwargs={"rigid": True},  
 )
 print(rec_corrected)
@@ -340,9 +343,9 @@ Once motion correction is run, we can plot the outputs to inspect the results:
 
 ```{python}
 
-# Display the motion output: drift map + estimated motion over depth/time.
+## Display the motion output: drift map + estimated motion over depth/time.
 fig = plt.figure(figsize=(14, 8))
-si_widgets.plot_motion_info(
+si.plot_motion_info(
     motion_info,
     recording=rec_corrected,
     figure=fig,
@@ -359,7 +362,7 @@ In the top two plots, we see a spike raster plot before (left) and after (right)
 
 The bottom left plot shows the estimated physical motion in μm over time.
 
-Because this is only a 90-second recording, we see very little drift. On longer recordings, the drift and its correction will be more apparent, for example on these example recording with injected drift (from [this useful explainer](https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording)):
+Because this is only a 90-second recording, we see very little drift (note: the y-spacing between the electrodes is around 10 microns, while the drift is less than 1 micron.). On longer recordings, the drift and its correction will be more apparent, for example on these example recording with injected drift (from [this useful explainer](https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording)):
 
 ::: {#fig-dredge fig-align="center"}
 ![](images/handle_drift_17_5.png){width=100%}
@@ -395,7 +398,7 @@ The takeaway from this section is to always plot your estimation motion (even if
 using it to make the decision whether to apply this to your sorted data or not. You can check drift maps in SpikeInterface,
 through Kilosort outputs or using the interactive [driftplots](https://github.com/neuroinformatics-unit/driftplots) package.
 
-# Whitening
+## Whitening
 
 Finally, we will explore the whitening step. The whitening step reduces noise correlated across channels, and can help localize spikes onto a smaller number of channels. 
 
@@ -405,12 +408,12 @@ In SpikeInterface, whitening is done by the [`whiten()`](https://spikeinterface.
 
 ```{python}
 
-recording_whiten = si_prepro.whiten(rec_corrected)
+recording_whiten = si.whiten(rec_corrected)
 
 plot_prepro(
     {"rec_corrected": rec_corrected, 
     "whitened": recording_whiten}, 
-    TIME_RANGE
+    TIME_RANGE,
 )
 
 ```
@@ -421,7 +424,7 @@ This is all we need to do to get a whitened version of our recording, however du
 To get a better understanding of how whitening changes the data, let's rescale the whitened data back to its original scaling (roughly) for visualization purposes. **Note we would not ever do this for recordings used in downstream analysis, this is just for visualization purposes**.
 
 ::: {.callout-note collapse="true"}
-### How the rescaling works.
+#### How the rescaling works.
 
 The correlation matrix is the key structure of the whitening step. It is computed by correlating all channels with each other:
 
@@ -449,11 +452,13 @@ variances along the diagonal, instead of ones (with zeros still on the off-diago
 
 ```{python}
 
-noise = np.mean(si.get_noise_levels(
-    rec_corrected, return_in_uV=False, method="std")
+noise = np.mean(
+    si.get_noise_levels(
+        rec_corrected, return_in_uV=False, method="std"
+    )
 )
 
-scaled_white_recording = si_prepro.scale(recording_whiten, noise)
+scaled_white_recording = si.scale(recording_whiten, noise)
 
 plot_prepro(
     {"rec_corrected": rec_corrected, 
@@ -467,11 +472,11 @@ We can zoom in on some spikes, to really see how the waveforms are changed (belo
 
 ```{python}
 
-# Select the times we want to display and convert them into samples
+## Select the times we want to display and convert them into samples
 start_frame = int(TIME_RANGE[0] * rec_corrected.get_sampling_frequency())
 end_frame = int(TIME_RANGE[1] * rec_corrected.get_sampling_frequency())
 
-# Get the data from this time range, and further slice it around a few spikes
+## Get the data from this time range, and further slice it around a few spikes
 orig_data = rec_corrected.get_traces(
     start_frame=start_frame, end_frame=end_frame, return_in_uV=True
 )[200:400, :4]
@@ -480,8 +485,8 @@ whitened_data = scaled_white_recording.get_traces(
     start_frame=start_frame, end_frame=end_frame, return_in_uV=True,
 )[200:400, :4]
 
-# Plot the spikes, adding an offset between traces so they 
-# are displayed vertically stacked.
+## Plot the spikes, adding an offset between traces so they 
+## are displayed vertically stacked.
 plt.figure(figsize=(8, 5))
 plt.plot(orig_data + np.arange(orig_data.shape[1]) * 750, color="k")
 plt.plot(whitened_data + np.arange(whitened_data.shape[1]) * 750, color="r")
@@ -490,10 +495,33 @@ plt.show()
 
 ```
 
-Here, we can see that spikes are 'squashed' onto a smaller number of channels (which can aid spike sorting). The second spike is now only found on 4 channels instead of 3. The 1st and 3rd spikes, which was probably a single waveform distributed over 4 channels, however now appear to be split into two separate spikes.
+Here, we can see that spikes are 'squashed' onto a smaller number of channels (which can aid spike sorting). The second spike is now only found on 4 channels instead of 3. 
+
+However, the 1st and 3rd spikes, which was likely a single waveform distributed over 4 channels, has now been split into two separate spikes.
+This could lead to a single unit being split into two during sorting.
+
+## Saving the data
+
+SpikeInterface makes it very easy to save preprocessed data, which is useful as applying 
+preprocessing to an entire long recording can take some time. Here we will save the data
+preprocessed with *bandpass filter*, *bad channel removal* and *common referencing* for use
+later in the course. 
+
+In general, we can perform these lighter preprocessing steps in SpikeInterface
+and let the sorter use internaly preprocessing for oher steps.
+
+```{python}
+
+PREPROCESSED_DATA_FOLDER = Path("data/preprocessed-dandiset-000939")
+
+if not PREPROCESSED_DATA_FOLDER.exists():
+    recording_cmr.save(folder=PREPROCESSED_DATA_FOLDER)
+
+```
 
 
-# How to turn off the steps in KS 
+
+## How to turn off the steps in KS 
 
 Finally, when we sort our preprocessed data we must remember to turn off the relevant steps in Kilosort so we do not apply them twice! (for filtering, it is not possible to fully turn it off
 so we set the cutoff to a very low value so that the step does little to the data).
@@ -521,10 +549,10 @@ sorting = si_sorters.run_sorter(
     folder="_tmp/ks4_out",
     remove_existing_folder=True,
     verbose=True,
-    skip_kilosort_preprocessing=True,  # turn off whitening and other steps
-    do_CAR=False,  # turn off CAR and filtering to be sure
+    skip_kilosort_preprocessing=True,  ## turn off whitening and other steps
+    do_CAR=False,  ## turn off CAR and filtering to be sure
     highpass_cutoff=0.01,
-    do_correction=False,  # turn off motion correction
+    do_correction=False,  ## turn off motion correction
 )
 print(sorting)
 

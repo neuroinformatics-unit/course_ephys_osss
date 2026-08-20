@@ -12,6 +12,11 @@ license-files = ["LICENSE"]
 dynamic = ["version"]
 authors = [
     { name = "Joseph Ziminski", email = "j.ziminski@ucl.ac.uk" },
+    { name = "Chris Halcrow", email = "c.halcrow@ucl.ac.uk" },
+    { name = "Alessio Buccino", email = "alessio.buccino@alleninstitute.org" },
+    { name = "Enny H. van Beest", email = "e.beest@ucl.ac.uk" },
+    { name = "Olivier Winter", email = "olivier.winter@internationalbrainlab.org" },
+    { name = "Wolf De Wulf", email = "wolf.de.wulf@ed.ac.uk" },
 ]
 keywords = ["electrophysiology", "neuroscience", "course", "OSSS"]
 classifiers = [
@@ -30,20 +35,28 @@ classifiers = [
 dependencies = [
     "dandi",
     "hdbscan",
+    "ibl-neuropixel",
     "ipykernel",
-    "ipympl==0.10.0",  # TODO: can we remove these pins?
-    "ipywidgets==8.1.5",
+    "ipympl",
+    "ipywidgets",
     "jupyter",
     "kilosort",
-    "matplotlib==3.9.4",
+    "matplotlib",
     "nbformat",
     "numpy",
+    "ONE-api",
     "pandas",
     "probeinterface",
     "pynapple",
     "remfile",
     "scipy",
     "spikeinterface[full,widgets]",
+    "pyqtgraph",
+    "pynwb",
+    "UnitMatchPy[full,notebooks]",
+    "spikeinterface-gui",
+    "viewephys",
+    "pyqt5",
 ]
 
 [project.urls]
@@ -58,3 +71,6 @@ package-dir = { "" = "src" }
 where = ["src"]
 include = ["course_ephys_osss*"]
 [tool.setuptools_scm]
+
+[tool.uv.sources]
+spikeinterface-gui = { git = "https://github.com/spikeinterface/spikeinterface-gui" }

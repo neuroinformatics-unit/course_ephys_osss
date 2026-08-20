@@ -15,8 +15,6 @@ The preprocessing steps we will explore in this chapter are:
 
 - **common median referencing**: Removes noise that takes the form of stripes through the data (i.e. occurring on all channels for a short period of time). This is applied across all channels, separately per time point.
 
-- **highpass spatial filter**: A destriping algorithm (i.e. similar to common median referencing) introduced by the [International Brain Laboratory (IBL)](https://figshare.com/articles/online_resource/Spike_sorting_pipeline_for_the_International_Brain_Laboratory/19705522?file=49783080) that accounts for slow oscillations of the signal across channels within the noise stripe.
-
 - **motion correction** : A step to account for physical drift of the probe in the brain. Attempts to estimate the drift and interpolate the channels (having the effect of shifting the signal up or down the probe) to account for it.
 
 - **whiten** : Removes correlated noise across channels and helps isolate spikes on  a subset of channels. Has significant effects on the data scaling and waveform shape.
@@ -271,19 +269,6 @@ plot_prepro(
 We can see that contaminating noise spikes that run vertically across the heatmap are removed through this processing method.
 
 The implicit assumption of CAR or CMR is that the variability in the noise stripe is fairly small across channels (and so can be approximated well by removing only the central tendency measure). However, in practice this assumption is often broken, with stripes appearing only on a subset of channels (e.g. the top half). As such, the `common_reference` function contains a number of arguments allowing the operation to be performed on subsets of channels, and these can be explored in the 'things to try' section below.
-
-As an alternative solution to the striping problem, the IBL introduced a 'highpass spatial filter' which captures slow variations in the noise stripes across channels:
-
-```{python}
-
-recording_hsf = spre.highpass_spatial_filter(
-    rec_clean, 
-    highpass_butter_wn=0.03
-)  
-
-plot_prepro({"recording_cmr": recording_cmr, "recording_hsf": recording_hsf}, TIME_RANGE)
-
-```
 
 :::{.callout-tip}
 #### Things to try

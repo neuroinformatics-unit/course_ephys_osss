@@ -44,7 +44,9 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
-import spikeinterface.full as si
+import spikeinterface.core as si
+import spikeinterface.preprocessing as spre
+import spikeinterface.widgets as sw
 
 from course_ephys_osss.data.utils import download_and_slice_nwb_from_dandi
 ```
@@ -115,7 +117,7 @@ def plot_prepro(recordings, time_range, return_in_uV=True):
         
         ax = axes[idx]
 
-        si.plot_traces(
+        sw.plot_traces(
             recording,
             time_range=time_range,
             mode="map",  ## plot as a heatmap
@@ -135,7 +137,7 @@ First, let's have a look at the effect of bandpass filtering the data, using the
 
 ```{python}
 
-recording_bp = si.bandpass_filter(
+recording_bp = spre.bandpass_filter(
     recording, 
     ## commonly used values to filter noise 
     ## while not affecting spikes
@@ -198,7 +200,7 @@ First, let's use the [`detect_bad_channels()`](https://spikeinterface.readthedoc
 
 ```{python}
 
-bad_channel_ids_1, channel_labels_1 = si.detect_bad_channels(recording_bp)
+bad_channel_ids_1, channel_labels_1 = spre.detect_bad_channels(recording_bp)
 print("first attempt labels:\n", channel_labels_1)
 
 rec_clean_1 = recording_bp.remove_channels(bad_channel_ids_1)
@@ -218,7 +220,7 @@ dead channel detection from `-0.5` to `-0.25` (this was done through manual tria
 
 ```{python}
 ## Let's try again with different settings
-bad_channel_ids, channel_labels = si.detect_bad_channels(
+bad_channel_ids, channel_labels = spre.detect_bad_channels(
     recording_bp, dead_channel_threshold=-0.25
 )
 print("second attempt labels:\n", channel_labels)
@@ -253,7 +255,7 @@ We can use SpikeInterface's [`common_reference()`](https://spikeinterface.readth
 
 ```{python}
 
-recording_cmr = si.common_reference(
+recording_cmr = spre.common_reference(
     rec_clean, 
     operator="median"
 )
@@ -274,7 +276,7 @@ As an alternative solution to the striping problem, the IBL introduced a 'highpa
 
 ```{python}
 
-recording_hsf = si.highpass_spatial_filter(
+recording_hsf = spre.highpass_spatial_filter(
     rec_clean, 
     highpass_butter_wn=0.03
 )  
@@ -324,7 +326,7 @@ Typically, non-rigid estimation algorithms break up the probe into sections and 
 
 ```{python}
 
-rec_corrected, motion_info = si.correct_motion(
+rec_corrected, motion_info = spre.correct_motion(
     recording_cmr,
     preset="dredge_fast",
     output_motion_info=True,
@@ -345,7 +347,7 @@ Once motion correction is run, we can plot the outputs to inspect the results:
 
 ## Display the motion output: drift map + estimated motion over depth/time.
 fig = plt.figure(figsize=(14, 8))
-si.plot_motion_info(
+sw.plot_motion_info(
     motion_info,
     recording=rec_corrected,
     figure=fig,
@@ -408,7 +410,7 @@ In SpikeInterface, whitening is done by the [`whiten()`](https://spikeinterface.
 
 ```{python}
 
-recording_whiten = si.whiten(rec_corrected)
+recording_whiten = spre.whiten(rec_corrected)
 
 plot_prepro(
     {"rec_corrected": rec_corrected, 
@@ -458,7 +460,7 @@ noise = np.mean(
     )
 )
 
-scaled_white_recording = si.scale(recording_whiten, noise)
+scaled_white_recording = spre.scale(recording_whiten, noise)
 
 plot_prepro(
     {"rec_corrected": rec_corrected, 
@@ -541,9 +543,9 @@ Typically it is safe to perform filtering and common referencing in SpikeInterfa
 
 ```{python}
 #| eval: false
-import spikeinterface.sorters as si_sorters
+import spikeinterface.sorters as ss
 
-sorting = si_sorters.run_sorter(
+sorting = ss.run_sorter(
     "kilosort4",
     recording_whiten,
     folder="_tmp/ks4_out",

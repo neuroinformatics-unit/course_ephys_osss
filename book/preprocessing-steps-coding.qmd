@@ -9,6 +9,9 @@ See the [previous chapter](preprocessing-steps-presentation.qmd) for details on 
 
 The preprocessing steps we will explore in this chapter are:
 
+- **saturation detection**: Detect periods in the recording where the electronics were saturated (i.e. the voltage exceeds the range
+of the recording electronics). We detect saturation periods on the raw recording, and set any detected periods to zero after filtering.
+
 - **bandpass filtering**: Filters out low-frequency oscillations (e.g. 50-60 Hz noise) and high-frequency oscillations (e.g. noise spikes) from the data. Applied separately per channel.
 
 - **bad channel detection** : Automatically detect channels that are dead, noisy or out-of-brain. These bad channels can be removed or interpolated (i.e 'filled in' using the data from surrounding channels).
@@ -17,7 +20,7 @@ The preprocessing steps we will explore in this chapter are:
 
 - **motion correction** : A step to account for physical drift of the probe in the brain. Attempts to estimate the drift and interpolate the channels (having the effect of shifting the signal up or down the probe) to account for it.
 
-- **whiten** : Removes correlated noise across channels and helps isolate spikes on  a subset of channels. Has significant effects on the data scaling and waveform shape.
+- **whitening** : Removes correlated noise across channels and helps isolate spikes on  a subset of channels. Has significant effects on the data scaling and waveform shape.
 
 ::: {.callout-warning}
 
@@ -89,7 +92,7 @@ Next, we will define a function to plot and compare multiple preprocessing steps
 
 ```{python}
 
-def plot_prepro(recordings, time_range, return_in_uV=True):
+def plot_prepro(recordings, time_range, return_in_uV=True, clim=None):
     """
     Plot multiple recordings in subplots.
 
@@ -100,6 +103,8 @@ def plot_prepro(recordings, time_range, return_in_uV=True):
         the corresponding keys used as plot titles.
     time_range: 
         A tuple with the (start, stop) times of the data to plot.
+    clim:
+        A tuple with the (min, max) colour limits for the heatmap.
     """
     fig, axes = plt.subplots(
         1, len(recordings), 
@@ -122,10 +127,44 @@ def plot_prepro(recordings, time_range, return_in_uV=True):
             ax=ax,
             with_colorbar=True,
             return_in_uV=True,
+            clim=clim,
         )
         ax.set_title(name)
         ax.tick_params(axis="x", rotation=45)
 
+```
+
+## Detecting saturation periods
+
+The electronics that record the extracellular voltage have dynamic ranges in which they operate. If the voltage exceeds this threshold, the equipment is said to 'saturate' and the recorded values are uninformative.
+
+The working ranges are associated with the specific recording requiptment, most commonly the amplifier and analog-digital converters. For Neuropixels, these electronics are contained in the probe and the probe manual shows hte dynaimc range (1200 uV for NP1, XXX uV for NP2).
+
+The data we are working with was recorded on a Camridge Neurotech probe, using a Intan RHD2000-series amplifier/headstage with range -5mV to 5mV. Therefore, we can use SpikeInterface to detect any periods of the recording that exceed 5mV (5000 uV).
+
+```{python}
+
+saturation_periods = spre.detect_saturation_periods(
+    recording,
+    saturation_threshold_uV=5000,
+)
+print(saturation_periods)
+
+```
+
+@@@@@
+
+```{python}
+
+fs = recording.get_sampling_frequency()
+saturation_time_start = saturation_periods[0]["start_sample_index"] / fs
+saturation_time_stop = saturation_periods[0]["end_sample_index"] / fs
+
+plot_prepro(
+    {"raw": recording},
+    time_range=(saturation_time_start - 0.2, saturation_time_stop + 0.2),    
+    clim=(-5000, 5000),
+)
 ```
 
 ## Bandpass filter
@@ -269,6 +308,25 @@ plot_prepro(
 We can see that contaminating noise spikes that run vertically across the heatmap are removed through this processing method.
 
 The implicit assumption of CAR or CMR is that the variability in the noise stripe is fairly small across channels (and so can be approximated well by removing only the central tendency measure). However, in practice this assumption is often broken, with stripes appearing only on a subset of channels (e.g. the top half). As such, the `common_reference` function contains a number of arguments allowing the operation to be performed on subsets of channels, and these can be explored in the 'things to try' section below.
+
+## Zeroing the saturation artifacts
+
+We do not want to zero the saturation periods before filtering because the sharp change will create artifacts during filtering. Therefore, we apply the zeroing after the filtering steps:
+
+```{python}
+
+recording_zeroed = spre.silence_periods(
+    recording_cmr,
+    periods=saturation_periods,
+)
+
+plot_prepro(
+    {"recording_cmr": recording_cmr, 
+    "saturation zeroed": recording_zeroed}, 
+    time_range=(saturation_time_start - 0.2, saturation_time_stop + 0.2),
+)
+
+```
 
 :::{.callout-tip}
 #### Things to try

@@ -1,4 +1,33 @@
 # Preprocessing (slides)
 
 
-This presentation can be found [here](https://docs.google.com/presentation/d/1KsR5lh2i3QatL2LFhxDyiqdFYjOI7ttqNNcJecuh1L4/edit?usp=sharing).
+## Extracellular recordings with Neuropixels
+_Olivier Winter_ (~20 mins)
+
+This presentation introduces the fundamentals of extracellular neurophysiology, specifically focusing on recordings using Neuropixel probes. It outlines key concepts like hardware, sampling theory, and the physiological basis of Local-Field Potentials (LFP) and Action Potentials (AP).
+
+ [Link to the presentation](https://docs.google.com/presentation/d/19ErflK8HBzeZbK9hSlEuLzzIFdl0aCyl7wf9vio3Mh4)
+
+## Sampling the extracellular voltage
+_Olivier Winter_ (~20 mins)
+
+This presentation focuses on sampling theory and hardware components such as analog-to-digital converters, Nyquist frequency, and grounding techniques. Additionally, it compares the technical specifications and structural configurations of Neuropixels 1 and 2 probes.
+
+[Link to the presentation](https://docs.google.com/presentation/d/1SdfpGozIqIvS4voiu7cJWfiNtOYYQnEk8TuKVRSvOvY)
+
+
+## Preprocessing of the AP band
+_Olivier Winter and Joe Ziminski_ (~40 mins)
+
+- Data preparation
+    - Compression
+    - Shank splitting for NP2
+    - Saturation detection
+- Pre-processing
+    - ADC rephasing
+    - Bad channels detection
+    - CAR / Spatial filter
+    - Saturation Application
+    - Whitening
+
+[Link to the presentation](https://docs.google.com/presentation/d/1KsR5lh2i3QatL2LFhxDyiqdFYjOI7ttqNNcJecuh1L4/edit?slide=id.g3ee7e7a5c01_0_128#slide=id.g3ee7e7a5c01_0_128)

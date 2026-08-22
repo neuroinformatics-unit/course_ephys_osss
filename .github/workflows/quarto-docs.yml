@@ -2,8 +2,8 @@ name: Quarto Docs
 
 # Build the book on all merges to main, all pull requests, or by manual
 # workflow dispatch, which acts as a CI check that the book still renders.
-# The publish step only runs when a tag is pushed, deploying the already
-# rendered site to the gh-pages branch.
+# The publish step runs when changes land on main or a tag is pushed,
+# deploying the already rendered site to the gh-pages branch.
 on:
   push:
     branches:
@@ -51,7 +51,7 @@ jobs:
         run: quarto render book
 
       - name: Publish to gh-pages
-        if: github.ref_type == 'tag'
+        if: github.ref_type == 'tag' || github.ref == 'refs/heads/main'
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages

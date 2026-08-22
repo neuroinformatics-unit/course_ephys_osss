@@ -19,3 +19,14 @@ quarto render --to html
 
 This generates the website in `book/_site`. After a PR is merged into `main`, CI rebuilds the site and publishes it to `gh-pages` automatically.
 
+## Releasing a new version
+
+The package version is not set manually: it is derived from git tags via `setuptools-scm` (see `pyproject.toml`). To cut a new release:
+
+```
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+Pushing the tag triggers the same GitHub Actions workflow, which rebuilds and publishes the site to `gh-pages`, and `setuptools-scm` picks up `vX.Y.Z` as the new package version.
+

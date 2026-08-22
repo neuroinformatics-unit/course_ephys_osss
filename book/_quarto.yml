@@ -94,6 +94,7 @@ book:
     - unitmatch-coding.qmd
     - curation.qmd
     - pynapple.qmd
+    - electrophysiology-features.qmd
     - part: "Reference"
       chapters:
         - course-data.qmd

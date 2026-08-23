@@ -325,15 +325,14 @@ As such, we will skip these steps, as we have already run them in SpikeInterface
 It is generally easiest to sort each shank separately, and in this tutorial we will now sort the first shank of the recording:
 
 ```{python}
-sorter_folder = Path("kilosort4_output")
-sorter_output_folder = sorter_folder / "sorter_output"
+output_folder = Path("kilosort4_output")
 
 first_shank_recording = split_recording[0]
 
 sorting = si.run_sorter(
     "kilosort4",
     first_shank_recording,
-    folder=sorter_folder,
+    folder=output_folder,
     remove_existing_folder=True,
     do_CAR=False,
     highpass_cutoff=0.1,
@@ -453,4 +452,4 @@ run_mainwindow(
 )
 ```
 
-and see https://www.youtube.com/watch?v=OGlQtxzip-Q for walking through the GUI.
+and see [this video](https://www.youtube.com/watch?v=OGlQtxzip-Q) for a GUI walkthrough.

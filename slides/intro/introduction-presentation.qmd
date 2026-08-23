@@ -42,6 +42,23 @@ Joe Ziminski
 
 :::
 
+## Backgrounds
+
+**What is your research / academic background?**
+
+[menti.com/?code=67083044](https://www.menti.com/?code=67083044)
+
+## Research interests
+
+**What is your current research interest?**
+
+[menti.com/?code=67083044](https://www.menti.com/?code=67083044)
+
+## Today's session
+1. Course Introduction
+2. Introduction to extracellular electrophysiology
+3. Coding a full pipeline with SpikeInterface
+
 ## Course objectives {.ephys-process-slide}
 
 - Gain hands-on experience implementing an extracellular electrophysiology pipeline
@@ -85,11 +102,6 @@ Joe Ziminski
 
 :::
 
-## Today's session
-1. Course Introduction
-2. Introduction to extracellular electrophysiology
-3. Coding a full pipeline with SpikeInterface
-
 ## Course book
 
 - We will work through the course book available at: \
@@ -98,7 +110,20 @@ Joe Ziminski
 - Feel free to open this link now (these slides are Chapter 2).
 - We will work through Chapter 3 today.
 
-## Coding section
+## Your own data
+
+- We welcome you trying out the methods discussed on your own data
+- Please feel free to ask questions related to your own data at any point
+- If you are already familiar with the concepts covered in exercises, feel free to apply the methods discussed on your own data
+
+
+## Own data?
+
+**Do you have your own data?**
+
+[menti.com/?code=67083044](https://www.menti.com/?code=67083044)
+
+## Coding sections
 
 - We will go through core sections together, with time for exercises and free coding
 - Writing code by hand improves understanding
@@ -145,12 +170,6 @@ When you allow yourself to be confused you become far more introspective; you ga
 
 ::::
 
-## Your own data
-
-- We welcome you trying out the methods discussed on your own data
-- Please feel free to ask questions related to your own data at any point
-- If you are already familiar with the concepts covered in exercises, feel free to apply the methods discussed on your own data
-
 ## Introduction to extracellular electrophysiology {.section-title-slide}
 
 ## Method overview {.ephys-process-slide}
@@ -159,10 +178,6 @@ When you allow yourself to be confused you become far more introspective; you ga
 <div class="ephys-process-left-figure">
   <img src="images/apollo-implant-f4-edited.png" class="ephys-process-image fragment fade-out" data-fragment-index="2" alt="Implant recording, target area, and example extracellular traces across days">
   <img src="images/apollo-implant-f4-edited-w-spikes.png" class="ephys-process-image fragment" data-fragment-index="2" alt="Implant recording, target area, and extracellular traces with spikes highlighted across days">
-</div>
-
-<div class="ephys-tuning-figure">
-  <img src="images/tuning-curve-image-edited.png" class="ephys-tuning-image fragment" data-fragment-index="4" alt="Orientation tuning curve and preferred orientation schematic">
 </div>
 :::
 
@@ -186,13 +201,19 @@ When you allow yourself to be confused you become far more introspective; you ga
 {{< video https://www.youtube.com/embed/IOHayh06LJ4 title="Hubel and Wiesel orientation selectivity" >}}
 :::
 
+<div class="ephys-tuning-figure fragment" data-fragment-index="1">
+  <img src="images/tuning-curve-image-edited.png" class="ephys-tuning-image" alt="Orientation tuning curve and preferred orientation schematic">
+</div>
+
 :::
 
 ::: {.column width="50%"}
+::: {.fragment data-fragment-index="2"}
 ### Hippocampal space encoding
 
 ::: {.classic-video-frame}
 {{< video https://www.youtube.com/embed/STyd1qJr3yM title="Hippocampal place cells" >}}
+:::
 :::
 
 :::
@@ -202,7 +223,7 @@ When you allow yourself to be confused you become far more introspective; you ga
 ## In the clinic {.clinic-video-slide}
 
 ::: {.clinic-video-frame}
-{{< video https://www.youtube.com/embed/iTZ2N-HJbwA title="Recording example" >}}
+{{< video https://www.youtube.com/embed/iTZ2N-HJbwA?start=64 title="Recording example" >}}
 :::
 
 ## Evolution of recording devices
@@ -219,47 +240,11 @@ When you allow yourself to be confused you become far more introspective; you ga
 
 ## The action potential {data-transition="none"}
 
-:::: {.columns}
-
-::: {.column width="50%"}
-### Intracellular
-
-![](images/glossary-action-potential.png){fig-alt="Intracellular action potential waveform phases" style="display: block; width: 92%; max-height: 500px; margin: 0 auto; object-fit: contain;"}
-:::
-
-::: {.column width="50%"}
-### Extracellular
-
 ![](images/glossary-extracellular.jpg){fig-alt="Extracellular action potential voltage field around a neuron from Gold et al. 2006" style="display: block; width: 92%; max-height: 500px; margin: 0 auto; object-fit: contain;"}
+
+::: {style="font-size: 0.55em; text-align: center; margin-top: 0.3rem;"}
+From [Gold et al. (2006)](https://pubmed.ncbi.nlm.nih.gov/16467426/)
 :::
-
-::::
-
-## Pros and cons {.ephys-compare-slide}
-
-:::: {.ephys-compare-grid}
-
-::: {.ephys-compare-col}
-![](images/ephys-positives-examples.png){.ephys-compare-image fig-alt="Targeted deep electrophysiology recording and traces"}
-
-<h3 class="ephys-compare-title">Electrophysiology</h3>
-
-- ✅ High temporal resolution
-- ✅ Targeted to deep and multiple regions
-- ❌ Cannot easily identify individual neurons
-:::
-
-::: {.ephys-compare-col}
-![](images/2p-examples.png){.ephys-compare-image fig-alt="Two-photon imaging field of view with labeled neurons"}
-
-<h3 class="ephys-compare-title">Imaging</h3>
-
-- ✅ Easy identification of individual neurons (genetically targetable)
-- ❌ Low temporal resolution
-- ❌ Limited depth and field of view
-:::
-
-::::
 
 ## The recording setup
 
@@ -318,7 +303,7 @@ A common API for open-source electrophysiological tools
 
 Download everything you need for the course from:
 
-- The [course Zenodo repository](https://zenodo.org/records/21908611) — all core datasets.
+- The [course Zenodo repository](https://zenodo.org/records/21908762) — all core datasets.
   - ✅ `sub-001_ses-001_g0_t0.imec0.ap.bin`
   - ✅ `sub-001_ses-001_g0_t0.imec0.ap.meta`
 - The **AL032** dataset from [Dropbox](https://www.dropbox.com/scl/fo/1019utuiqbogkyxeqpm8a/AKov2FuY5XZfx5JjIEVuoO4?rlkey=1xcxyki0ijktmxz1k62qg07hh&st=4rrisszb&e=1&dl=0) — UnitMatch chapter.
@@ -335,6 +320,12 @@ from spikeinterface_gui import run_mainwindow
 
 print("Finished importing")
 ```
+
+## Feedback
+
+[Day 1 feedback board](https://ideaboardz.com/for/Extracellular%20Electrophysiology%20-%20Day%201/5814935)
+
+## Appendix {.section-title-slide}
 
 ## Data checks {data-transition="none"}
 
@@ -355,3 +346,28 @@ Each sample is stored as a 16-bit integer (`int16`) — that is 2 bytes:
 
 ![](images/sixteen-bit-int.svg){fig-alt="Sixteen squares, one per bit, grouped into two bytes, showing a 16-bit integer in binary" style="display: block; width: 70%; margin: 0.5em auto 0 auto;"}
 
+## Pros and cons {.ephys-compare-slide}
+
+:::: {.ephys-compare-grid}
+
+::: {.ephys-compare-col}
+![](images/ephys-positives-examples.png){.ephys-compare-image fig-alt="Targeted deep electrophysiology recording and traces"}
+
+<h3 class="ephys-compare-title">Electrophysiology</h3>
+
+- ✅ High temporal resolution
+- ✅ Targeted to deep and multiple regions
+- ❌ Cannot easily identify individual neurons
+:::
+
+::: {.ephys-compare-col}
+![](images/2p-examples.png){.ephys-compare-image fig-alt="Two-photon imaging field of view with labeled neurons"}
+
+<h3 class="ephys-compare-title">Imaging</h3>
+
+- ✅ Easy identification of individual neurons (genetically targetable)
+- ❌ Low temporal resolution
+- ❌ Limited depth and field of view
+:::
+
+::::

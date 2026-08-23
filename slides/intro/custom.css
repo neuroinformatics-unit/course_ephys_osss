@@ -137,17 +137,18 @@
 
 .reveal .ephys-process-figures {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(220px, 2fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   align-items: center;
+  justify-items: center;
   margin-bottom: 0.2rem;
 }
 
 .reveal .ephys-process-left-figure {
   position: relative;
   width: 100%;
-  max-width: 980px;
-  height: 430px;
+  max-width: 1200px;
+  height: 500px;
   margin: 0 auto;
 }
 
@@ -164,8 +165,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 310px;
-  height: 235px;
+  width: 390px;
+  height: 295px;
   justify-self: center;
 }
 
@@ -189,8 +190,8 @@
 
 .reveal img.ephys-tuning-image {
   width: 100%;
-  max-width: 310px;
-  max-height: 235px;
+  max-width: 390px;
+  max-height: 295px;
 }
 
 .reveal .slide.ephys-compare-slide h2 {

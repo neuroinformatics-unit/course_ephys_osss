@@ -174,31 +174,6 @@ When you allow yourself to be confused you become far more introspective; you ga
 <div class="ephys-step"><span class="fragment" data-fragment-index="4"><strong>5.</strong> Understand how neural activity encodes behavior</span></div>
 :::
 
-## Pros and cons {.ephys-compare-slide}
-
-:::: {.ephys-compare-grid}
-
-::: {.ephys-compare-col}
-![](images/ephys-positives-examples.png){.ephys-compare-image fig-alt="Targeted deep electrophysiology recording and traces"}
-
-<h3 class="ephys-compare-title">Electrophysiology</h3>
-
-- ✅ High temporal resolution
-- ✅ Targeted to deep and multiple regions
-- ❌ Cannot easily identify individual neurons
-:::
-
-::: {.ephys-compare-col}
-![](images/2p-examples.png){.ephys-compare-image fig-alt="Two-photon imaging field of view with labeled neurons"}
-
-<h3 class="ephys-compare-title">Imaging</h3>
-
-- ✅ Easy identification of individual neurons (genetically targetable)
-- ❌ Low temporal resolution
-- ❌ Limited depth and field of view
-:::
-
-::::
 
 ## Classic findings {.classic-video-slide}
 
@@ -256,6 +231,32 @@ When you allow yourself to be confused you become far more introspective; you ga
 ### Extracellular
 
 ![](images/glossary-extracellular.jpg){fig-alt="Extracellular action potential voltage field around a neuron from Gold et al. 2006" style="display: block; width: 92%; max-height: 500px; margin: 0 auto; object-fit: contain;"}
+:::
+
+::::
+
+## Pros and cons {.ephys-compare-slide}
+
+:::: {.ephys-compare-grid}
+
+::: {.ephys-compare-col}
+![](images/ephys-positives-examples.png){.ephys-compare-image fig-alt="Targeted deep electrophysiology recording and traces"}
+
+<h3 class="ephys-compare-title">Electrophysiology</h3>
+
+- ✅ High temporal resolution
+- ✅ Targeted to deep and multiple regions
+- ❌ Cannot easily identify individual neurons
+:::
+
+::: {.ephys-compare-col}
+![](images/2p-examples.png){.ephys-compare-image fig-alt="Two-photon imaging field of view with labeled neurons"}
+
+<h3 class="ephys-compare-title">Imaging</h3>
+
+- ✅ Easy identification of individual neurons (genetically targetable)
+- ❌ Low temporal resolution
+- ❌ Limited depth and field of view
 :::
 
 ::::
@@ -327,18 +328,30 @@ Download everything you need for the course from:
 
 ```python
 from pathlib import Path
-
 import matplotlib.pyplot as plt
-
 import spikeinterface.full as si
-import spikeinterface.extractors as si_extractors
-import spikeinterface.preprocessing as si_prepro
-import spikeinterface.sorters as si_sorters
-import spikeinterface.widgets as si_widgets
-from spikeinterface import create_sorting_analyzer
 from probeinterface.plotting import plot_probe
 from spikeinterface_gui import run_mainwindow
 
-print("finished importing")
+print("Finished importing")
 ```
+
+## Data checks {data-transition="none"}
+
+```
+SpikeGLXRecordingExtractor: 384 channels - 30.0kHz - 1 segments - 75,000 samples - 2.50s
+                            int16 dtype - 54.93 MiB
+```
+
+::: {style="font-size: 0.8em;"}
+
+- **Samples**: 2.50 s × 30,000 Hz = **75,000 samples** per channel
+- **Bytes**: 75,000 samples × 2 bytes × 384 channels = **57,600,000 bytes**
+- = 57.6 MB (megabytes, ÷1000³) = **54.93 MiB** (mebibytes, ÷1024³)
+
+:::
+
+Each sample is stored as a 16-bit integer (`int16`) — that is 2 bytes:
+
+![](images/sixteen-bit-int.svg){fig-alt="Sixteen squares, one per bit, grouped into two bytes, showing a 16-bit integer in binary" style="display: block; width: 70%; margin: 0.5em auto 0 auto;"}
 

@@ -80,7 +80,7 @@ book:
       - id: IBL
         name: International Brain Laboratory
         url: https://www.internationalbrainlab.com/
-  date: "2026-04-15"
+  date: today
   date-format: "DD/MM/YYYY"
   chapters:
     - index.qmd

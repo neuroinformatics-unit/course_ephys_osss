@@ -9,17 +9,18 @@ See the [previous chapter](preprocessing-steps-presentation.qmd) for details on 
 
 The preprocessing steps we will explore in this chapter are:
 
+- **saturation detection**: Detect periods in the recording where the electronics were saturated (i.e. the voltage exceeds the range
+of the recording electronics). We detect saturation periods on the raw recording, and set any detected periods to zero after filtering.
+
 - **bandpass filtering**: Filters out low-frequency oscillations (e.g. 50-60 Hz noise) and high-frequency oscillations (e.g. noise spikes) from the data. Applied separately per channel.
 
 - **bad channel detection** : Automatically detect channels that are dead, noisy or out-of-brain. These bad channels can be removed or interpolated (i.e 'filled in' using the data from surrounding channels).
 
 - **common median referencing**: Removes noise that takes the form of stripes through the data (i.e. occurring on all channels for a short period of time). This is applied across all channels, separately per time point.
 
-- **highpass spatial filter**: A destriping algorithm (i.e. similar to common median referencing) introduced by the [International Brain Laboratory (IBL)](https://figshare.com/articles/online_resource/Spike_sorting_pipeline_for_the_International_Brain_Laboratory/19705522?file=49783080) that accounts for slow oscillations of the signal across channels within the noise stripe.
-
 - **motion correction** : A step to account for physical drift of the probe in the brain. Attempts to estimate the drift and interpolate the channels (having the effect of shifting the signal up or down the probe) to account for it.
 
-- **whiten** : Removes correlated noise across channels and helps isolate spikes on  a subset of channels. Has significant effects on the data scaling and waveform shape.
+- **whitening** : Removes correlated noise across channels and helps isolate spikes on a subset of channels. Has significant effects on the data scaling and waveform shape.
 
 ::: {.callout-warning}
 
@@ -44,7 +45,9 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
-import spikeinterface.full as si
+import spikeinterface.core as si
+import spikeinterface.preprocessing as spre
+import spikeinterface.widgets as sw
 
 from course_ephys_osss.data.utils import download_and_slice_nwb_from_dandi
 ```
@@ -55,21 +58,21 @@ from course_ephys_osss.data.utils import download_and_slice_nwb_from_dandi
 
 This is the first chapter in which we will use a core dataset used in this course,
 a postsubiculum recording on a 64-channel Cambridge Neurotech probe used in an
-experimental in neural tuning of head direction cells (see [here](course-data.qmd#head-direction-experiment-from-the-dandi-archive) for details).
+experiment on the neural tuning of head direction cells (see [here](course-data.qmd#head-direction-experiment-from-the-dandi-archive) for details).
 
 We will download the first 90 seconds of a recording from this dataset from
 the open access DANDI archive repository (an [excellent resource](course-data.qmd))
 
 ```{python}
 
-## (optionally) change this to where you would like to download the data to.
+# (optionally) change this to where you would like to download the data to.
 RAW_DATA_FOLDER = Path("data/raw-dandiset-000939")
 
 if RAW_DATA_FOLDER.exists():
-    ## if we have already downloaded the data, reload it.
+    # if we have already downloaded the data, reload it.
     recording = si.load(RAW_DATA_FOLDER)
 else:
-    ## Otherwise, download the first 90 seconds from DANDI
+    # Otherwise, download the first 90 seconds from DANDI
     download_and_slice_nwb_from_dandi(
         s3_url="https://dandiarchive.s3.amazonaws.com/blobs/a8f/800/a8f8003e-4483-4b50-8a45-91ac5971f5d5",
         duration_s=90,
@@ -89,7 +92,7 @@ Next, we will define a function to plot and compare multiple preprocessing steps
 
 ```{python}
 
-def plot_prepro(recordings, time_range, return_in_uV=True):
+def plot_prepro(recordings, time_range, return_in_uV=True, clim=None):
     """
     Plot multiple recordings in subplots.
 
@@ -100,6 +103,8 @@ def plot_prepro(recordings, time_range, return_in_uV=True):
         the corresponding keys used as plot titles.
     time_range: 
         A tuple with the (start, stop) times of the data to plot.
+    clim:
+        A tuple with the (min, max) colour limits for the heatmap.
     """
     fig, axes = plt.subplots(
         1, len(recordings), 
@@ -108,24 +113,60 @@ def plot_prepro(recordings, time_range, return_in_uV=True):
         layout="constrained",
     )
 
-    ## Grab the first (and only) row of axes
+    # Grab the first (and only) row of axes
     axes = axes[0, :]
 
     for idx, (name, recording) in enumerate(recordings.items()):
         
         ax = axes[idx]
 
-        si.plot_traces(
+        sw.plot_traces(
             recording,
             time_range=time_range,
-            mode="map",  ## plot as a heatmap
+            mode="map",  # plot as a heatmap
             ax=ax,
             with_colorbar=True,
             return_in_uV=True,
+            clim=clim,
         )
         ax.set_title(name)
         ax.tick_params(axis="x", rotation=45)
 
+```
+
+## Detecting saturation periods
+
+The electronics that record the extracellular voltage have dynamic ranges in which they operate. If the voltage exceeds this range, the equipment is said to 'saturate' and the recorded values are uninformative.
+
+The working ranges are associated with the specific recording equipment, most commonly the amplifier and analog-digital converters. For Neuropixels, these electronics are contained in the probe and the probe manual specifies the input voltage range (IBL recommend a threshold of 1200 μV for NP1; NP2 probes have a wider range and are harder to saturate).
+
+The data we are working with was recorded on a Cambridge Neurotech probe, using an Intan RHD2000-series amplifier/headstage with range -5 mV to 5 mV. Therefore, we can use SpikeInterface to detect any periods of the recording that fall outside ±5 mV (5000 μV).
+
+We need to detect saturation events before any preprocessing has occurred, as we need the raw voltage values to determine saturation. However, we must remove these events by zeroing them out after filtering, as sharp transitions to zero can cause filter artifacts. Therefore, we will detect the saturation periods now but actually zero out the data [later](#zeroing-the-saturation-artifacts).
+
+```{python}
+
+saturation_periods = spre.detect_saturation_periods(
+    recording,
+    saturation_threshold_uV=5000,
+)
+print(saturation_periods)
+
+```
+
+We can see that the detected saturation event indeed falls outside the ±5 mV range. The data recorded here is thus uninformative and we will zero it out later.
+
+```{python}
+
+fs = recording.get_sampling_frequency()
+saturation_time_start = saturation_periods[0]["start_sample_index"] / fs
+saturation_time_stop = saturation_periods[0]["end_sample_index"] / fs
+
+plot_prepro(
+    {"raw": recording},
+    time_range=(saturation_time_start - 0.2, saturation_time_stop + 0.2),    
+    clim=(-5000, 5000),
+)
 ```
 
 ## Bandpass filter
@@ -135,10 +176,10 @@ First, let's have a look at the effect of bandpass filtering the data, using the
 
 ```{python}
 
-recording_bp = si.bandpass_filter(
+recording_bp = spre.bandpass_filter(
     recording, 
-    ## commonly used values to filter noise 
-    ## while not affecting spikes
+    # commonly used values to filter noise 
+    # while not affecting spikes
     freq_min=300, 
     freq_max=6000
 ) 
@@ -187,18 +228,18 @@ plot_prepro(
 
 ## Bad Channel Detection
 
-Individual recording electrodes on a probe sometimes break and become 'dead' (no signal), 'noisy' (excessive electrical noise)
+Individual recording electrodes on a probe sometimes break and become 'dead' (no signal), 'noise' (excessive electrical noise)
 or may be 'out of brain' (i.e. a contiguous set of channels at the end of the probe with no signal, indicating they are not in brain tissue). 
 In our case, there is a small number of channels at the top of the previous plot whose traces look different than all the rest of
 the signal. These are likely out of the brain.
 
-The [IBL have developed an algorithm]((https://figshare.com/articles/online_resource/Spike_sorting_pipeline_for_the_International_Brain_Laboratory/19705522?file=49783080)) for automatically detecting bad channels, which has been ported to SpikeInterface.
+The [IBL have developed an algorithm](https://figshare.com/articles/online_resource/Spike_sorting_pipeline_for_the_International_Brain_Laboratory/19705522?file=49783080) for automatically detecting bad channels, which has been ported to SpikeInterface.
 
-First, let's use the [`detect_bad_channels()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.preprocessing.detect_bad_channels) function on our data, printing a list of the channel label ("good", "outside", "dead", "noisy"), removing the bad channels and and visualizing the traces:
+First, let's use the [`detect_bad_channels()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.preprocessing.detect_bad_channels) function on our data, printing a list of the channel label ("good", "out", "dead", "noise"), removing the bad channels and visualizing the traces:
 
 ```{python}
 
-bad_channel_ids_1, channel_labels_1 = si.detect_bad_channels(recording_bp)
+bad_channel_ids_1, channel_labels_1 = spre.detect_bad_channels(recording_bp)
 print("first attempt labels:\n", channel_labels_1)
 
 rec_clean_1 = recording_bp.remove_channels(bad_channel_ids_1)
@@ -212,14 +253,18 @@ plot_prepro(
 
 **It didn't work!** We can still see the dead channels on our recording. Why is this? 
 
-The IBL algorithm was developed for Neurpixel probes (with 384 recording channels) but we are using Cambridge Neurotech 64-channel probes. 
-As such, the default settings are not appropriate for our data, and we need to adjust them slightly. We reduce the threshold for
-dead channel detection from `-0.5` to `-0.25` (this was done through manual trial and error):
+The IBL algorithm was developed for Neuropixel probes (with 384 recording channels) but we are using Cambridge Neurotech 64-channel probes. As such, the default settings are not appropriate for our data, and we need to adjust them. 
+
+The new values were found through trial and error. `n_neighbors` default is `11` so we reduced it for the 64-channel Cambridge Neurotech probe. We also set outside_channels_location="bottom". By convention the algorithm expects out-of-brain channels at the top of the depth-ordered channels (as on Neuropixels), but by this probe's channel-ordering convention they sit at the bottom (index 0). Finally, we reduced the thresholds through trial and error to ensure the dead and out-of-brain channels were flagged correctly (once set, this configuration should work for all recordings in this dataset, but of course we should always check).
 
 ```{python}
-## Let's try again with different settings
-bad_channel_ids, channel_labels = si.detect_bad_channels(
-    recording_bp, dead_channel_threshold=-0.25
+# Let's try again with different settings
+bad_channel_ids, channel_labels = spre.detect_bad_channels(
+    recording_bp, 
+    dead_channel_threshold=-0.15,
+    outside_channels_location="bottom",
+    outside_channel_threshold=-0.25,
+    n_neighbors=5
 )
 print("second attempt labels:\n", channel_labels)
 
@@ -243,17 +288,17 @@ to ensure the default arguments of the algorithms we are using are suitable for 
 
 ## Common average referencing
 
-Electrophysiological recordings are often contaminated by noise artefacts that appear on all channels at once for a short period of time.
-Striping artefacts are typically caused by electrical noise that is shared across many recording channels, for example fluctuations in the reference electrode or electromagnetic interference.
+Electrophysiological recordings are often contaminated by noise artifacts that appear on all channels at once for a short period of time.
+Striping artifacts are typically caused by electrical noise that is shared across many recording channels, for example fluctuations in the reference electrode or electromagnetic interference.
 These appear as vertical 'stripes' on the heatmap view of the data, as can be seen below.
 
-Common average referencing (CAR) takes the average signal across all of the channels, and subtracts it. Sometimes you wil see this called 'common median referencing' (CMR) when the median is used instead of the mean. 
+Common average referencing (CAR) takes the average signal across all of the channels, and subtracts it. Sometimes you will see this called 'common median referencing' (CMR) when the median is used instead of the mean. 
 
 We can use SpikeInterface's [`common_reference()`](https://spikeinterface.readthedocs.io/en/latest/api.html#spikeinterface.preprocessing.common_reference) function to perform common median referencing: 
 
 ```{python}
 
-recording_cmr = si.common_reference(
+recording_cmr = spre.common_reference(
     rec_clean, 
     operator="median"
 )
@@ -270,16 +315,22 @@ We can see that contaminating noise spikes that run vertically across the heatma
 
 The implicit assumption of CAR or CMR is that the variability in the noise stripe is fairly small across channels (and so can be approximated well by removing only the central tendency measure). However, in practice this assumption is often broken, with stripes appearing only on a subset of channels (e.g. the top half). As such, the `common_reference` function contains a number of arguments allowing the operation to be performed on subsets of channels, and these can be explored in the 'things to try' section below.
 
-As an alternative solution to the striping problem, the IBL introduced a 'highpass spatial filter' which captures slow variations in the noise stripes across channels:
+## Zeroing the saturation artifacts
+
+We do not want to zero the saturation periods before filtering because the sharp change will create artifacts during filtering. Therefore, we apply the zeroing after the filtering steps:
 
 ```{python}
 
-recording_hsf = si.highpass_spatial_filter(
-    rec_clean, 
-    highpass_butter_wn=0.03
-)  
+recording_zeroed = spre.silence_periods(
+    recording_cmr,
+    periods=saturation_periods,
+)
 
-plot_prepro({"recording_cmr": recording_cmr, "recording_hsf": recording_hsf}, TIME_RANGE)
+plot_prepro(
+    {"recording_cmr": recording_cmr, 
+    "saturation zeroed": recording_zeroed}, 
+    time_range=(saturation_time_start - 0.2, saturation_time_stop + 0.2),
+)
 
 ```
 
@@ -290,7 +341,7 @@ There's no need to get through all of these — pick whatever looks interesting.
 
 - The time window we plot is important. Each spike is around 1-5 ms long, so if we plot long time windows we don't have enough pixels on the screen to resolve spikes. Nonetheless, longer windows can reveal other patterns in the data (e.g. 50 Hz noise). Play around with plotting different time windows (e.g. 10 ms, 200 ms, 1 s) to get a feel for this.
 - Plot the data using the `mode="line"` argument. Same data — a completely different perspective!
-- What happens if you set the bandpass filter minimum cutoff to zero? What frequencies are including now? Or set the maximum cutoff to 15000?
+- What happens if you set the bandpass filter minimum cutoff to zero? What frequencies are included now? Or set the maximum cutoff to 15000?
 - Try common median referencing (CMR) particular subsets of channels, using the `reference`, `groups` arguments as well
 as use different channels as reference using the `ref_channel_ids` argument. Recordings have a `get_channel_ids()` function that
 returns a list of ids.
@@ -305,7 +356,7 @@ The recording probe can move during an experiment. The major axis of movement is
 The majority of motion correction algorithms are based around the movement of detected spike waveforms. The pattern of detected spikes is used as a 'barcode' across time, allowing motion to be tracked through the recording (see this 
 [infographic](https://spikeinterface.readthedocs.io/en/stable/_images/motion_correction_overview.png) for details - the grey dots in the plots are individual spikes which have been detected). Most motion correction algorithms have three main steps:
 
-- **Spike detection and localization**: This step detections spikes in the data and estimates their physical location in space (x, y, z coordinates) from the waveform.
+- **Spike detection and localization**: This step detects spikes in the data and estimates their physical location in space (x, y, z coordinates) from the waveform.
 
 - **Motion estimation**: This estimates the probe movement based on how the detected spikes move up or down along the probe during the recording. Estimation may be `rigid` (capturing movement of the entire probe) or `non-rigid` (capturing movement that differs along the probe length, such as that caused by movement of brain tissue).
 
@@ -324,11 +375,11 @@ Typically, non-rigid estimation algorithms break up the probe into sections and 
 
 ```{python}
 
-rec_corrected, motion_info = si.correct_motion(
+rec_corrected, motion_info = spre.correct_motion(
     recording_cmr,
     preset="dredge_fast",
     output_motion_info=True,
-    ## turn off non-rigid estimation
+    # turn off non-rigid estimation
     estimate_motion_kwargs={"rigid": True},  
 )
 print(rec_corrected)
@@ -343,9 +394,9 @@ Once motion correction is run, we can plot the outputs to inspect the results:
 
 ```{python}
 
-## Display the motion output: drift map + estimated motion over depth/time.
+# Display the motion output: drift map + estimated motion over depth/time.
 fig = plt.figure(figsize=(14, 8))
-si.plot_motion_info(
+sw.plot_motion_info(
     motion_info,
     recording=rec_corrected,
     figure=fig,
@@ -362,7 +413,7 @@ In the top two plots, we see a spike raster plot before (left) and after (right)
 
 The bottom left plot shows the estimated physical motion in μm over time.
 
-Because this is only a 90-second recording, we see very little drift (note: the y-spacing between the electrodes is around 10 microns, while the drift is less than 1 micron.). On longer recordings, the drift and its correction will be more apparent, for example on these example recording with injected drift (from [this useful explainer](https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording)):
+Because this is only a 90-second recording, we see very little drift (note: the y-spacing between the electrodes is around 10 microns, while the drift is less than 1 micron.). On longer recordings, the drift and its correction will be more apparent, for example on this example recording with injected drift (from [this useful explainer](https://spikeinterface.readthedocs.io/en/stable/how_to/handle_drift.html#handle-drift-in-your-recording)):
 
 ::: {#fig-dredge fig-align="center"}
 ![](images/handle_drift_17_5.png){width=100%}
@@ -408,7 +459,7 @@ In SpikeInterface, whitening is done by the [`whiten()`](https://spikeinterface.
 
 ```{python}
 
-recording_whiten = si.whiten(rec_corrected)
+recording_whiten = spre.whiten(rec_corrected)
 
 plot_prepro(
     {"rec_corrected": rec_corrected, 
@@ -419,7 +470,7 @@ plot_prepro(
 ```
 
 
-This is all we need to do to get a whitened version of our recording, however due the scaling that whitening performs it is difficult to see what has happened. 
+This is all we need to do to get a whitened version of our recording, however due to the scaling that whitening performs it is difficult to see what has happened. 
 
 To get a better understanding of how whitening changes the data, let's rescale the whitened data back to its original scaling (roughly) for visualization purposes. **Note we would not ever do this for recordings used in downstream analysis, this is just for visualization purposes**.
 
@@ -432,7 +483,7 @@ The correlation matrix is the key structure of the whitening step. It is compute
 ![](images/whiten-mat.png){width=100%}
 :::
 
-Here $c_i$ represents a channel's data indexed by some integer $i$. $c_ic_j$ represents the sum of squares of the data from channels $i$ and $j$ (i.e. multiple each value in the vector with the corresponding value and add these all together). For example $c_1c_1$ is the variance for channel $c_1$, and $c_1c_2$ represents the covariance between channels 1 and 2. 
+Here $c_i$ represents a channel's data indexed by some integer $i$. $c_ic_j$ represents the sum of squares of the data from channels $i$ and $j$ (i.e. multiply each value in the vector with the corresponding value and add these all together). For example $c_1c_1$ is the variance for channel $c_1$, and $c_1c_2$ represents the covariance between channels 1 and 2. 
 
 For those interested, you can see how this comes from the [covariance definition](https://www.educba.com/covariance-formula/) when the mean of the channel data is zero and we ignore the scaling factor $N$.
 
@@ -458,7 +509,7 @@ noise = np.mean(
     )
 )
 
-scaled_white_recording = si.scale(recording_whiten, noise)
+scaled_white_recording = spre.scale(recording_whiten, noise)
 
 plot_prepro(
     {"rec_corrected": rec_corrected, 
@@ -472,11 +523,11 @@ We can zoom in on some spikes, to really see how the waveforms are changed (belo
 
 ```{python}
 
-## Select the times we want to display and convert them into samples
+# Select the times we want to display and convert them into samples
 start_frame = int(TIME_RANGE[0] * rec_corrected.get_sampling_frequency())
 end_frame = int(TIME_RANGE[1] * rec_corrected.get_sampling_frequency())
 
-## Get the data from this time range, and further slice it around a few spikes
+# Get the data from this time range, and further slice it around a few spikes
 orig_data = rec_corrected.get_traces(
     start_frame=start_frame, end_frame=end_frame, return_in_uV=True
 )[200:400, :4]
@@ -485,8 +536,8 @@ whitened_data = scaled_white_recording.get_traces(
     start_frame=start_frame, end_frame=end_frame, return_in_uV=True,
 )[200:400, :4]
 
-## Plot the spikes, adding an offset between traces so they 
-## are displayed vertically stacked.
+# Plot the spikes, adding an offset between traces so they 
+# are displayed vertically stacked.
 plt.figure(figsize=(8, 5))
 plt.plot(orig_data + np.arange(orig_data.shape[1]) * 750, color="k")
 plt.plot(whitened_data + np.arange(whitened_data.shape[1]) * 750, color="r")
@@ -508,7 +559,7 @@ preprocessed with *bandpass filter*, *bad channel removal* and *common referenci
 later in the course. 
 
 In general, we can perform these lighter preprocessing steps in SpikeInterface
-and let the sorter use internaly preprocessing for oher steps.
+and let the sorter use its internal preprocessing for other steps.
 
 ```{python}
 
@@ -535,24 +586,24 @@ runs whitening prior to motion correction, while in SpikeInterface it is recomme
 motion correction first. There may be subtle differences in how these steps are applied, and
 sorters may make assumptions internally that the data will be preprocessed in a certain way. 
 
-Typically it is safe to perform filtering and common referencing in SpikeInterface. When overwriting more agressive preprocessing steps (e.g. motion correction, whitening), it is worth checking the sorting outputs are improved compared to the sorters own defaults.
+Typically it is safe to perform filtering and common referencing in SpikeInterface. When overwriting more aggressive preprocessing steps (e.g. motion correction, whitening), it is worth checking the sorting outputs are improved compared to the sorter's own defaults.
 
 :::
 
 ```{python}
 #| eval: false
-import spikeinterface.sorters as si_sorters
+import spikeinterface.sorters as ss
 
-sorting = si_sorters.run_sorter(
+sorting = ss.run_sorter(
     "kilosort4",
     recording_whiten,
     folder="_tmp/ks4_out",
     remove_existing_folder=True,
     verbose=True,
-    skip_kilosort_preprocessing=True,  ## turn off whitening and other steps
-    do_CAR=False,  ## turn off CAR and filtering to be sure
+    skip_kilosort_preprocessing=True,  # turn off whitening and other steps
+    do_CAR=False,  # turn off CAR and filtering to be sure
     highpass_cutoff=0.01,
-    do_correction=False,  ## turn off motion correction
+    do_correction=False,  # turn off motion correction
 )
 print(sorting)
 

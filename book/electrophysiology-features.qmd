@@ -1,0 +1,12 @@
+# Electrophysiology Features (slides)
+
+## Probe histology reconstruction with electrophysiological landmarks
+_Pranav Rai_ (~20 mins)
+
+## Electrophysiological atlas
+_Olivier Winter_ (~20 mins)
+
+## Going further with LFP
+_Olivier Winter_ (~20 mins)
+
+[Link to the presentation](https://docs.google.com/presentation/d/154TyOVoUDQVmTZPJ2m4cTba8pGpjvyzrcesT9PwBIOY/edit?slide=id.g36797cfa110_0_232)

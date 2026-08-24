@@ -261,8 +261,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup"><span class="header-section-number">9.1</span> Setup</a></li>
-  <li><a href="#exercise-1-matching-neurons-with-unitmatchpy-15-min" id="toc-exercise-1-matching-neurons-with-unitmatchpy-15-min" class="nav-link" data-scroll-target="#exercise-1-matching-neurons-with-unitmatchpy-15-min"><span class="header-section-number">9.2</span> Exercise 1: Matching neurons with UnitMatchPy (~15 min)</a></li>
-  <li><a href="#exercise-2-matching-neurons-with-deepunitmatch-10-min" id="toc-exercise-2-matching-neurons-with-deepunitmatch-10-min" class="nav-link" data-scroll-target="#exercise-2-matching-neurons-with-deepunitmatch-10-min"><span class="header-section-number">9.3</span> Exercise 2: Matching neurons with DeepUnitMatch (~10 min)</a></li>
+  <li><a href="#exercise-1-matching-neurons-with-unitmatchpy-10-min" id="toc-exercise-1-matching-neurons-with-unitmatchpy-10-min" class="nav-link" data-scroll-target="#exercise-1-matching-neurons-with-unitmatchpy-10-min"><span class="header-section-number">9.2</span> Exercise 1: Matching neurons with UnitMatchPy (~10 min)</a></li>
+  <li><a href="#exercise-2-matching-neurons-with-deepunitmatch-15-min" id="toc-exercise-2-matching-neurons-with-deepunitmatch-15-min" class="nav-link" data-scroll-target="#exercise-2-matching-neurons-with-deepunitmatch-15-min"><span class="header-section-number">9.3</span> Exercise 2: Matching neurons with DeepUnitMatch (~15 min)</a></li>
   <li><a href="#if-you-have-more-time" id="toc-if-you-have-more-time" class="nav-link" data-scroll-target="#if-you-have-more-time"><span class="header-section-number">9.4</span> If you have more time</a></li>
   </ul>
 </nav>
@@ -299,8 +299,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The main dataset we will use below is <strong>AL032</strong>: two sessions from one mouse (also available on <a href="https://figshare.com/articles/dataset/UnitMatch_Demo_-_data/24305758?file=42664381">figshare</a>). You should download this dataset.</p>
 <p>You can optionally download the <strong>EB055</strong> dataset (four sessions from one mouse, two of which include raw SpikeGLX data) which will be used in the <a href="#extension-multi-day-tracking-and-training-your-own-model">extended exercises</a>. However, it is a large dataset so don’t worry if you cannot download as we will not use it in the main exercises.</p>
 </section>
-<section id="exercise-1-matching-neurons-with-unitmatchpy-15-min" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="exercise-1-matching-neurons-with-unitmatchpy-15-min"><span class="header-section-number">9.2</span> Exercise 1: Matching neurons with UnitMatchPy (~15 min)</h2>
+<section id="exercise-1-matching-neurons-with-unitmatchpy-10-min" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="exercise-1-matching-neurons-with-unitmatchpy-10-min"><span class="header-section-number">9.2</span> Exercise 1: Matching neurons with UnitMatchPy (~10 min)</h2>
 <ol type="1">
 <li>Open <a href="https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/UMPy_example.ipynb"><code>UMPy_example.ipynb</code></a> in your favourite Python interpreter, pointed at the two AL032 sessions.</li>
 <li>Follow the demo until you reach a plot that looks like a matrix of black and white dots.</li>
@@ -323,8 +323,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="exercise-2-matching-neurons-with-deepunitmatch-10-min" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="exercise-2-matching-neurons-with-deepunitmatch-10-min"><span class="header-section-number">9.3</span> Exercise 2: Matching neurons with DeepUnitMatch (~10 min)</h2>
+<section id="exercise-2-matching-neurons-with-deepunitmatch-15-min" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="exercise-2-matching-neurons-with-deepunitmatch-15-min"><span class="header-section-number">9.3</span> Exercise 2: Matching neurons with DeepUnitMatch (~15 min)</h2>
 <p>Now let’s compare against DeepUnitMatch, which replaces the hand-engineered matching step with a trained neural network.</p>
 <ol type="1">
 <li>Open <a href="https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DeepUnitMatch.ipynb"><code>DeepUnitMatch.ipynb</code></a>.</li>
@@ -343,6 +343,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>How do the DeepUnitMatch matches compare to what you got from UnitMatchPy in Exercise 1?</li>
 <li>Can you find a way to run the GUI on the DeepUnitMatch output? Are the results comparable to UnitMatchPy’s?</li>
+<li>Do you understand the functional validation? What do the specific AUC values tell you about the matching quality?</li>
+<li>Do you understand the tracking algorithm(s) at the end?</li>
 </ul>
 </div>
 </div>
@@ -364,6 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Multi-day tracking (~10-15 min)</strong>: use <a href="https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DeepUnitMatch.ipynb"><code>DeepUnitMatch.ipynb</code></a> on the EB055 dataset (four sessions) to see how DUM performs when tracking across more than two days.</li>
 <li><strong>Training your own model (~10-15 min)</strong>: use <a href="https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DUM_training.ipynb"><code>DUM_training.ipynb</code></a> to train a new DeepUnitMatch model on all available EB055 sessions, then infer matches across days with it. How does it compare to the pretrained model, and why might that be?</li>
 <li><strong>Extracting raw waveforms (~15 min)</strong>: use <a href="https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/extract_raw_data_demo.ipynb"><code>extract_raw_data_demo.ipynb</code></a> (or <a href="https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/extract_raw_data_demo_open_ephys.ipynb"><code>extract_raw_data_demo_open_ephys.ipynb</code></a> for OpenEphys data) on the raw SpikeGLX EB055 sessions (or your own data), then run UnitMatchPy or DeepUnitMatch on the extracted waveforms.</li>
+<li><strong>Bonus - Use the spike interface integration (~10-15 min)</strong>: use <a href="https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/UMPy_spike_interface_demo.ipynb">‘UMPy_spike_interface_demo.ipynb’</a>.</li>
 <li><strong>Bonus - try it on your own data (~15-30 min)</strong>: if you don’t have chronic recordings, run UnitMatch on a single session instead, to check for oversplits.</li>
 </ul>
 </div>

@@ -23,7 +23,7 @@ The main dataset we will use below is **AL032**: two sessions from one mouse (al
 You can optionally download the **EB055** dataset (four sessions from one mouse, two of which include raw SpikeGLX data)
 which will be used in the [extended exercises](#extension-multi-day-tracking-and-training-your-own-model). However, it is a large dataset so don't worry if you cannot download as we will not use it in the main exercises.
 
-## Exercise 1: Matching neurons with UnitMatchPy (~15 min)
+## Exercise 1: Matching neurons with UnitMatchPy (~10 min)
 
 1. Open [`UMPy_example.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/UMPy_example.ipynb) in your favourite Python interpreter, pointed at the two AL032 sessions.
 2. Follow the demo until you reach a plot that looks like a matrix of black and white dots.
@@ -35,7 +35,7 @@ which will be used in the [extended exercises](#extension-multi-day-tracking-and
 - Are there any matches *within* the same session? What would that mean (hint: think splits and merges)?
 :::
 
-## Exercise 2: Matching neurons with DeepUnitMatch (~10 min)
+## Exercise 2: Matching neurons with DeepUnitMatch (~15 min)
 
 Now let's compare against DeepUnitMatch, which replaces the hand-engineered matching step with a
 trained neural network.
@@ -47,6 +47,8 @@ trained neural network.
 ### Things to try
 - How do the DeepUnitMatch matches compare to what you got from UnitMatchPy in Exercise 1?
 - Can you find a way to run the GUI on the DeepUnitMatch output? Are the results comparable to UnitMatchPy's?
+- Do you understand the functional validation? What do the specific AUC values tell you about the matching quality?
+- Do you understand the tracking algorithm(s) at the end?
 :::
 
 ## If you have more time
@@ -59,5 +61,6 @@ something we expect everyone to reach today.
 - **Multi-day tracking (~10-15 min)**: use [`DeepUnitMatch.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DeepUnitMatch.ipynb) on the EB055 dataset (four sessions) to see how DUM performs when tracking across more than two days.
 - **Training your own model (~10-15 min)**: use [`DUM_training.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/DUM_training.ipynb) to train a new DeepUnitMatch model on all available EB055 sessions, then infer matches across days with it. How does it compare to the pretrained model, and why might that be?
 - **Extracting raw waveforms (~15 min)**: use [`extract_raw_data_demo.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/extract_raw_data_demo.ipynb) (or [`extract_raw_data_demo_open_ephys.ipynb`](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/extract_raw_data_demo_open_ephys.ipynb) for OpenEphys data) on the raw SpikeGLX EB055 sessions (or your own data), then run UnitMatchPy or DeepUnitMatch on the extracted waveforms.
+- **Bonus - Use the spike interface integration (~10-15 min)**: use ['UMPy_spike_interface_demo.ipynb'](https://github.com/EnnyvanBeest/UnitMatch/blob/main/UnitMatchPy/Demo%20Notebooks/UMPy_spike_interface_demo.ipynb).
 - **Bonus - try it on your own data (~15-30 min)**: if you don't have chronic recordings, run UnitMatch on a single session instead, to check for oversplits.
 :::

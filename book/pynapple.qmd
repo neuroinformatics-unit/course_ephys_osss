@@ -532,7 +532,6 @@ Beyond fundamental processing functions, Pynapple has loads of advanced function
 
 ### Autocorrelograms
 Given one or a group of time series, you can compute autocorrelograms.  
-<span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.
 
 ```{python}
 time_step_s = 0.01
@@ -1059,3 +1058,5 @@ filename: `dandiset-000939-no-traces-full.nwb`. See [here](course-data.qmd#spike
 
 If you are confident, you can write your own code using the snippets provided in this chapter.  
 If you want a bit more help, follow along in [this notebook](https://colab.research.google.com/drive/1o3IJtprvaTzwHxThGTdInE6GYADBULyA?usp=sharing).
+
+If you are not satisfied and want to learn more, we are keeping track of all the [Pynapple learning material here](https://pynapple.org/learning_material.html).

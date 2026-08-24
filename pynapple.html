@@ -347,7 +347,7 @@ See the <a href="./setup.html#create-the-environment">setup section</a> on how t
 <p>If you want to run this by itself, just install Pynapple using:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pip install pynapple</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then open your favourite way of running Python, import the right packages, and follow along!</p>
-<div id="27f04604" class="cell" data-execution_count="1">
+<div id="83546b95" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pynapple <span class="im">as</span> nap</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -440,7 +440,7 @@ Guillaume Viejo</p></li>
 <section id="time-series-ts" class="level3" data-number="11.3.1">
 <h3 data-number="11.3.1" class="anchored" data-anchor-id="time-series-ts"><span class="header-section-number">11.3.1</span> Time series (<code>Ts</code>)</h3>
 <p>We store a time series, for example a spike train, in a <code>Ts</code> object.</p>
-<div id="b40d5cf6" class="cell" data-execution_count="2">
+<div id="7bd9e633" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> nap.Ts(t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -453,7 +453,7 @@ Guillaume Viejo</p></li>
 shape: 5</code></pre>
 </div>
 </div>
-<div id="3d2c1372" class="cell" data-execution_count="3">
+<div id="4147a164" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -478,7 +478,7 @@ shape: 5</code></pre>
 <section id="time-series-with-data-tsd" class="level3" data-number="11.3.2">
 <h3 data-number="11.3.2" class="anchored" data-anchor-id="time-series-with-data-tsd"><span class="header-section-number">11.3.2</span> Time series with data (<code>Tsd</code>)</h3>
 <p>We store a time series with corresponding data values, for example the speed of a mouse when it is running around, in a <code>Tsd</code> object.</p>
-<div id="3a139e30" class="cell" data-execution_count="4">
+<div id="1479cd83" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tsd <span class="op">=</span> nap.Tsd(t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], d<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tsd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -492,7 +492,7 @@ shape: 5</code></pre>
 dtype: int64, shape: (5,)</code></pre>
 </div>
 </div>
-<div id="cdb450e1" class="cell" data-execution_count="5">
+<div id="ffd04af1" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -516,7 +516,7 @@ dtype: int64, shape: (5,)</code></pre>
 <h3 data-number="11.3.3" class="anchored" data-anchor-id="multiple-time-series"><span class="header-section-number">11.3.3</span> Multiple time series</h3>
 <p>If we have multiple time series, they can be collected in a <code>TsGroup</code>.<br>
 This could be a collection of spike times for multiple spiking units, for example.</p>
-<div id="247a4788" class="cell" data-execution_count="6">
+<div id="96f0b14a" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tsgroup <span class="op">=</span> nap.TsGroup({</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: nap.Ts([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]), </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>: nap.Ts([<span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">2.9</span>, <span class="fl">4.2</span>])</span>
@@ -529,7 +529,7 @@ This could be a collection of spike times for multiple spiking units, for exampl
       2    1</code></pre>
 </div>
 </div>
-<div id="d14a022b" class="cell" data-execution_count="7">
+<div id="dae60033" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> plt.get_cmap(<span class="st">"tab10"</span>)</span>
@@ -558,7 +558,7 @@ This could be a collection of spike times for multiple spiking units, for exampl
 <h3 data-number="11.3.4" class="anchored" data-anchor-id="time-series-with-multiple-data-columns-tsdframe"><span class="header-section-number">11.3.4</span> Time series with multiple data columns (<code>TsdFrame</code>)</h3>
 <p>If we have a time series with multiple data associated with the same time points, they can be stored in a <code>TsdFrame</code>.<br>
 This could be a collection of activity traces from multiple cells, e.g.&nbsp;recorded using <a href="https://www.sciencedirect.com/science/article/pii/S0896627312001729">calcium-imaging</a>.</p>
-<div id="05f73f0c" class="cell" data-execution_count="8">
+<div id="a285f689" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tsdframe <span class="op">=</span> nap.TsdFrame(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    d<span class="op">=</span>[[<span class="dv">1</span>,<span class="dv">2</span>],</span>
@@ -580,7 +580,7 @@ This could be a collection of activity traces from multiple cells, e.g.&nbsp;rec
 dtype: int64, shape: (5, 2)</code></pre>
 </div>
 </div>
-<div id="e36b4949" class="cell" data-execution_count="9">
+<div id="c836fe5c" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -605,7 +605,7 @@ dtype: int64, shape: (5, 2)</code></pre>
 <section id="intervals-intervalset" class="level3" data-number="11.3.5">
 <h3 data-number="11.3.5" class="anchored" data-anchor-id="intervals-intervalset"><span class="header-section-number">11.3.5</span> Intervals (<code>IntervalSet</code>)</h3>
 <p>Often we want to store events that occur across a period rather than at single time points, for example a behavioural stimulus that lasts multiple seconds, or a period of sleep. To represent this, we store time intervals as start and end pairs in an <code>IntervalSet</code>.</p>
-<div id="d63edaca" class="cell" data-execution_count="10">
+<div id="dec81484" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>epochs <span class="op">=</span> nap.IntervalSet(</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    start<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">7</span>],</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    end<span class="op">=</span>[<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">9</span>]</span>
@@ -619,7 +619,7 @@ dtype: int64, shape: (5, 2)</code></pre>
 shape: (3, 2), time unit: sec.</code></pre>
 </div>
 </div>
-<div id="653dcc3e" class="cell" data-execution_count="11">
+<div id="e8062eb1" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -647,7 +647,7 @@ shape: (3, 2), time unit: sec.</code></pre>
 <section id="time-supports-time_support" class="level3" data-number="11.4.1">
 <h3 data-number="11.4.1" class="anchored" data-anchor-id="time-supports-time_support"><span class="header-section-number">11.4.1</span> Time supports (<code>time_support</code>)</h3>
 <p>Every time series object has a time support, an <code>IntervalSet</code> that gives the epochs over which the time series is defined.</p>
-<div id="54cd396c" class="cell" data-execution_count="12">
+<div id="15c718d9" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> nap.Ts(t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ts.time_support</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -656,7 +656,7 @@ shape: (3, 2), time unit: sec.</code></pre>
 shape: (1, 2), time unit: sec.</code></pre>
 </div>
 </div>
-<div id="9714d5b2" class="cell" data-execution_count="13">
+<div id="8423fed9" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -683,7 +683,7 @@ shape: (1, 2), time unit: sec.</code></pre>
 <section id="restricting-restrict" class="level3" data-number="11.4.2">
 <h3 data-number="11.4.2" class="anchored" data-anchor-id="restricting-restrict"><span class="header-section-number">11.4.2</span> Restricting (<code>restrict</code>)</h3>
 <p>Any time series object can be restricted to certain <code>IntervalSet</code>, thereby updating its time support. This could be used, for example, to keep only the spike times that fall within the presentation of a behavioural stimulus.</p>
-<div id="bd8e88e6" class="cell" data-execution_count="14">
+<div id="4299e27f" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> nap.Ts(t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>restriction <span class="op">=</span> nap.IntervalSet(start<span class="op">=</span>[<span class="fl">1.3</span>, <span class="fl">3.9</span>], end<span class="op">=</span>[<span class="fl">3.5</span>, <span class="fl">4.2</span>])</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>restricted <span class="op">=</span> ts.restrict(restriction)</span>
@@ -696,7 +696,7 @@ shape: (1, 2), time unit: sec.</code></pre>
 shape: 3</code></pre>
 </div>
 </div>
-<div id="6ae47050" class="cell" data-execution_count="15">
+<div id="bc248374" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -724,7 +724,7 @@ shape: 3</code></pre>
 <section id="taking-values-value_from" class="level3" data-number="11.4.3">
 <h3 data-number="11.4.3" class="anchored" data-anchor-id="taking-values-value_from"><span class="header-section-number">11.4.3</span> Taking values (<code>value_from</code>)</h3>
 <p>Given one time series, you can <code>value_from</code> to take the value corresponding to the closest time point in another time series with data. This can be handy, for example, if you want to sample the position of an animal, at particular spike times.</p>
-<div id="f7e358a1" class="cell" data-execution_count="16">
+<div id="fac698f5" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> nap.Ts(t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>tsd <span class="op">=</span> nap.Tsd(t<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>), d<span class="op">=</span>np.random.randn(<span class="dv">100</span>))</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> ts.value_from(tsd)</span>
@@ -732,15 +732,15 @@ shape: 3</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>Time (s)
 ----------  ----------
-1            0.0952383
-2           -0.415953
-3           -0.244287
-4           -0.804491
-5           -0.0463882
+1           -0.588054
+2            0.236739
+3            1.99254
+4            0.0452298
+5            0.635722
 dtype: float64, shape: (5,)</code></pre>
 </div>
 </div>
-<div id="3c5b5eb1" class="cell" data-execution_count="17">
+<div id="b6017155" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -773,7 +773,7 @@ dtype: float64, shape: (5,)</code></pre>
 <section id="numpy" class="level3" data-number="11.5.1">
 <h3 data-number="11.5.1" class="anchored" data-anchor-id="numpy"><span class="header-section-number">11.5.1</span> Numpy</h3>
 <p>Most Numpy functions can be applied to Pynapple objects without hassle.</p>
-<div id="29ecb3d6" class="cell" data-execution_count="18">
+<div id="3e35ab42" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tsdframe <span class="op">=</span> nap.TsdFrame(</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], </span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    d<span class="op">=</span>[[<span class="dv">1</span>,<span class="dv">2</span>],</span>
@@ -795,7 +795,7 @@ dtype: float64, shape: (5,)</code></pre>
 dtype: float64, shape: (5,)</code></pre>
 </div>
 </div>
-<div id="ff12bbf4" class="cell" data-execution_count="19">
+<div id="2d90d465" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tsdframe <span class="op">=</span> nap.TsdFrame(</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], </span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    d<span class="op">=</span>[[<span class="dv">1</span>,<span class="dv">2</span>],</span>
@@ -821,7 +821,7 @@ dtype: int64, shape: (5, 1)</code></pre>
 <section id="slicing" class="level3" data-number="11.5.2">
 <h3 data-number="11.5.2" class="anchored" data-anchor-id="slicing"><span class="header-section-number">11.5.2</span> Slicing</h3>
 <p>Pynapple objects can be sliced like Numpy arrays.</p>
-<div id="954a3e40" class="cell" data-execution_count="20">
+<div id="18f9de25" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tsdframe <span class="op">=</span> nap.TsdFrame(</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], </span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    d<span class="op">=</span>[[<span class="dv">1</span>,<span class="dv">2</span>],</span>
@@ -843,7 +843,7 @@ dtype: int64, shape: (5, 1)</code></pre>
 dtype: int64, shape: (5,)</code></pre>
 </div>
 </div>
-<div id="33220088" class="cell" data-execution_count="21">
+<div id="375290db" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tsdframe <span class="op">=</span> nap.TsdFrame(</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    t<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>], </span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    d<span class="op">=</span>[[<span class="dv">1</span>,<span class="dv">2</span>],</span>
@@ -870,7 +870,7 @@ dtype: int64, shape: (2, 2)</code></pre>
 <section id="binning" class="level3" data-number="11.6.1">
 <h3 data-number="11.6.1" class="anchored" data-anchor-id="binning"><span class="header-section-number">11.6.1</span> Binning</h3>
 <p>The time points of any time series object can be counted.</p>
-<div id="01203497" class="cell" data-execution_count="22">
+<div id="8f4a2a73" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>time_step_s <span class="op">=</span> <span class="fl">0.001</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">4</span>, time_step_s)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -886,25 +886,25 @@ dtype: int64, shape: (2, 2)</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>Time (s)
 -------------------  --
-0.14300000000000002   4
-0.243                 5
-0.34299999999999997   3
-0.443                 5
-0.543                 2
-0.643                 2
-0.743                 0
+0.069                 2
+0.16899999999999998   2
+0.269                 3
+0.369                 2
+0.469                 4
+0.5690000000000001    0
+0.669                 1
 ...
-3.343                 4
-3.4429999999999996    3
-3.5429999999999997    2
-3.643                 1
-3.743                 0
-3.843                 0
-3.9429999999999996    1
+3.2689999999999997    3
+3.3689999999999998    2
+3.469                 1
+3.569                 0
+3.669                 2
+3.7689999999999997    0
+3.8689999999999998    0
 dtype: int64, shape: (39,)</code></pre>
 </div>
 </div>
-<div id="127dcc01" class="cell" data-execution_count="23">
+<div id="7b393be7" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fig, (ax_rate, ax_spikes, ax_count) <span class="op">=</span> plt.subplots(</span>
@@ -930,7 +930,7 @@ dtype: int64, shape: (39,)</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pynapple_files/figure-html/cell-24-output-1.png" width="731" height="311" class="figure-img"></p>
+<p><img src="pynapple_files/figure-html/cell-24-output-1.png" width="731" height="310" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -939,7 +939,7 @@ dtype: int64, shape: (39,)</code></pre>
 <section id="averaging" class="level3" data-number="11.6.2">
 <h3 data-number="11.6.2" class="anchored" data-anchor-id="averaging"><span class="header-section-number">11.6.2</span> Averaging</h3>
 <p>If you have continous data already, you would not count events in bins, but rather average values across bins. For example, if you wanted to downsample a signal without losing too much information.</p>
-<div id="f7a10e11" class="cell" data-execution_count="24">
+<div id="e897e74a" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>time_step_s <span class="op">=</span> <span class="fl">0.01</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, time_step_s)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -958,25 +958,25 @@ dtype: int64, shape: (39,)</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>Time (s)
 -------------------  ----------
-0.1                   0.530926
-0.30000000000000004   0.910411
-0.5                   0.0532624
-0.7                  -0.859501
-0.9                  -0.623725
-1.1                   0.502941
-1.3                   0.896674
+0.1                   0.484471
+0.30000000000000004   0.927596
+0.5                   0.0302638
+0.7                  -0.86312
+0.9                  -0.60168
+1.1                   0.465165
+1.3                   0.909568
 ...
-8.7                  -0.882965
-8.9                  -0.640689
-9.1                   0.551661
-9.299999999999999     0.849775
-9.5                   0.107213
-9.7                  -0.849233
-9.9                  -0.565701
+8.7                  -0.840172
+8.9                  -0.487635
+9.1                   0.419306
+9.299999999999999     0.980443
+9.5                   0.0741549
+9.7                  -0.83684
+9.9                  -0.511046
 dtype: float64, shape: (50,)</code></pre>
 </div>
 </div>
-<div id="cf2ea7b2" class="cell" data-execution_count="25">
+<div id="8e5a97c7" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -1001,7 +1001,7 @@ dtype: float64, shape: (50,)</code></pre>
 <section id="thresholding" class="level3" data-number="11.6.3">
 <h3 data-number="11.6.3" class="anchored" data-anchor-id="thresholding"><span class="header-section-number">11.6.3</span> Thresholding</h3>
 <p>Time series with data can be thresholded, yielding new time series objects with updated time supports.</p>
-<div id="41342b99" class="cell" data-execution_count="26">
+<div id="aae3e2c6" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>time_step_s <span class="op">=</span> <span class="fl">0.01</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, time_step_s)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1020,25 +1020,25 @@ dtype: float64, shape: (50,)</code></pre>
 <span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>above.time_support</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>index    start                end
-0        0.07500000000000001  0.095
-1        0.10500000000000001  0.11499999999999999
-2        0.125                0.365
-3        0.375                0.435
-4        0.455                0.465
-5        1.0950000000000002   1.1350000000000002
-6        1.145                1.415
+0        0.08499999999999999  0.11499999999999999
+1        0.125                0.305
+2        0.315                0.325
+3        0.335                0.355
+4        0.365                0.41500000000000004
+5        0.435                0.445
+6        1.065                1.0950000000000002
 ...      ...                  ...
-35       8.465                8.475000000000001
-36       9.035                9.055
-37       9.065000000000001    9.075
-38       9.085                9.105
-39       9.115                9.365
-40       9.385000000000002    9.405000000000001
-41       9.455000000000002    9.465
-shape: (42, 2), time unit: sec.</code></pre>
+36       8.045000000000002    8.075
+37       8.085                8.395
+38       8.415                8.425
+39       8.434999999999999    8.445
+40       9.065000000000001    9.145
+41       9.155000000000001    9.425
+42       9.434999999999999    9.445
+shape: (43, 2), time unit: sec.</code></pre>
 </div>
 </div>
-<div id="173fef13" class="cell" data-execution_count="27">
+<div id="7a5d6e5b" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -1062,7 +1062,7 @@ shape: (42, 2), time unit: sec.</code></pre>
 <section id="smoothing" class="level3" data-number="11.6.4">
 <h3 data-number="11.6.4" class="anchored" data-anchor-id="smoothing"><span class="header-section-number">11.6.4</span> Smoothing</h3>
 <p>Time series with data can be smoothed. Smoothing makes a signal less noisy by averaging out small, fast changes while keeping the main pattern. The operation consists of convolving the signal with a Gaussian kernel.</p>
-<div id="6bf7c43b" class="cell" data-execution_count="28">
+<div id="2f4f4881" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>time_step_s <span class="op">=</span> <span class="fl">0.01</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">10</span>, time_step_s)</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1079,31 +1079,31 @@ shape: (42, 2), time unit: sec.</code></pre>
 <span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>smoothed <span class="op">=</span> tsd.smooth(std<span class="op">=</span><span class="fl">0.1</span>)</span>
 <span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>smoothed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/tmp/ipykernel_3572/820394606.py:14: UserWarning: Kernel size (1001 samples) is larger than the number of samples in 1 out of 1 epochs (shortest epoch has 1000 samples). The signal is zero-padded outside each epoch, so every point of the output in those epochs is contaminated by the padding and artifacts are expected. Consider decreasing the kernel/window size.
+<pre><code>/tmp/ipykernel_3427/820394606.py:14: UserWarning: Kernel size (1001 samples) is larger than the number of samples in 1 out of 1 epochs (shortest epoch has 1000 samples). The signal is zero-padded outside each epoch, so every point of the output in those epochs is contaminated by the padding and artifacts are expected. Consider decreasing the kernel/window size.
   smoothed = tsd.smooth(std=0.1)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>Time (s)
 -----------------  ---------
-0.0                 0.224907
-0.01                0.251335
-0.02                0.279247
-0.03                0.308509
-0.04                0.338964
-0.05                0.370427
-0.06                0.402693
+0.0                 0.235039
+0.01                0.261389
+0.02                0.289002
+0.03                0.317727
+0.04                0.347395
+0.05                0.377818
+0.06                0.408794
 ...
-9.93               -0.478766
-9.94               -0.444806
-9.950000000000001  -0.41119
-9.96               -0.378174
-9.97               -0.345991
-9.98               -0.314857
-9.99               -0.284958
+9.93               -0.38862
+9.94               -0.356237
+9.950000000000001  -0.324769
+9.96               -0.294434
+9.97               -0.265422
+9.98               -0.237888
+9.99               -0.211956
 dtype: float64, shape: (1000,)</code></pre>
 </div>
 </div>
-<div id="3418acfe" class="cell" data-execution_count="29">
+<div id="e70fc586" class="cell" data-execution_count="29">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -1131,9 +1131,8 @@ dtype: float64, shape: (1000,)</code></pre>
 <p>Beyond fundamental processing functions, Pynapple has loads of advanced functionality for neuroscientific analysis.</p>
 <section id="autocorrelograms" class="level3" data-number="11.7.1">
 <h3 data-number="11.7.1" class="anchored" data-anchor-id="autocorrelograms"><span class="header-section-number">11.7.1</span> Autocorrelograms</h3>
-<p>Given one or a group of time series, you can compute autocorrelograms.<br>
-<span style="color:red">LINK TO PREVIOUS CHAPTERS</span>.</p>
-<div id="d1eb8e5e" class="cell" data-execution_count="30">
+<p>Given one or a group of time series, you can compute autocorrelograms.</p>
+<div id="0072220a" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>time_step_s <span class="op">=</span> <span class="fl">0.01</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">4</span>, time_step_s)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1166,98 +1165,98 @@ dtype: float64, shape: (1000,)</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.9</th>
-<td>23.647059</td>
-<td>43.272727</td>
+<td>22.471910</td>
+<td>41.4375</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.8</th>
-<td>21.176471</td>
-<td>37.878788</td>
+<td>18.988764</td>
+<td>34.4375</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.7</th>
-<td>15.058824</td>
-<td>30.424242</td>
+<td>13.932584</td>
+<td>26.4375</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.6</th>
-<td>10.352941</td>
-<td>21.818182</td>
+<td>10.898876</td>
+<td>18.7500</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.5</th>
-<td>7.882353</td>
-<td>18.303030</td>
+<td>10.224719</td>
+<td>17.3125</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.4</th>
-<td>10.470588</td>
-<td>23.575758</td>
+<td>13.820225</td>
+<td>21.6250</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.3</th>
-<td>20.000000</td>
-<td>32.363636</td>
+<td>18.539326</td>
+<td>32.6875</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.2</th>
-<td>22.941176</td>
-<td>45.272727</td>
+<td>24.943820</td>
+<td>45.5000</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.1</th>
-<td>30.588235</td>
-<td>55.090909</td>
+<td>29.101124</td>
+<td>54.8125</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.0</th>
 <td>0.000000</td>
-<td>0.000000</td>
+<td>0.0000</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.1</th>
-<td>30.235294</td>
-<td>54.666667</td>
+<td>30.000000</td>
+<td>54.9375</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.2</th>
-<td>23.058824</td>
-<td>45.393939</td>
+<td>24.269663</td>
+<td>45.3125</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.3</th>
-<td>19.882353</td>
-<td>32.181818</td>
+<td>18.876404</td>
+<td>32.1875</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.4</th>
-<td>11.176471</td>
-<td>23.333333</td>
+<td>14.044944</td>
+<td>21.6250</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.5</th>
-<td>7.294118</td>
-<td>18.060606</td>
+<td>9.775281</td>
+<td>17.5625</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.6</th>
-<td>10.470588</td>
-<td>21.575758</td>
+<td>10.898876</td>
+<td>18.6250</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.7</th>
-<td>14.941176</td>
-<td>29.636364</td>
+<td>13.595506</td>
+<td>25.6875</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.8</th>
-<td>20.588235</td>
-<td>37.515152</td>
+<td>19.101124</td>
+<td>33.8125</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.9</th>
-<td>24.000000</td>
-<td>43.636364</td>
+<td>22.359551</td>
+<td>41.4375</td>
 </tr>
 </tbody>
 </table>
@@ -1265,7 +1264,7 @@ dtype: float64, shape: (1000,)</code></pre>
 </div>
 </div>
 </div>
-<div id="3b1d4d47" class="cell" data-execution_count="31">
+<div id="e6cc010a" class="cell" data-execution_count="31">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>ax<span class="op">=</span>autocorrelogram.plot()</span>
@@ -1288,7 +1287,7 @@ dtype: float64, shape: (1000,)</code></pre>
 <section id="crosscorrelograms" class="level3" data-number="11.7.2">
 <h3 data-number="11.7.2" class="anchored" data-anchor-id="crosscorrelograms"><span class="header-section-number">11.7.2</span> Crosscorrelograms</h3>
 <p>Given one or two groups of time series, you can also compute crosscorrelograms.</p>
-<div id="f74eeb95" class="cell" data-execution_count="32">
+<div id="bb808db4" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>crosscorrelogram <span class="op">=</span> nap.compute_crosscorrelogram(</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    units, binsize<span class="op">=</span><span class="fl">0.1</span>, windowsize<span class="op">=</span><span class="fl">1.0</span>, norm<span class="op">=</span><span class="va">False</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -1311,79 +1310,79 @@ dtype: float64, shape: (1000,)</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.9</th>
-<td>45.058824</td>
+<td>42.022472</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.8</th>
-<td>37.882353</td>
+<td>36.853933</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.7</th>
-<td>30.352941</td>
+<td>26.292135</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.6</th>
-<td>20.352941</td>
+<td>19.662921</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.5</th>
-<td>16.705882</td>
+<td>18.876404</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.4</th>
-<td>20.352941</td>
+<td>20.112360</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.3</th>
-<td>33.176471</td>
+<td>30.674157</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">-0.2</th>
-<td>46.352941</td>
+<td>44.044944</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">-0.1</th>
-<td>57.294118</td>
+<td>53.820225</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.0</th>
-<td>62.941176</td>
+<td>60.224719</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.1</th>
-<td>60.235294</td>
+<td>57.191011</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.2</th>
-<td>46.117647</td>
+<td>48.988764</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.3</th>
-<td>33.294118</td>
+<td>36.404494</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.4</th>
-<td>24.352941</td>
+<td>25.056180</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.5</th>
-<td>17.764706</td>
+<td>17.865169</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.6</th>
-<td>19.647059</td>
+<td>17.865169</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.7</th>
-<td>28.117647</td>
+<td>23.707865</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.8</th>
-<td>40.117647</td>
+<td>32.471910</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.9</th>
-<td>46.588235</td>
+<td>40.000000</td>
 </tr>
 </tbody>
 </table>
@@ -1391,7 +1390,7 @@ dtype: float64, shape: (1000,)</code></pre>
 </div>
 </div>
 </div>
-<div id="dd2ff00c" class="cell" data-execution_count="33">
+<div id="a1834a6c" class="cell" data-execution_count="33">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>ax<span class="op">=</span>crosscorrelogram.plot()</span>
@@ -1415,7 +1414,7 @@ dtype: float64, shape: (1000,)</code></pre>
 <h3 data-number="11.7.3" class="anchored" data-anchor-id="signal-processing"><span class="header-section-number">11.7.3</span> Signal processing</h3>
 <p>Pynapple wraps a lot of scipy functions for signal processing.</p>
 <p>Let’s simulate a noisy multi-frequency signal (the combination of multiple sine waves oscillating at different frequencies):</p>
-<div id="04f13533" class="cell" data-execution_count="34">
+<div id="4ff36a1f" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sampling_rate_hz <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, sampling_rate_hz <span class="op">*</span> <span class="dv">2</span>)</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1435,26 +1434,26 @@ dtype: float64, shape: (1000,)</code></pre>
 <span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>tsd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
 <pre><code>Time (s)
----------------------  --------
-0.0                    3.38355
-0.0010005002501250625  2.52172
-0.002001000500250125   2.31991
-0.003001500750375187   2.41274
-0.00400200100050025    3.21736
-0.0050025012506253125  2.32863
-0.006003001500750374   0.845586
+---------------------  -------
+0.0                    2.94686
+0.0010005002501250625  2.55297
+0.002001000500250125   2.5392
+0.003001500750375187   2.90785
+0.00400200100050025    2.82893
+0.0050025012506253125  2.79432
+0.006003001500750374   2.06651
 ...
-1.9939969984992494     1.03292
-1.9949974987493746     1.92378
-1.9959979989994996     3.02811
-1.9969984992496246     2.12536
-1.9979989994997498     2.70401
-1.9989994997498748     2.91986
-2.0                    3.08175
+1.9939969984992494     2.15138
+1.9949974987493746     2.45225
+1.9959979989994996     2.16267
+1.9969984992496246     3.02322
+1.9979989994997498     2.89444
+1.9989994997498748     2.37123
+2.0                    2.61465
 dtype: float64, shape: (2000,)</code></pre>
 </div>
 </div>
-<div id="faa8ccf8" class="cell" data-execution_count="35">
+<div id="0d736cae" class="cell" data-execution_count="35">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fig, (ax2, ax10, ax50, ax) <span class="op">=</span> plt.subplots(</span>
@@ -1494,7 +1493,7 @@ dtype: float64, shape: (2000,)</code></pre>
 <section id="bandpass-filter" class="level4" data-number="11.7.3.1">
 <h4 data-number="11.7.3.1" class="anchored" data-anchor-id="bandpass-filter"><span class="header-section-number">11.7.3.1</span> Bandpass filter</h4>
 <p>We can bandpass filter to extract certain frequency bands. For example, if we apply a bandpass filter with a 8Hz high-pass and 12Hz low-pass cutoff, we will keep only the part of the signal in the 8-12hz range.</p>
-<div id="47006d64" class="cell" data-execution_count="36">
+<div id="07b371e2" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>filtered <span class="op">=</span> nap.apply_bandpass_filter(</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>tsd, </span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    cutoff<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">12</span>), </span>
@@ -1505,25 +1504,25 @@ dtype: float64, shape: (2000,)</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="36">
 <pre><code>Time (s)
 ---------------------  ----------
-0.0                    0.36434
-0.0010005002501250625  0.33308
-0.002001000500250125   0.300438
-0.003001500750375187   0.26651
-0.00400200100050025    0.231401
-0.0050025012506253125  0.195219
-0.006003001500750374   0.158077
+0.0                    0.287497
+0.0010005002501250625  0.268878
+0.002001000500250125   0.24914
+0.003001500750375187   0.228327
+0.00400200100050025    0.206488
+0.0050025012506253125  0.183679
+0.006003001500750374   0.159955
 ...
-1.9939969984992494     0.00297805
-1.9949974987493746     0.00268916
-1.9959979989994996     0.00241202
-1.9969984992496246     0.00214844
-1.9979989994997498     0.00189988
-1.9989994997498748     0.00166745
-2.0                    0.00145193
+1.9939969984992494     0.0033581
+1.9949974987493746     0.0030282
+1.9959979989994996     0.00271257
+1.9969984992496246     0.00241313
+1.9979989994997498     0.00213138
+1.9989994997498748     0.00186846
+2.0                    0.00162514
 dtype: float64, shape: (2000,)</code></pre>
 </div>
 </div>
-<div id="f320c0a8" class="cell" data-execution_count="37">
+<div id="e25e6483" class="cell" data-execution_count="37">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>fig, (ax_original, ax_filtered) <span class="op">=</span> plt.subplots(</span>
@@ -1557,7 +1556,7 @@ dtype: float64, shape: (2000,)</code></pre>
 <h4 data-number="11.7.3.2" class="anchored" data-anchor-id="power-spectral-density"><span class="header-section-number">11.7.3.2</span> Power-spectral density</h4>
 <p>We can compute the <a href="The power spectral density (PSD) shows how strongly different frequencies contribute to a signal. It is only shown up to half the sampling rate (the Nyquist frequency), because higher frequencies cannot be reliably recovered from the recorded data. See the SciPy periodogram documentation for more details: https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.periodogram.html.">power-spectral density (PSD)</a> to find frequencies of interest.<br>
 The PSD shows how strongly different frequencies contribute to a signal. You only ever compute it up to half the sampling rate (the Nyquist frequency), because higher frequencies cannot be reliably recovered from the recorded data.</p>
-<div id="b608e5d5" class="cell" data-execution_count="38">
+<div id="946f3ca1" class="cell" data-execution_count="38">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>psd <span class="op">=</span> nap.compute_power_spectral_density(</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    tsd, </span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    fs<span class="op">=</span>sampling_rate_hz</span>
@@ -1577,23 +1576,23 @@ The PSD shows how strongly different frequencies contribute to a signal. You onl
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0.0</th>
-<td>0.000030</td>
+<td>0.000432</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">0.5</th>
-<td>0.000470</td>
+<td>0.002216</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">1.0</th>
-<td>0.000438</td>
+<td>0.000193</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1.5</th>
-<td>0.000279</td>
+<td>0.000177</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2.0</th>
-<td>1.026352</td>
+<td>1.013736</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">...</th>
@@ -1601,23 +1600,23 @@ The PSD shows how strongly different frequencies contribute to a signal. You onl
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">497.5</th>
-<td>0.000019</td>
+<td>0.000036</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">498.0</th>
-<td>0.000839</td>
+<td>0.000582</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">498.5</th>
-<td>0.000821</td>
+<td>0.000376</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">499.0</th>
-<td>0.000568</td>
+<td>0.000010</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">499.5</th>
-<td>0.000243</td>
+<td>0.000469</td>
 </tr>
 </tbody>
 </table>
@@ -1626,7 +1625,7 @@ The PSD shows how strongly different frequencies contribute to a signal. You onl
 </div>
 </div>
 </div>
-<div id="ba7c615c" class="cell" data-execution_count="39">
+<div id="4c761308" class="cell" data-execution_count="39">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">3</span>))</span>
@@ -1651,7 +1650,7 @@ The PSD shows how strongly different frequencies contribute to a signal. You onl
 <h3 data-number="11.7.4" class="anchored" data-anchor-id="perievent"><span class="header-section-number">11.7.4</span> Perievent</h3>
 <p>A typical neuroscientific analysis consists of aligning activity to a set of stimuli or events. For example, spiking activity around a stimulus presentation.</p>
 <p>Let’s start by simulating a spiking unit that has clear stimulus-locked activity:</p>
-<div id="3b27d602" class="cell" data-execution_count="40">
+<div id="afa5f4f7" class="cell" data-execution_count="40">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>stimuli <span class="op">=</span> nap.Ts(t<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="dv">1000</span>, <span class="dv">1</span>), time_units<span class="op">=</span><span class="st">"s"</span>)</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>baseline <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1000</span>, <span class="dv">500</span>)</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>burst <span class="op">=</span> np.concatenate([</span>
@@ -1664,25 +1663,25 @@ The PSD shows how strongly different frequencies contribute to a signal. You onl
 <span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>ts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
 <pre><code>Time (s)
--0.015987668859582846
-0.08796207738813125
-0.1584567209994509
-1.1162619052558733
-1.1188212664850363
-1.1929291254750738
-2.018159454164421
+0.031775644742401715
+0.04553621954147799
+0.08433690446109801
+0.17969696468267404
+0.701440034283185
+1.0065643788459644
+1.1197301998426383
 ...
-998.1082385066165
-998.1181098367446
-998.1383577283589
-998.5953166923323
-999.0263194446778
-999.10221356702
-999.1551571143465
+998.0694431154187
+998.1330477003497
+998.149842154175
+998.1865174541169
+999.0757695741096
+999.1157489498704
+999.146661504079
 shape: 3500</code></pre>
 </div>
 </div>
-<div id="513dc553" class="cell" data-execution_count="41">
+<div id="215bd5f0" class="cell" data-execution_count="41">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>segment <span class="op">=</span> nap.IntervalSet(<span class="dv">100</span>, <span class="fl">103.9</span>)</span>
@@ -1712,7 +1711,7 @@ shape: 3500</code></pre>
 </div>
 </div>
 <p>Now, we can easily compute a peri-event time histogram (PETH) as follows:</p>
-<div id="2e8f3977" class="cell" data-execution_count="42">
+<div id="8eec3c7a" class="cell" data-execution_count="42">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>peth <span class="op">=</span> nap.compute_perievent(</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>ts, </span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>    events<span class="op">=</span>stimuli, </span>
@@ -1721,24 +1720,24 @@ shape: 3500</code></pre>
 <div class="cell-output cell-output-display" data-execution_count="42">
 <pre><code>Index    rate    events
 -------  ------  --------
-0        6.0     0.0
-1        6.0     1.0
-2        6.0     2.0
-3        6.0     3.0
-4        6.0     4.0
-5        6.0     5.0
-6        6.0     6.0
+0        8.0     1.0
+1        6.0     2.0
+2        6.0     3.0
+3        6.0     4.0
+4        6.0     5.0
+5        8.0     6.0
+6        10.0    7.0
 ...      ...     ...
-993      6.0     993.0
-994      6.0     994.0
-995      6.0     995.0
-996      6.0     996.0
-997      6.0     997.0
-998      8.0     998.0
-999      6.0     999.0</code></pre>
+992      6.0     993.0
+993      6.0     994.0
+994      6.0     995.0
+995      6.0     996.0
+996      6.0     997.0
+997      8.0     998.0
+998      6.0     999.0</code></pre>
 </div>
 </div>
-<div id="37e78b25" class="cell" data-execution_count="43">
+<div id="1f1de9cc" class="cell" data-execution_count="43">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
@@ -1765,7 +1764,7 @@ shape: 3500</code></pre>
 <p>A typical neuroscientific analysis is that of computing tuning curves: the mean activity curve with respect to a variable of interest. Well known examples are the response of <a href="https://physoc.onlinelibrary.wiley.com/doi/abs/10.1113/jphysiol.1962.sp006837">neurons in the visual cortex with respect to the orientation of a bar stimulus</a>, the response of <a href="https://www.jneurosci.org/content/10/2/420.long">neurons in the postsubiculum with respect to head direction</a>, or the response of <a href="https://www.sciencedirect.com/science/article/pii/0006899371903581?via%3Dihub">hippocampal neurons with respect to position on a track</a>.</p>
 <p>Tuning curves can be computed from both discrete (spike times) and continuous activity. Pynapple’s <code>compute_tuning_curves</code> function handles both cases, depending on whether you pass a <code>Ts</code> or <code>Tsd</code> as data. In what follows, we’ll simulate computing tuning curves from a circular variable (e.g.&nbsp;bar angle, or head direction).</p>
 <p>Let’s start by simulating some spiking units that are clearly modulated by a circular feature:</p>
-<div id="61a6c48f" class="cell" data-execution_count="44">
+<div id="67f60775" class="cell" data-execution_count="44">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>n_neurons <span class="op">=</span> <span class="dv">6</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Divide the circular feature space (0 to 2π) into bins</span></span>
@@ -1815,7 +1814,7 @@ shape: 3500</code></pre>
 </div>
 <p>Let’s visualise what we generated.<br>
 We now have a random walk in the feature space:</p>
-<div id="5e6f1d4d" class="cell" data-execution_count="45">
+<div id="b55b363a" class="cell" data-execution_count="45">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
@@ -1837,7 +1836,7 @@ We now have a random walk in the feature space:</p>
 </div>
 </div>
 <p>As well as the activity of 6 neurons, modulated by the feature:</p>
-<div id="a06de0e5" class="cell" data-execution_count="46">
+<div id="6e12e808" class="cell" data-execution_count="46">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
@@ -1859,7 +1858,7 @@ We now have a random walk in the feature space:</p>
 </div>
 <p>We can now use Pynapple to easily compute tuning curves with respect to the circular feature.<br>
 The output is an <a href="https://docs.xarray.dev/en/stable/generated/xarray.DataArray.html"><code>xarray.DataArray</code></a>:</p>
-<div id="5bb67d19" class="cell" data-execution_count="47">
+<div id="d231bcea" class="cell" data-execution_count="47">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>tuning_curves <span class="op">=</span> nap.compute_tuning_curves(</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>tsgroup,</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>    features<span class="op">=</span>feature,</span>
@@ -2412,12 +2411,13 @@ dl.xr-attrs {
   stroke-width: 0.8px;
 }
 </style><pre class="xr-text-repr-fallback">&lt;xarray.DataArray (unit: 6, feature: 120)&gt; Size: 6kB
-array([[64.83516484, 67.08860759, 61.8556701 , 60.        , 55.43478261,
-        53.76344086, 57.14285714, 59.25925926, 47.36842105, 37.93103448,
-        34.61538462, 37.5       , 21.97802198, 27.27272727, 14.63414634,
-        28.72340426, 19.41747573, 14.60674157,  7.        ,  9.75609756,
-         8.33333333,  4.87804878,  6.41025641,  4.05405405,  1.20481928,
-         0.92592593,  0.        ,  0.94339623,  0.        ,  0.        ,
+array([[66.66666667, 77.52808989, 64.64646465, 62.63736264, 53.68421053,
+        59.43396226, 55.14018692, 52.88461538, 44.15584416, 50.63291139,
+        38.55421687, 37.34939759, 28.72340426, 27.5       , 26.96629213,
+        22.09302326, 11.50442478, 20.40816327, 10.46511628, 13.86138614,
+         4.90196078,  0.        ,  7.1942446 ,  2.12765957,  0.96153846,
+         2.35294118,  0.        ,  0.        ,  0.        ,  0.        ,
+         1.14942529,  0.        ,  0.        ,  1.88679245,  1.72413793,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
@@ -2429,9 +2429,8 @@ array([[64.83516484, 67.08860759, 61.8556701 , 60.        , 55.43478261,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
-         0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
-         0.        ,  0.        ,  0.        ,  2.63157895,  2.85714286,
-         1.75438596,  1.69491525,  0.        ,  0.        ,  3.125     ,
+         0.        ,  1.11111111,  0.        ,  0.        ,  1.61290323,
+         4.54545455,  7.89473684,  1.47058824,  4.65116279, 10.14492754,
 ...
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
@@ -2442,30 +2441,31 @@ array([[64.83516484, 67.08860759, 61.8556701 , 60.        , 55.43478261,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
-         0.        ,  0.        ,  0.        ,  0.        ,  1.35135135,
-         0.        ,  0.        ,  3.07692308,  2.66666667,  1.19047619,
-         1.98019802,  4.71698113,  7.63358779,  4.70588235,  3.27868852,
-        10.31746032,  8.23529412, 14.49275362, 12.22222222, 20.27027027,
-        23.1884058 , 25.35211268, 20.        , 25.37313433, 38.35616438,
-        54.54545455, 40.        , 55.26315789, 50.        , 41.42857143,
-        56.14035088, 55.93220339, 66.66666667, 68.33333333, 57.8125    ,
-        67.69230769, 54.38596491, 53.22580645, 67.64705882, 54.83870968,
-        59.64912281, 58.18181818, 56.14035088, 46.37681159, 48.91304348,
-        35.63218391, 41.55844156, 23.59550562, 23.80952381, 26.31578947,
-        18.60465116, 17.33333333, 15.        ,  8.79120879,  6.89655172]])
+         0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+         1.14942529,  0.        ,  0.        ,  1.31578947,  1.1627907 ,
+         4.59770115,  3.44827586,  1.11111111,  2.85714286,  6.49350649,
+         5.95238095,  7.69230769,  9.63855422,  8.49056604, 19.75308642,
+        23.52941176, 21.97802198, 26.13636364, 28.57142857, 26.82926829,
+        37.14285714, 47.77777778, 45.20547945, 43.47826087, 56.4516129 ,
+        54.54545455, 61.84210526, 60.29411765, 54.65116279, 68.11594203,
+        52.94117647, 68.29268293, 54.41176471, 59.15492958, 68.85245902,
+        70.49180328, 55.40540541, 60.46511628, 40.69767442, 48.7804878 ,
+        37.33333333, 35.64356436, 35.        , 36.55913978, 25.        ,
+        14.1509434 , 22.34042553, 19.31818182,  9.87654321,  7.14285714]])
 Coordinates:
   * unit     (unit) int64 48B 1 2 3 4 5 6
   * feature  (feature) float64 960B 0.02618 0.07854 0.1309 ... 6.152 6.205 6.257
 Attributes:
-    occupancy:  [ 91.  79.  97.  95.  92.  93.  77.  81.  76.  58.  78.  96. ...
+    occupancy:  [111.  89.  99.  91.  95. 106. 107. 104.  77.  79.  83.  83. ...
     bin_edges:  [array([0.        , 0.05235988, 0.10471976, 0.15707963, 0.209...
     fs:         100.0
-    rates:      [13.12131213 14.73147315 14.68146815 13.29132913 13.12131213 ...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-obj-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">unit</span>: 6</li><li><span class="xr-has-index">feature</span>: 120</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-5322abe7-d326-4009-8d5e-de395d6b36ed" class="xr-array-in" type="checkbox" checked=""><label for="section-5322abe7-d326-4009-8d5e-de395d6b36ed" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>64.84 67.09 61.86 60.0 55.43 53.76 ... 18.6 17.33 15.0 8.791 6.897</span></div><div class="xr-array-data"><pre>array([[64.83516484, 67.08860759, 61.8556701 , 60.        , 55.43478261,
-        53.76344086, 57.14285714, 59.25925926, 47.36842105, 37.93103448,
-        34.61538462, 37.5       , 21.97802198, 27.27272727, 14.63414634,
-        28.72340426, 19.41747573, 14.60674157,  7.        ,  9.75609756,
-         8.33333333,  4.87804878,  6.41025641,  4.05405405,  1.20481928,
-         0.92592593,  0.        ,  0.94339623,  0.        ,  0.        ,
+    rates:      [14.83148315 14.65146515 12.22122212 12.72127213 13.48134813 ...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-obj-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">unit</span>: 6</li><li><span class="xr-has-index">feature</span>: 120</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-3470f114-eb34-445a-902d-82abd55a8ead" class="xr-array-in" type="checkbox" checked=""><label for="section-3470f114-eb34-445a-902d-82abd55a8ead" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>66.67 77.53 64.65 62.64 53.68 59.43 ... 14.15 22.34 19.32 9.877 7.143</span></div><div class="xr-array-data"><pre>array([[66.66666667, 77.52808989, 64.64646465, 62.63736264, 53.68421053,
+        59.43396226, 55.14018692, 52.88461538, 44.15584416, 50.63291139,
+        38.55421687, 37.34939759, 28.72340426, 27.5       , 26.96629213,
+        22.09302326, 11.50442478, 20.40816327, 10.46511628, 13.86138614,
+         4.90196078,  0.        ,  7.1942446 ,  2.12765957,  0.96153846,
+         2.35294118,  0.        ,  0.        ,  0.        ,  0.        ,
+         1.14942529,  0.        ,  0.        ,  1.88679245,  1.72413793,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
@@ -2477,9 +2477,8 @@ Attributes:
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
-         0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
-         0.        ,  0.        ,  0.        ,  2.63157895,  2.85714286,
-         1.75438596,  1.69491525,  0.        ,  0.        ,  3.125     ,
+         0.        ,  1.11111111,  0.        ,  0.        ,  1.61290323,
+         4.54545455,  7.89473684,  1.47058824,  4.65116279, 10.14492754,
 ...
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
@@ -2490,17 +2489,17 @@ Attributes:
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
-         0.        ,  0.        ,  0.        ,  0.        ,  1.35135135,
-         0.        ,  0.        ,  3.07692308,  2.66666667,  1.19047619,
-         1.98019802,  4.71698113,  7.63358779,  4.70588235,  3.27868852,
-        10.31746032,  8.23529412, 14.49275362, 12.22222222, 20.27027027,
-        23.1884058 , 25.35211268, 20.        , 25.37313433, 38.35616438,
-        54.54545455, 40.        , 55.26315789, 50.        , 41.42857143,
-        56.14035088, 55.93220339, 66.66666667, 68.33333333, 57.8125    ,
-        67.69230769, 54.38596491, 53.22580645, 67.64705882, 54.83870968,
-        59.64912281, 58.18181818, 56.14035088, 46.37681159, 48.91304348,
-        35.63218391, 41.55844156, 23.59550562, 23.80952381, 26.31578947,
-        18.60465116, 17.33333333, 15.        ,  8.79120879,  6.89655172]])</pre></div></div></li><li class="xr-section-item"><input id="section-16958971-884a-4592-b26e-0b8a91606b66" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-16958971-884a-4592-b26e-0b8a91606b66" class="xr-section-summary" title="Expand/collapse section">Coordinates: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">unit</span></div><div class="xr-var-dims">(unit)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1 2 3 4 5 6</div><input id="attrs-74fae9aa-2673-4e2e-b007-e2298a66a0eb" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-74fae9aa-2673-4e2e-b007-e2298a66a0eb" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-ccb544a0-3063-491a-9928-ae1e45b211a8" class="xr-var-data-in" type="checkbox"><label for="data-ccb544a0-3063-491a-9928-ae1e45b211a8" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([1, 2, 3, 4, 5, 6])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">feature</span></div><div class="xr-var-dims">(feature)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">0.02618 0.07854 ... 6.205 6.257</div><input id="attrs-1c24de4f-8c00-456a-93e1-a33275bc2926" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-1c24de4f-8c00-456a-93e1-a33275bc2926" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-59731551-4490-4d8f-8901-b47bf60a170c" class="xr-var-data-in" type="checkbox"><label for="data-59731551-4490-4d8f-8901-b47bf60a170c" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([0.02618 , 0.07854 , 0.1309  , 0.18326 , 0.235619, 0.287979, 0.340339,
+         0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+         1.14942529,  0.        ,  0.        ,  1.31578947,  1.1627907 ,
+         4.59770115,  3.44827586,  1.11111111,  2.85714286,  6.49350649,
+         5.95238095,  7.69230769,  9.63855422,  8.49056604, 19.75308642,
+        23.52941176, 21.97802198, 26.13636364, 28.57142857, 26.82926829,
+        37.14285714, 47.77777778, 45.20547945, 43.47826087, 56.4516129 ,
+        54.54545455, 61.84210526, 60.29411765, 54.65116279, 68.11594203,
+        52.94117647, 68.29268293, 54.41176471, 59.15492958, 68.85245902,
+        70.49180328, 55.40540541, 60.46511628, 40.69767442, 48.7804878 ,
+        37.33333333, 35.64356436, 35.        , 36.55913978, 25.        ,
+        14.1509434 , 22.34042553, 19.31818182,  9.87654321,  7.14285714]])</pre></div></div></li><li class="xr-section-item"><input id="section-0d1b7dbe-becd-4534-890c-330ddf9f4980" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-0d1b7dbe-becd-4534-890c-330ddf9f4980" class="xr-section-summary" title="Expand/collapse section">Coordinates: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">unit</span></div><div class="xr-var-dims">(unit)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1 2 3 4 5 6</div><input id="attrs-f3d00f5b-7a48-4b68-bee9-433be260636a" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-f3d00f5b-7a48-4b68-bee9-433be260636a" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-ebefed41-7ac1-4509-8fc9-53540804ae73" class="xr-var-data-in" type="checkbox"><label for="data-ebefed41-7ac1-4509-8fc9-53540804ae73" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([1, 2, 3, 4, 5, 6])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">feature</span></div><div class="xr-var-dims">(feature)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">0.02618 0.07854 ... 6.205 6.257</div><input id="attrs-c9f32c85-891b-4ea2-89a0-2b6bb6571a9c" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-c9f32c85-891b-4ea2-89a0-2b6bb6571a9c" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-cc2a5123-7b82-43e6-a7c4-c245de39b2fb" class="xr-var-data-in" type="checkbox"><label for="data-cc2a5123-7b82-43e6-a7c4-c245de39b2fb" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([0.02618 , 0.07854 , 0.1309  , 0.18326 , 0.235619, 0.287979, 0.340339,
        0.392699, 0.445059, 0.497419, 0.549779, 0.602139, 0.654498, 0.706858,
        0.759218, 0.811578, 0.863938, 0.916298, 0.968658, 1.021018, 1.073377,
        1.125737, 1.178097, 1.230457, 1.282817, 1.335177, 1.387537, 1.439897,
@@ -2517,15 +2516,15 @@ Attributes:
        5.157448, 5.209808, 5.262168, 5.314528, 5.366887, 5.419247, 5.471607,
        5.523967, 5.576327, 5.628687, 5.681047, 5.733407, 5.785766, 5.838126,
        5.890486, 5.942846, 5.995206, 6.047566, 6.099926, 6.152286, 6.204645,
-       6.257005])</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-b4d1772f-5a6a-4906-8ddf-bafd4f1f6a14" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-b4d1772f-5a6a-4906-8ddf-bafd4f1f6a14" class="xr-section-summary" title="Expand/collapse section">Attributes: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>occupancy :</span></dt><dd>[ 91.  79.  97.  95.  92.  93.  77.  81.  76.  58.  78.  96.  91.  77.
-  82.  94. 103.  89. 100.  82.  72.  82.  78.  74.  83. 108. 107. 106.
- 126. 103. 102.  87. 104. 114.  81.  93.  86. 109. 116.  87.  87. 104.
-  80.  80.  80.  83.  95.  79.  88. 100.  86.  66.  76.  83.  86.  74.
-  75.  77.  72.  75.  83.  69.  79.  85.  71.  74. 104. 105.  74.  74.
-  73.  73.  65.  75.  84. 101. 106. 131.  85. 122. 126.  85.  69.  90.
-  74.  69.  71.  70.  67.  73.  55.  65.  76.  76.  70.  57.  59.  60.
-  60.  64.  65.  57.  62.  68.  62.  57.  55.  57.  69.  92.  87.  77.
-  89. 105.  95.  86.  75. 100.  91.  87.]</dd><dt><span>bin_edges :</span></dt><dd>[array([0.        , 0.05235988, 0.10471976, 0.15707963, 0.20943951,
+       6.257005])</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-ea5c6cf5-312c-44b9-a742-6859da0ea866" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-ea5c6cf5-312c-44b9-a742-6859da0ea866" class="xr-section-summary" title="Expand/collapse section">Attributes: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>occupancy :</span></dt><dd>[111.  89.  99.  91.  95. 106. 107. 104.  77.  79.  83.  83.  94.  80.
+  89.  86. 113.  98.  86. 101. 102. 120. 139.  94. 104.  85.  76.  78.
+  80.  85.  87.  71.  56.  53.  58.  81.  88.  86.  89.  78.  68.  67.
+  67.  63.  97.  68.  77.  72.  82.  84.  60.  73.  79.  82.  74.  71.
+ 101.  89.  74.  67.  64.  63.  76.  79.  79.  85.  83.  86.  85.  81.
+  87.  98.  70.  76.  86.  87.  87.  90. 105.  77.  84.  91.  83. 106.
+  81.  85.  91.  88.  77.  82.  70.  90.  73.  69.  62.  88.  76.  68.
+  86.  69.  68.  82.  68.  71.  61.  61.  74.  86.  86.  82.  75. 101.
+  80.  93. 100. 106.  94.  88.  81.  84.]</dd><dt><span>bin_edges :</span></dt><dd>[array([0.        , 0.05235988, 0.10471976, 0.15707963, 0.20943951,
        0.26179939, 0.31415927, 0.36651914, 0.41887902, 0.4712389 ,
        0.52359878, 0.57595865, 0.62831853, 0.68067841, 0.73303829,
        0.78539816, 0.83775804, 0.89011792, 0.9424778 , 0.99483767,
@@ -2549,12 +2548,12 @@ Attributes:
        5.49778714, 5.55014702, 5.6025069 , 5.65486678, 5.70722665,
        5.75958653, 5.81194641, 5.86430629, 5.91666616, 5.96902604,
        6.02138592, 6.0737458 , 6.12610567, 6.17846555, 6.23082543,
-       6.28318531])]</dd><dt><span>fs :</span></dt><dd>100.0</dd><dt><span>rates :</span></dt><dd>[13.12131213 14.73147315 14.68146815 13.29132913 13.12131213 11.07110711]</dd></dl></div></li></ul></div></div>
+       6.28318531])]</dd><dt><span>fs :</span></dt><dd>100.0</dd><dt><span>rates :</span></dt><dd>[14.83148315 14.65146515 12.22122212 12.72127213 13.48134813 12.37123712]</dd></dl></div></li></ul></div></div>
 </div>
 </div>
 <p>It has 2 dimensions, one for the neurons, and one for the feature bins.</p>
 <p>These can be easily visualised:</p>
-<div id="d5c2460f" class="cell" data-execution_count="48">
+<div id="a7c49c5f" class="cell" data-execution_count="48">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
@@ -2588,7 +2587,7 @@ Attributes:
 <li>a (temporal) bin size, to bin activity in</li>
 <li>a smoothing window, if we want to smooth the activity (this often helps for Bayesian decoding, by reducing noise)</li>
 </ul>
-<div id="df15cc63" class="cell" data-execution_count="49">
+<div id="a3b039ce" class="cell" data-execution_count="49">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>decoded, proba_feature <span class="op">=</span> nap.decode_bayes(</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>    tuning_curves<span class="op">=</span>tuning_curves,</span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>tsgroup,</span>
@@ -2599,27 +2598,27 @@ Attributes:
 <span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>decoded</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="49">
 <pre><code>Time (s)
--------------------  --------
-0.01                 6.20465
-0.03                 5.94285
-0.05                 5.99521
-0.06999999999999999  5.78577
-0.09                 5.78577
-0.11                 5.78577
-0.13                 5.83813
+-------------------  ---------
+0.01                 6.25701
+0.03                 6.25701
+0.05                 0.0785398
+0.06999999999999999  0.287979
+0.09                 0.287979
+0.11                 0.0785398
+0.13                 0.392699
 ...
-9.87                 5.36689
-9.89                 5.62869
-9.91                 5.99521
-9.93                 5.94285
-9.95                 0.1309
-9.97                 0.340339
-9.99                 0.654498
+9.87                 4.26733
+9.89                 4.05789
+9.91                 4.05789
+9.93                 4.26733
+9.95                 3.95317
+9.97                 3.95317
+9.99                 3.95317
 dtype: float64, shape: (500,)</code></pre>
 </div>
 </div>
 <p>The output consists of a <code>Tsd</code>, containing the predicted feature values at every time step, and a <code>TsdFrame</code> containing the estimated probabilities of each feature value at every time step:</p>
-<div id="ad917280" class="cell" data-execution_count="50">
+<div id="ba412061" class="cell" data-execution_count="50">
 <details class="code-fold">
 <summary>Show plotting code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>), nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
@@ -2693,7 +2692,7 @@ Check out <a href="https://nemos.readthedocs.io/en/latest/tutorials/README.html"
 <h3 data-number="11.9.1" class="anchored" data-anchor-id="nwb"><span class="header-section-number">11.9.1</span> NWB</h3>
 <p>The main input format Pynapple can read is <a href="https://nwb.org/">Neurodata Without Borders (NWB)</a>.<br>
 Pynapple will parse all data in the file that can be represented as a Pynapple object and present a dictionary-like interface for selecting them.</p>
-<div id="0d28e07f" class="cell" data-execution_count="52">
+<div id="d0b6d8bb" class="cell" data-execution_count="52">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> nap.load_file(<span class="st">'A2929-200711.nwb'</span>)</span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="52">
@@ -2722,7 +2721,7 @@ Pynapple will parse all data in the file that can be represented as a Pynapple o
 <section id="saving-as-.npz" class="level3" data-number="11.9.3">
 <h3 data-number="11.9.3" class="anchored" data-anchor-id="saving-as-.npz"><span class="header-section-number">11.9.3</span> Saving as <code>.npz</code></h3>
 <p>Pynapple objects can be saved (and loaded) as Numpy <code>.npz</code> files.</p>
-<div id="7cf46344" class="cell" data-execution_count="53">
+<div id="d80ce29c" class="cell" data-execution_count="53">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>tsd <span class="op">=</span> nap.Tsd(t<span class="op">=</span>np.arange(<span class="dv">10</span>), d<span class="op">=</span>np.arange(<span class="dv">10</span>))</span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>tsd.save(<span class="st">"my_tsd.npz"</span>)</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>loaded <span class="op">=</span> nap.load_file(<span class="st">"my_tsd.npz"</span>)</span>
@@ -2748,7 +2747,7 @@ dtype: int64, shape: (10,)</code></pre>
 <h3 data-number="11.9.4" class="anchored" data-anchor-id="streaming-from-dandi"><span class="header-section-number">11.9.4</span> Streaming from DANDI</h3>
 <p>Data in the NWB format can be directly streamed from the <a href="https://dandiarchive.org">DANDI archive</a> into Pynapple.<br>
 Here is useful function to keep on hand that does this for you:</p>
-<div id="09b2cc11" class="cell" data-execution_count="54">
+<div id="d25b2926" class="cell" data-execution_count="54">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pynwb <span class="im">import</span> NWBHDF5IO</span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dandi.dandiapi <span class="im">import</span> DandiAPIClient</span>
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fsspec</span>
@@ -2785,6 +2784,7 @@ Here is useful function to keep on hand that does this for you:</p>
 <p>This dataset can be downloaded from the <a href="https://zenodo.org/records/21908611">course data Zenodo</a>, filename: <code>dandiset-000939-no-traces-full.nwb</code>. See <a href="./course-data.html#spike-times-and-behavior-used-in-the-pynapple-section">here</a> for more details on data provenance.</p>
 <p>If you are confident, you can write your own code using the snippets provided in this chapter.<br>
 If you want a bit more help, follow along in <a href="https://colab.research.google.com/drive/1o3IJtprvaTzwHxThGTdInE6GYADBULyA?usp=sharing">this notebook</a>.</p>
+<p>If you are not satisfied and want to learn more, we are keeping track of all the <a href="https://pynapple.org/learning_material.html">Pynapple learning material here</a>.</p>
 
 
 </section>

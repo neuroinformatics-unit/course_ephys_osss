@@ -12,6 +12,7 @@ import ibldsp.voltage
 from one.api import ONE
 from brainbox.io.one import SpikeSortingLoader
 from viewephys.gui import viewephys
+from iblatlas.atlas import BrainRegions
 
 # ONE = Open Neurophysiology Environment, the IBL data access layer.
 # The public endpoint lets anyone download data with those public credentials.
@@ -38,17 +39,18 @@ pids = [
     'fe380793-8035-414e-b000-09bfe5ece92a',  # Benchmark PIDS stop
 ]
 
-for pid in pids:
-    # SpikeSortingLoader is a convenience object that bundles the probe geometry,
-    # spike-sorting results, and raw data access for a single insertion.
-    ss = SpikeSortingLoader(pid=pid, one=one)
+pid = pids[-1]
+# SpikeSortingLoader is a convenience object that bundles the probe geometry,
+# spike-sorting results, and raw data access for a single insertion.
+ss = SpikeSortingLoader(pid=pid, one=one)
 
-    # get the histology information
-    channels = ss.load_channels()
+# get the histology information
+channels = ss.load_channels()
 
-    # stream=True fetches only the requested chunk on-the-fly — no need to download the full recording.
-    # band='ap' selects the action-potential band (300 Hz high-pass, 30 kHz sample rate).
-    sr = ss.raw_electrophysiology(band='ap', stream=True)
+# stream=True fetches only the requested chunk on-the-fly — no need to download the full recording.
+# band='ap' selects the action-potential band (300 Hz high-pass, 30 kHz sample rate).
+sr = ss.raw_electrophysiology(band='ap', stream=True)
+sr_lf = ss.raw_electrophysiology(band='lf', stream=True)
 
 # %%
 # ---------------------------------------------------------------------------
@@ -95,7 +97,8 @@ destriped = ibldsp.voltage.destripe(raw, fs=sr.fs, h=sr.geometry,
 # ---------------------------------------------------------------------------
 # viewephys is an IBL interactive viewer: scroll with the mouse wheel,
 # adjust gain with +/-, and pan by clicking and dragging.
+regions = BrainRegions()
 eqcs = {}
-eqcs['raw'] = viewephys(raw, sr.fs, channels=channels, title='Raw (unfiltered)', t0=T0)
-eqcs['butt'] = viewephys(butt, sr.fs, channels=channels, title='Butterworth high-pass 300 Hz', t0=T0)
-eqcs['destriped'] = viewephys(destriped, sr.fs, channels=channels, title='Destriped (butter + ADC + k-filter)', t0=T0)
+eqcs['raw'] = viewephys(raw, sr.fs, channels=channels, title='Raw (unfiltered)', t0=T0, br=regions)
+eqcs['butt'] = viewephys(butt, sr.fs, channels=channels, title='Butterworth high-pass 300 Hz', t0=T0, br=regions)
+eqcs['destriped'] = viewephys(destriped, sr.fs, channels=channels, title='Destriped (butter + ADC + k-filter)', t0=T0, br=regions)

@@ -61,5 +61,5 @@ The script below demonstrates how to:
 5. Open all three stages side-by-side in the `viewephys` interactive viewer
 
 ```python
-{{< include scripts/stream_raw_ephys.py >}}
+{{< include scripts/visualize_raw_ephys_snippets.py >}}
 ```

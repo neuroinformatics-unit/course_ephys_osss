@@ -1,3 +1,72 @@
+# Visualisation of the raw data (coding)
+
+Preparation (optional but recommended to cache the snippets we'll visualize)
+```bash
+python -m ./book/scripts/download_raw_ephys_snippets.py
+```
+
+```{python}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Content of the `download_raw_ephys_snippets.py` script"
+{{< include scripts/download_raw_ephys_snippets.py >}}
+```
+
+
+## Display snippets of raw data at different stages of pre-processing
+
+```{python}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Run the following code in a interactive Python session to visualize raw data at different stages of pre-processing. If using Ipython, use the magic command `%gui qt`"
+{{< include scripts/visualize_raw_ephys_snippets.py >}}
+```
+
+![The viewephys viewer showing the destriped raw data snippet](images/viewephys_screen.png){width="120%"}
+
+### Navigating the viewer
+
+- **Pan**: left-click and drag
+- **Zoom**: scroll the mouse wheel (zooms on the cursor position), or right-click and drag
+- **Pan with the keyboard**: arrow keys (hold `Ctrl` for a bigger step)
+- **Gain**: `Page Up` / `Ctrl+A` decreases the gain (amplifies the signal), `Page Down` / `Ctrl+Z` increases it (you can also type a value directly in the gain box)
+- **Propagate**: `Ctrl+P` applies the current gain, colormap, sort order and axis links to all other open viewer windows; `Shift+P` does the same and additionally tiles the windows side by side
+- **Copy the current view**: `Ctrl+S` copies the plot to the clipboard as an image
+- **Right-click** on the plot for a context menu (view a single trace, spectrum or spectrogram)
+
+This is handy for comparing the raw, Butterworth-filtered and destriped windows side by side: open the three viewers, arrange/zoom one of them as needed, then hit `Ctrl+P` (or `Shift+P`) in that window to propagate the view to the other two.
+
+### Cycling through the different pre-processing steps
+
+Once you did **Propagate**: `Ctrl+P`, all of the 3 windows should now be synchronized.
+- Cycle through using `Alt+Tab`. How different are they ? 
+- On the raw display, right-click on the data, and look at individual traces. What can be said about the DC offset and grounding ? The units are uV, and those probes saturate at 1200 uV, can you spot any saturation events on the raw data ?
+
+
+### Looking at different recordings in different brain regions
+
+You can select different insertions (probe ids), by setting the `pid = pids[i]` index to visualize different brain regions.
+
+What can you see for different insertions ? Is there any quality issues with the data ? How different do you see the characteristics per region ? 
+[Here is a website with several of those insertions pre-displayed](http://reveal.internationalbrainlab.org.s3-website-us-east-1.amazonaws.com/benchmarks.html#/5/2)
+
+
+### Looking at the LFP
+
+Let's stream 5 seconds of the raw LFP, and print the folder in which the data is stored
+```{python}
+#| eval: false
+raw_lf = sr_lf[int(T0 * sr_lf.fs):int((T0 + 5) * sr_lf.fs), :-1].T
+eqcs['raw_lf'] = viewephys(raw_lf, sr_lf.fs, channels=channels, title='Raw LFP', t0=T0, br=regions)
+print(sr_lf.target_dir)
+```
+
+In a shell, with the environment active type in `viewephys`. 
+Select raw, and LFP, then open the File > Open menu and point to the `.cbin` file in the folder above.
+
+How close is the raw voltage from saturation ? What is the shape of the spectrum if you right click and compute the PSD ? 
+
+
 # Preprocessing (coding)
 
 In this chapter we will explore in more detail the preprocessing steps used in extracellular electrophysiology. 
